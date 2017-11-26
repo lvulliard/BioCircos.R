@@ -1,0 +1,13 @@
+Package: BioCircos
+Title: Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
+Version: 0.0.1.1
+Authors@R: c(person("Loan", "Vulliard", email = "lvulliard@cemm.at", role = c("trl", "cre")),
+	person("Runsheng", "Chen", email = "schen@ibp.ac.cn", role = c("aut")),
+	person("Ya", "Cui", role = c("aut")))
+Description: This package allows to implement in R Circos-like vizualization of genomic data,
+    as proposed by the BioCircos.js JavaScript library, based on the JQuery and D3 technologies.
+Depends: R (>= 3.4.1)
+License: GPL-2 | file LICENSE
+Encoding: UTF-8
+URL: https://github.com/lvulliard/BioCircos.R
+LazyData: true
