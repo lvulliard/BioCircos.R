@@ -6,8 +6,14 @@
 \usage{
 BioCircos(message, genome = "hg19", yChr = TRUE,
   genomeFillColor = "Spectral", chrPad = 0.04, displayGenomeBorder = TRUE,
-  genomeBorderColor = "#000", genomeBorderSize = 0.5, width = NULL,
-  height = NULL, elementId = NULL, ...)
+  genomeBorderColor = "#000", genomeBorderSize = 0.5,
+  genomeTicksDisplay = TRUE, genomeTicksLen = 5,
+  genomeTicksColor = "#000", genomeTicksTextSize = 10,
+  genomeTicksTextColor = "#000", genomeTicksScale = 3e+07,
+  genomeLabelDisplay = TRUE, genomeLabelTextSize = 15,
+  genomeLabelTextColor = "#000", genomeLabelDx = 0.028,
+  genomeLabelDy = "-0.55em", width = NULL, height = NULL,
+  elementId = NULL, ...)
 }
 \arguments{
 \item{message}{A message to display.}
@@ -25,6 +31,12 @@ format or base R colors. If the vector is shorter than the reference genome, val
 
 \item{displayGenomeBorder, genomeBorderColor, genomeBorderSize}{Should the reference genome have borders?
 If yes specify the color, in RGB hexadecimal format, and the thickness.}
+
+\item{genomeTicksDisplay, genomeTicksLen, genomeTicksColor, genomeTicksTextSize, genomeTicksTextColor, genomeTicksScale}{Should the refence genome have ticks, of which length, color (in hexadecimal RGB format), with labels in which font
+size and color, and spaced by how many bases?}
+
+\item{genomeLabelDisplay, genomeLabelTextSize, genomeLabelTextColor, genomeLabelDx, genomeLabelDy}{Should the reference genome have labels on each chromosome, in which font size and color? Moreover rotation
+and radius shifts for the label texts can be added}
 
 \item{width, height}{Must be a valid CSS unit (like \code{'100\%'},
 \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a

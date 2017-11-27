@@ -54,19 +54,19 @@ HTMLWidgets.widget({
               borderSize : opts.genomeBorderSize
            },
            ticks : {
-              display : true,
-              len : 5,
-              color : "#000",
-              textSize : 10,
-              textColor : "#000",
-              scale : 30000000
+              display : opts.genomeTicksDisplay,
+              len : opts.genomeTicksLen,
+              color : opts.genomeTicksColor,
+              textSize : opts.genomeTicksTextSize,
+              textColor : opts.genomeTicksTextColor,
+              scale : opts.genomeTicksScale
            },
            genomeLabel : {
-              display : true,
-              textSize : 15,
-              textColor : "#000",
-              dx : 0.028,
-              dy : "-0.55em"
+              display : opts.genomeLabelDisplay,
+              textSize : opts.genomeLabelTextSize,
+              textColor : opts.genomeLabelTextColor,
+              dx : opts.genomeLabelDx,
+              dy : opts.genomeLabelDy
            }
         });
 

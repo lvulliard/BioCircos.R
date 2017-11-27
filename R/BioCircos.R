@@ -19,9 +19,17 @@
 #'  generate one color per chromosome, or a character or vector of characters stating RGB values in hexadecimal
 #'  format or base R colors. If the vector is shorter than the reference genome, values will be repeated.
 #' @param chrPad Distance between chromosomes.
+#' 
 #' @param displayGenomeBorder,genomeBorderColor,genomeBorderSize Should the reference genome have borders?
 #'  If yes specify the color, in RGB hexadecimal format, and the thickness.
 #'
+#' @param genomeTicksDisplay,genomeTicksLen,genomeTicksColor,genomeTicksTextSize,genomeTicksTextColor,genomeTicksScale
+#'  Should the refence genome have ticks, of which length, color (in hexadecimal RGB format), with labels in which font
+#' size and color, and spaced by how many bases?
+#' @param genomeLabelDisplay,genomeLabelTextSize,genomeLabelTextColor,genomeLabelDx,genomeLabelDy
+#'  Should the reference genome have labels on each chromosome, in which font size and color? Moreover rotation
+#'  and radius shifts for the label texts can be added
+#' 
 #' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 #'   string and have \code{'px'} appended.
@@ -34,6 +42,10 @@ BioCircos <- function(message,
   genomeFillColor = "Spectral",
   chrPad = 0.04, 
   displayGenomeBorder = TRUE, genomeBorderColor = "#000", genomeBorderSize = 0.5,
+  genomeTicksDisplay = TRUE, genomeTicksLen = 5, genomeTicksColor = "#000", 
+  genomeTicksTextSize = 10, genomeTicksTextColor = "#000", genomeTicksScale = 30000000,
+  genomeLabelDisplay = TRUE, genomeLabelTextSize = 15, genomeLabelTextColor = "#000",
+  genomeLabelDx = 0.028, genomeLabelDy = "-0.55em",
   width = NULL, height = NULL, elementId = NULL, ...) {
 
   # If genome is a string, convert to corresponding chromosome lengths
@@ -97,7 +109,18 @@ BioCircos <- function(message,
     chrPad = chrPad, 
     displayGenomeBorder = displayGenomeBorder, 
     genomeBorderColor = genomeBorderColor, 
-    genomeBorderSize = genomeBorderSize
+    genomeBorderSize = genomeBorderSize,
+    genomeTicksDisplay = genomeTicksDisplay, 
+    genomeTicksLen = genomeTicksLen, 
+    genomeTicksColor = genomeTicksColor,
+    genomeTicksTextSize = genomeTicksTextSize, 
+    genomeTicksTextColor = genomeTicksTextColor, 
+    genomeTicksScale = genomeTicksScale,
+    genomeLabelDisplay = genomeLabelDisplay, 
+    genomeLabelTextSize = genomeLabelTextSize, 
+    genomeLabelTextColor = genomeLabelTextColor,
+    genomeLabelDx = genomeLabelDx, 
+    genomeLabelDy = genomeLabelDy 
   )
 
   # create widget
