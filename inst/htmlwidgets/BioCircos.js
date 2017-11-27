@@ -14,7 +14,7 @@ HTMLWidgets.widget({
 
         // TODO: code to render the widget, e.g.
         el.innerText = x.message;
-
+        d3.selectAll("p").style("color", "red");
       },
 
       resize: function(width, height) {
