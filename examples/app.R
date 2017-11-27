@@ -1,4 +1,5 @@
 setwd("../")
+devtools::document() 
 devtools::install() # Build library
 library(BioCircos)
 library(shiny)
@@ -11,7 +12,7 @@ shinyUi <- fluidPage(
 
 shinyServer <- function(input, output) {
 	output$testBioCircos <- renderBioCircos({
-		BioCircos(input$testInput, genomeFillColor = "RdGy")
+		BioCircos(input$testInput, genomeFillColor = "Spectral")
 	})
 }
 

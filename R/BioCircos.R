@@ -6,10 +6,30 @@
 #' @import RColorBrewer
 #'
 #' @export
+
+#' BioCircos widget
+#'
+#' Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
+#' 
+#' @param message A message to display.
+#' @param genome A list of chromosome lengths to be used as reference for the vizualization or 'hg19' to use
+#'  the chromosomes 1 to 22 and the sexual chromosomes according to the hg19 reference.
+#' @param yChr A logical stating if the Y chromosome should be displayed.
+#' @param genomeFillColor The color to display in each chromosome. Can be a RColorBrewer palette name used to
+#'  generate one color per chromosome, or a character or vector of characters stating RGB values in hexadecimal
+#'  format or base R colors. If the vector is shorter than the reference genome, values will be repeated.
+#'
+#' @param width,height Must be a valid CSS unit (like \code{'100\%'},
+#'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
+#'   string and have \code{'px'} appended.
+#' 
+#' @param ... Ignored
+#' 
+#' @export
 BioCircos <- function(message, 
-  genome = "hg19", sex = "M",
+  genome = "hg19", yChr = TRUE,
   genomeFillColor = "Spectral",
-  width = NULL, height = NULL, elementId = NULL) {
+  width = NULL, height = NULL, elementId = NULL, ...) {
 
   # If genome is a string, convert to corresponding chromosome lengths
   if(class(genome) == "character"){
@@ -45,13 +65,22 @@ BioCircos <- function(message,
   }
 
   # If genomeFillColor is a string, create corresponding palette
+  genomeFillColorError = "\'genomeFillColor\' parameter should be either a vector of chromosome colors or the name of a RColorBrewer brewer."
   if(class(genomeFillColor) == "character"){
-    if(genomeFillColor %in% rownames(RColorBrewer::brewer.pal.info)){
+    if((genomeFillColor %in% rownames(RColorBrewer::brewer.pal.info))&&(length(genomeFillColor) == 1)) { # RColorBrewer's brewer
       genomeFillColor = grDevices::colorRampPalette(RColorBrewer::brewer.pal(8, genomeFillColor))(length(genome))
     }
-    else{
-      stop("\'genomeFillColor\' parameter should be either a vector of chromosome colors or the name of a RColorBrewer brewer.")
+    else if(!all(grepl("^#", genomeFillColor))){ # Not RGB values
+      if(all(genomeFillColor %in% colors())){
+        genomeFillColor = rgb(t(col2rgb(genomeFillColor))/255)
+      }
+      else{ # Unknown format
+        stop(genomeFillColorError)
+      }
     }
+  }
+  else{
+      stop(genomeFillColorError)
   }
 
   # forward options using x
