@@ -14,7 +14,7 @@ BioCircos(message, genome = "hg19", yChr = TRUE,
 \item{genome}{A list of chromosome lengths to be used as reference for the vizualization or 'hg19' to use
 the chromosomes 1 to 22 and the sexual chromosomes according to the hg19 reference.}
 
-\item{yChr}{A logical stating if the Y chromosome should be displayed.}
+\item{yChr}{A logical stating if the Y chromosome should be displayed. Used only when genome is set to 'hg19'.}
 
 \item{genomeFillColor}{The color to display in each chromosome. Can be a RColorBrewer palette name used to
 generate one color per chromosome, or a character or vector of characters stating RGB values in hexadecimal

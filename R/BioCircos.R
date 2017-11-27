@@ -14,7 +14,7 @@
 #' @param message A message to display.
 #' @param genome A list of chromosome lengths to be used as reference for the vizualization or 'hg19' to use
 #'  the chromosomes 1 to 22 and the sexual chromosomes according to the hg19 reference.
-#' @param yChr A logical stating if the Y chromosome should be displayed.
+#' @param yChr A logical stating if the Y chromosome should be displayed. Used only when genome is set to 'hg19'.
 #' @param genomeFillColor The color to display in each chromosome. Can be a RColorBrewer palette name used to
 #'  generate one color per chromosome, or a character or vector of characters stating RGB values in hexadecimal
 #'  format or base R colors. If the vector is shorter than the reference genome, values will be repeated.
@@ -56,8 +56,9 @@ BioCircos <- function(message,
         "20" = 63025520,
         "21" = 48129895,
         "22" = 51304566,
-        "X" = 155270560,
-        "Y" = 59373566)
+        "X" = 155270560)
+
+      if(yChr){ genome$"Y" = 59373566 }
     }
     else{
       stop("\'genome\' parameter should be either a list of chromosome lengths or \'hg19\'.")
