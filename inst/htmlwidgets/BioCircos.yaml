@@ -9,6 +9,6 @@ dependencies:
   src: "htmlwidgets/lib"
   script: jquery.js
 - name: biocircos-1.1.0
-  version: 1.1.0
+  version: 1.1.2
   src: "htmlwidgets/lib"
-  script: ./biocircos-1.1.0.js
+  script: ./biocircos-1.1.2.js

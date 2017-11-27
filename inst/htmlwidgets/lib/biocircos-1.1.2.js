@@ -12,7 +12,7 @@
 * from BioCircos.js website "http://bioinfo.ibp.ac.cn/biocircos/".
 * 
 * @author <a href="cui_ya@163.com">Ya Cui</a>, <a href="chenxiaowei@moon.ibp.ac.cn">Xiaowei Chen</a>
-* @version 1.1.0
+* @version 1.1.2
 *
 * @example 
 *      var BioCircosGenome = [
@@ -1110,6 +1110,13 @@ var BioCircos;
         .range(self.genomeFillColor);
 
     if(self.zoom == true){
+        function zoom() {
+            a=d3.event.translate[0]+width / 2
+            b=d3.event.translate[1]+height / 2
+            svg.attr("transform", "translate(" 
+                + a +","+ b 
+                + ")scale(" + d3.event.scale + ")");
+        }
         var svg = d3.select(self.target).append("svg")
             .attr("width", width)
             .attr("height", height)
@@ -1120,14 +1127,6 @@ var BioCircos;
             )
           .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-        function zoom() {
-            a=d3.event.translate[0]+width / 2
-            b=d3.event.translate[1]+height / 2
-            svg.attr("transform", "translate(" 
-                + a +","+ b 
-                + ")scale(" + d3.event.scale + ")");
-        }
 
     }else{
         var svg = d3.select(self.target).append("svg")
@@ -1178,6 +1177,16 @@ var BioCircos;
     }
 
     if(self.ticksDisplay == true){
+        function groupTicks(d) {
+          var k = (d.endAngle - d.startAngle) / d.value;
+          return d3.range(0, d.value, self.ticksScale).map(function(v, i) {
+            return {
+              angle: v * k + d.startAngle,
+              label: v / self.ticksScale + ""
+            };
+          });
+        }
+		
         var ticks = svg.append("g").selectAll("g")
             .data(chord.groups)
           .enter().append("g").selectAll("g")
@@ -1204,15 +1213,6 @@ var BioCircos;
             .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
             .text(function(d) { return d.label; });
 
-        function groupTicks(d) {
-          var k = (d.endAngle - d.startAngle) / d.value;
-          return d3.range(0, d.value, self.ticksScale).map(function(v, i) {
-            return {
-              angle: v * k + d.startAngle,
-              label: v / self.ticksScale + ""
-            };
-          });
-        }
     }
 
     var drag = d3.behavior.drag()
@@ -1264,6 +1264,22 @@ var BioCircos;
     }
 
     if(self.ARC.length > 0){
+            function BioCircosArc(d) {
+              return self.ARC[arci].map(function(v, i) {
+                var arc_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
+                return {
+                  startAngle: v.start * arc_k + d[self.initGenome[v.chr]].startAngle,
+                  endAngle: v.end * arc_k + d[self.initGenome[v.chr]].startAngle,
+                  arc_chr: v.chr,
+                  arc_start: v.start,
+                  arc_end: v.end,
+                  arc_color: v.color,
+                  arc_des: v.des,
+                  arc_link: v.link,
+                  arc_click_label: "arc"+arci+"_"+i,
+                };
+              });
+            }
         for(var arci=0; arci<self.ARC.length; arci++){
             self.update_ARCsettings(self.ARCConfig[arci]);
 
@@ -1278,6 +1294,8 @@ var BioCircos;
                 .selectAll("path.BioCircosARC")
                   .data(arc_objects)
                   .enter()
+                .append("a")
+                .attr("xlink:href", function(d){return d.arc_link})
                 .append("path")
                 .attr("class", "BioCircosARC")
                 .attr("fill", function(d,i) { return d.arc_color; })
@@ -1344,22 +1362,6 @@ var BioCircos;
                 }
 
             self.init_ARCsettings();
-
-            function BioCircosArc(d) {
-              return self.ARC[arci].map(function(v, i) {
-                var arc_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
-                return {
-                  startAngle: v.start * arc_k + d[self.initGenome[v.chr]].startAngle,
-                  endAngle: v.end * arc_k + d[self.initGenome[v.chr]].startAngle,
-                  arc_chr: v.chr,
-                  arc_start: v.start,
-                  arc_end: v.end,
-                  arc_color: v.color,
-                  arc_des: v.des,
-                  arc_click_label: "arc"+arci+"_"+i,
-                };
-              });
-            }
 
         }
 
@@ -1480,22 +1482,6 @@ var BioCircos;
     }
 
     if(self.HISTOGRAM.length > 0){
-        for(var histogrami=0; histogrami<self.HISTOGRAM.length; histogrami++){
-            self.update_HISTOGRAMsettings(self.HISTOGRAMConfig[histogrami]);
-
-            var histogram_objects = BioCircosHISTOGRAM(chord.groups())
-
-            svg.append("g")
-                .attr("class", "BioCircosHISTOGRAM")
-                .selectAll("path.BioCircosHISTOGRAM")
-                  .data(histogram_objects)
-                  .enter()
-                .append("path")
-                .attr("class", "BioCircosHISTOGRAM")
-                .attr("fill", self.HISTOGRAMsettings.histogramFillColor)
-                .attr("d", d3.svg.arc().innerRadius(self.HISTOGRAMsettings.minRadius).outerRadius(function(d) {return self.HISTOGRAMsettings.minRadius + ((d.histogram_value-self.histogram_value_maxmin(self.HISTOGRAM[histogrami])[1])*(self.HISTOGRAMsettings.maxRadius-self.HISTOGRAMsettings.minRadius)/(self.histogram_value_maxmin(self.HISTOGRAM[histogrami])[0]-self.histogram_value_maxmin(self.HISTOGRAM[histogrami])[1]));}));
-            self.init_HISTOGRAMsettings();
-
             function BioCircosHISTOGRAM(d) {
               return self.HISTOGRAM[histogrami].map(function(v, i) {
                 var histogram_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
@@ -1506,10 +1492,28 @@ var BioCircos;
                   histogram_start: v.start,
                   histogram_end: v.end,
                   histogram_name: v.name,
+                  histogram_link: v.link,
                   histogram_value: v.value,
                 };
               });
             }
+        for(var histogrami=0; histogrami<self.HISTOGRAM.length; histogrami++){
+            self.update_HISTOGRAMsettings(self.HISTOGRAMConfig[histogrami]);
+
+            var histogram_objects = BioCircosHISTOGRAM(chord.groups())
+
+            svg.append("g")
+                .attr("class", "BioCircosHISTOGRAM")
+                .selectAll("path.BioCircosHISTOGRAM")
+                  .data(histogram_objects)
+                  .enter()
+                .append("a")
+                .attr("xlink:href", function(d){return d.histogram_link})
+                .append("path")
+                .attr("class", "BioCircosHISTOGRAM")
+                .attr("fill", self.HISTOGRAMsettings.histogramFillColor)
+                .attr("d", d3.svg.arc().innerRadius(self.HISTOGRAMsettings.minRadius).outerRadius(function(d) {return self.HISTOGRAMsettings.minRadius + ((d.histogram_value-self.histogram_value_maxmin(self.HISTOGRAM[histogrami])[1])*(self.HISTOGRAMsettings.maxRadius-self.HISTOGRAMsettings.minRadius)/(self.histogram_value_maxmin(self.HISTOGRAM[histogrami])[0]-self.histogram_value_maxmin(self.HISTOGRAM[histogrami])[1]));}));
+            self.init_HISTOGRAMsettings();
 
         }
 
@@ -1616,6 +1620,22 @@ var BioCircos;
     }
 
     if(self.LINE.length > 0){
+            function BioCircosLINE(d) {
+              return self.LINE[linei].map(function(v, i) {
+                var line_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
+                return {
+                  line_angle: v.pos * line_k + d[self.initGenome[v.chr]].startAngle,
+                  line_chr: v.chr,
+                  line_pos: v.pos,
+                  line_des: v.des,
+                  line_value: v.value,
+                  line_color: self.LINEsettings.LineColor,
+                  line_width: self.LINEsettings.LineWidth,
+                  x: (0 + Math.sin(v.pos * line_k + d[self.initGenome[v.chr]].startAngle) * ((self.LINEsettings.minRadius + ( (v.value-self.line_value_maxmin(self.LINE[linei])[1])/(self.line_value_maxmin(self.LINE[linei])[0]-self.line_value_maxmin(self.LINE[linei])[1])*(self.LINEsettings.maxRadius-self.LINEsettings.minRadius) )))),
+                  y: (0 - Math.cos(v.pos * line_k + d[self.initGenome[v.chr]].startAngle) * ((self.LINEsettings.minRadius + ( (v.value-self.line_value_maxmin(self.LINE[linei])[1])/(self.line_value_maxmin(self.LINE[linei])[0]-self.line_value_maxmin(self.LINE[linei])[1])*(self.LINEsettings.maxRadius-self.LINEsettings.minRadius) ))))
+                };
+              });
+            }
         for(var linei=0; linei<self.LINE.length; linei++){
             self.update_LINEsettings(self.LINEConfig[linei]);
 
@@ -1639,22 +1659,6 @@ var BioCircos;
                 }
             }
             self.init_LINEsettings();
-            function BioCircosLINE(d) {
-              return self.LINE[linei].map(function(v, i) {
-                var line_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
-                return {
-                  line_angle: v.pos * line_k + d[self.initGenome[v.chr]].startAngle,
-                  line_chr: v.chr,
-                  line_pos: v.pos,
-                  line_des: v.des,
-                  line_value: v.value,
-                  line_color: self.LINEsettings.LineColor,
-                  line_width: self.LINEsettings.LineWidth,
-                  x: (0 + Math.sin(v.pos * line_k + d[self.initGenome[v.chr]].startAngle) * ((self.LINEsettings.minRadius + ( (v.value-self.line_value_maxmin(self.LINE[linei])[1])/(self.line_value_maxmin(self.LINE[linei])[0]-self.line_value_maxmin(self.LINE[linei])[1])*(self.LINEsettings.maxRadius-self.LINEsettings.minRadius) )))),
-                  y: (0 - Math.cos(v.pos * line_k + d[self.initGenome[v.chr]].startAngle) * ((self.LINEsettings.minRadius + ( (v.value-self.line_value_maxmin(self.LINE[linei])[1])/(self.line_value_maxmin(self.LINE[linei])[0]-self.line_value_maxmin(self.LINE[linei])[1])*(self.LINEsettings.maxRadius-self.LINEsettings.minRadius) ))))
-                };
-              });
-            }
 
         }
 
@@ -1773,6 +1777,23 @@ var BioCircos;
     }
 
     if(self.CNV.length > 0){
+            function BioCircosCnv(d) {
+              return self.CNV[cnvi].map(function(v, i) {
+                var cnv_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
+                return {
+                  startAngle: v.start * cnv_k + d[self.initGenome[v.chr]].startAngle,
+                  endAngle: v.end * cnv_k + d[self.initGenome[v.chr]].startAngle,
+                  cnv_chr: v.chr,
+                  cnv_start: v.start,
+                  cnv_end: v.end,
+                  cnv_val: v.value,
+                  cnv_link: v.link,
+                  cnv_click_label: "cnv"+cnvi+"_"+i,
+                  cnv_deviation: (v.value-self.cnv_value_maxmin(self.CNV[cnvi])[1])/(self.cnv_value_maxmin(self.CNV[cnvi])[0]-self.cnv_value_maxmin(self.CNV[cnvi])[1])*(self.CNVsettings.maxRadius-self.CNVsettings.minRadius)
+
+                };
+              });
+            }
         for(var cnvi=0; cnvi<self.CNV.length; cnvi++){
             self.update_CNVsettings(self.CNVConfig[cnvi]);
 
@@ -1783,6 +1804,8 @@ var BioCircos;
                 .selectAll("path.BioCircosCNV")
                   .data(cnv_objects)
                   .enter()
+                .append("a")
+                .attr("xlink:href", function(d){return d.cnv_link})
                 .append("path")
                 .attr("class", "BioCircosCNV")
                 .attr("transform", function(d) {
@@ -1853,23 +1876,6 @@ var BioCircos;
                 }
 
             self.init_CNVsettings();
-
-            function BioCircosCnv(d) {
-              return self.CNV[cnvi].map(function(v, i) {
-                var cnv_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
-                return {
-                  startAngle: v.start * cnv_k + d[self.initGenome[v.chr]].startAngle,
-                  endAngle: v.end * cnv_k + d[self.initGenome[v.chr]].startAngle,
-                  cnv_chr: v.chr,
-                  cnv_start: v.start,
-                  cnv_end: v.end,
-                  cnv_val: v.value,
-                  cnv_click_label: "cnv"+cnvi+"_"+i,
-                  cnv_deviation: (v.value-self.cnv_value_maxmin(self.CNV[cnvi])[1])/(self.cnv_value_maxmin(self.CNV[cnvi])[0]-self.cnv_value_maxmin(self.CNV[cnvi])[1])*(self.CNVsettings.maxRadius-self.CNVsettings.minRadius)
-
-                };
-              });
-            }
 
         }
 
@@ -1986,6 +1992,20 @@ var BioCircos;
     }
 
     if(self.HEATMAP.length > 0){
+            function BioCircosHeatmap(d) {
+              return self.HEATMAP[heatmapi].map(function(v, i) {
+                var heatmap_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
+                return {
+                  startAngle: v.start * heatmap_k + d[self.initGenome[v.chr]].startAngle,
+                  endAngle: v.end * heatmap_k + d[self.initGenome[v.chr]].startAngle,
+                  heatmap_chr: v.chr,
+                  heatmap_start: v.start,
+                  heatmap_end: v.end,
+                  heatmap_name: v.name,
+                  heatmap_value: v.value,
+                };
+              });
+            }
         for(var heatmapi=0; heatmapi<self.HEATMAP.length; heatmapi++){
             self.update_HEATMAPsettings(self.HEATMAPConfig[heatmapi]);
 
@@ -2006,21 +2026,6 @@ var BioCircos;
                 .attr("fill", function(d,i) { return HeatmapValue2Color((d.heatmap_value - self.heatmap_value_maxmin(self.HEATMAP[heatmapi])[1])/(self.heatmap_value_maxmin(self.HEATMAP[heatmapi])[0]-self.heatmap_value_maxmin(self.HEATMAP[heatmapi])[1])); })
                 .attr("d", function(d,i) { return heatmap(d,i); });
             self.init_HEATMAPsettings();
-
-            function BioCircosHeatmap(d) {
-              return self.HEATMAP[heatmapi].map(function(v, i) {
-                var heatmap_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
-                return {
-                  startAngle: v.start * heatmap_k + d[self.initGenome[v.chr]].startAngle,
-                  endAngle: v.end * heatmap_k + d[self.initGenome[v.chr]].startAngle,
-                  heatmap_chr: v.chr,
-                  heatmap_start: v.start,
-                  heatmap_end: v.end,
-                  heatmap_name: v.name,
-                  heatmap_value: v.value,
-                };
-              });
-            }
 
         }
 
@@ -2127,6 +2132,24 @@ var BioCircos;
     }
 
     if(self.SCATTER.length > 0){
+            function BioCircosSCATTER(d) {
+              return self.SCATTER[scatteri].map(function(v, i) {
+                var random_data = Math.random()*self.SCATTERsettings.random_data
+                var scatter_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
+                return {
+                  scatter_angle: (v.start/2+v.end/2) * scatter_k + d[self.initGenome[v.chr]].startAngle,
+                  scatter_chr: v.chr,
+                  scatter_start: v.start,
+                  scatter_end: v.end,
+                  scatter_name: v.name,
+                  scatter_des: v.des,
+                  scatter_link: v.link,
+                  scatter_click_label: "scatter"+scatteri+"_"+i,
+                  x: (0 + Math.sin((v.start/2+v.end/2) * scatter_k + d[self.initGenome[v.chr]].startAngle) * (self.SCATTERsettings.SCATTERRadius - random_data)),
+                  y: (0 - Math.cos((v.start/2+v.end/2) * scatter_k + d[self.initGenome[v.chr]].startAngle) * (self.SCATTERsettings.SCATTERRadius - random_data))
+                };
+              });
+            }
         for(var scatteri=0; scatteri<self.SCATTER.length; scatteri++){
             self.update_SCATTERsettings(self.SCATTERConfig[scatteri]);
             var scatter_objects = BioCircosSCATTER(chord.groups())
@@ -2137,7 +2160,10 @@ var BioCircos;
                     .attr("class", "BioCircosSCATTER")
                   .selectAll("circle")
                     .data(scatter_objects)
-                    .enter().append("circle")
+                    .enter()
+                    .append("a")
+                    .attr("xlink:href", function(d){return d.scatter_link})
+                    .append("circle")
                     .attr("id", "BioCircosSCATTEROut")
                     .attr("fill", self.SCATTERsettings.outerCircleColor)
                     .attr("opacity", self.SCATTERsettings.outerCircleOpacity)
@@ -2150,7 +2176,10 @@ var BioCircos;
                     .attr("class", "BioCircosSCATTER")
                   .selectAll("circle")
                     .data(scatter_objects)
-                    .enter().append("circle")
+                    .enter()
+                    .append("a")
+                    .attr("xlink:href", function(d){return d.scatter_link})
+                    .append("circle")
                     .attr("id", "BioCircosSCATTEROut")
                     .attr("fill", self.SCATTERsettings.outerCircleColor)
                     .attr("opacity", self.SCATTERsettings.outerCircleOpacity)
@@ -2253,7 +2282,10 @@ var BioCircos;
                     .attr("class", "BioCircosSCATTER")
                   .selectAll("rect")
                     .data(scatter_objects)
-                    .enter().append("rect")
+                    .enter()
+                    .append("a")
+                    .attr("xlink:href", function(d){return d.scatter_link})
+                    .append("rect")
                     .attr("id", "BioCircosSCATTEROut")
                     .attr("x", function(d) { return d.x - self.SCATTERsettings.outerrectWidth/2; })
                     .attr("y", function(d) { return d.y - self.SCATTERsettings.outerrectHeight/2; })
@@ -2269,7 +2301,10 @@ var BioCircos;
                     .attr("class", "BioCircosSCATTEROut")
                   .selectAll("circle")
                     .data(scatter_objects)
-                    .enter().append("circle")
+                    .enter()
+                    .append("a")
+                    .attr("xlink:href", function(d){return d.scatter_link})
+                    .append("circle")
                     .attr("id", "BioCircosSCATTEROut")  //out
                     .attr("fill", self.SCATTERsettings.innerCircleColor)
                     .attr("r", self.SCATTERsettings.innerCircleSize)
@@ -2281,7 +2316,10 @@ var BioCircos;
                     .attr("class", "BioCircosSCATTEROut")
                   .selectAll("circle")
                     .data(scatter_objects)
-                    .enter().append("circle")
+                    .enter()
+                    .append("a")
+                    .attr("xlink:href", function(d){return d.scatter_link})
+                    .append("circle")
                     .attr("id", "BioCircosSCATTEROut")  //out
                     .attr("fill", self.SCATTERsettings.innerCircleColor)
                     .attr("r", self.SCATTERsettings.innerCircleSize)
@@ -2382,7 +2420,10 @@ var BioCircos;
                     .attr("class", "BioCircosSCATTEROut")
                   .selectAll("rect")
                     .data(scatter_objects)
-                    .enter().append("rect")
+                    .enter()
+                    .append("a")
+                    .attr("xlink:href", function(d){return d.scatter_link})
+                    .append("rect")
                     .attr("id", "BioCircosSCATTEROut")  //out
                     .attr("x", function(d) { return d.x - self.SCATTERsettings.innerrectWidth/2; })
                     .attr("y", function(d) { return d.y - self.SCATTERsettings.innerrectHeight/2; })
@@ -2392,24 +2433,6 @@ var BioCircos;
             }
 
             self.init_SCATTERsettings();
-
-            function BioCircosSCATTER(d) {
-              return self.SCATTER[scatteri].map(function(v, i) {
-                var random_data = Math.random()*self.SCATTERsettings.random_data
-                var scatter_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
-                return {
-                  scatter_angle: (v.start/2+v.end/2) * scatter_k + d[self.initGenome[v.chr]].startAngle,
-                  scatter_chr: v.chr,
-                  scatter_start: v.start,
-                  scatter_end: v.end,
-                  scatter_name: v.name,
-                  scatter_des: v.des,
-                  scatter_click_label: "scatter"+scatteri+"_"+i,
-                  x: (0 + Math.sin((v.start/2+v.end/2) * scatter_k + d[self.initGenome[v.chr]].startAngle) * (self.SCATTERsettings.SCATTERRadius - random_data)),
-                  y: (0 - Math.cos((v.start/2+v.end/2) * scatter_k + d[self.initGenome[v.chr]].startAngle) * (self.SCATTERsettings.SCATTERRadius - random_data))
-                };
-              });
-            }
 
         }
 
@@ -2533,6 +2556,23 @@ var BioCircos;
 
 
     if(self.SNP.length > 0){
+            function BioCircosSNP(d) {
+              return self.SNP[snpi].map(function(v, i) {
+                var snp_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
+                return {
+                  snp_angle: v.pos * snp_k + d[self.initGenome[v.chr]].startAngle,
+                  snp_chr: v.chr,
+                  snp_pos: v.pos,
+                  snp_val: v.value,
+                  snp_des: v.des,
+                  snp_color: v.color,
+                  snp_link: v.link,
+                  snp_click_label: "snp"+snpi+"_"+i,
+                  x: (0 + Math.sin(v.pos * snp_k + d[self.initGenome[v.chr]].startAngle) * (self.SNPsettings.minRadius + ( (v.value-self.snp_value_maxmin(self.SNP[snpi])[1])/(self.snp_value_maxmin(self.SNP[snpi])[0]-self.snp_value_maxmin(self.SNP[snpi])[1])*(self.SNPsettings.maxRadius-self.SNPsettings.minRadius) ))),  //self.snp_value_maxmin(self.SNP[snpi])[0] max
+                  y: (0 - Math.cos(v.pos * snp_k + d[self.initGenome[v.chr]].startAngle) * (self.SNPsettings.minRadius + ( (v.value-self.snp_value_maxmin(self.SNP[snpi])[1])/(self.snp_value_maxmin(self.SNP[snpi])[0]-self.snp_value_maxmin(self.SNP[snpi])[1])*(self.SNPsettings.maxRadius-self.SNPsettings.minRadius) )))
+                };
+              });
+            }
         for(var snpi=0; snpi<self.SNP.length; snpi++){
             self.update_SNPsettings(self.SNPConfig[snpi]);
 
@@ -2544,7 +2584,10 @@ var BioCircos;
                     .attr("class", "BioCircosSNP")
                   .selectAll("circle")
                     .data(snp_objects)
-                    .enter().append("circle")
+                    .enter()
+                    .append("a")
+                    .attr("xlink:href", function(d){return d.scatter_link})
+                    .append("circle")
                     .attr("id", "BioCircosSNP")
                     .attr("fill", function(d,i) { if(d.snp_color!=undefined){return d.snp_color;}else{return self.SNPsettings.SNPFillColor;} })
                     .attr("r", self.SNPsettings.circleSize)
@@ -2556,7 +2599,10 @@ var BioCircos;
                     .attr("class", "BioCircosSNP")
                   .selectAll("circle")
                     .data(snp_objects)
-                    .enter().append("circle")
+                    .enter()
+                    .append("a")
+                    .attr("xlink:href", function(d){return d.scatter_link})
+                    .append("circle")
                     .attr("id", "BioCircosSNP")
                     .attr("fill", function(d,i) { if(d.snp_color!=undefined){return d.snp_color;}else{return self.SNPsettings.SNPFillColor;} })
                     .attr("r", self.SNPsettings.circleSize)
@@ -2643,7 +2689,10 @@ var BioCircos;
                     .attr("class", "BioCircosSNP")
                   .selectAll("rect")
                     .data(snp_objects)
-                    .enter().append("rect")
+                    .enter()
+                    .append("a")
+                    .attr("xlink:href", function(d){return d.scatter_link})
+                    .append("rect")
                     .attr("id", "BioCircosSNP")
                     .attr("x", function(d) { return d.x; })
                     .attr("y", function(d) { return d.y; })
@@ -2654,23 +2703,6 @@ var BioCircos;
             }
 
                  self.init_SNPsettings();
-
-            function BioCircosSNP(d) {
-              return self.SNP[snpi].map(function(v, i) {
-                var snp_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
-                return {
-                  snp_angle: v.pos * snp_k + d[self.initGenome[v.chr]].startAngle,
-                  snp_chr: v.chr,
-                  snp_pos: v.pos,
-                  snp_val: v.value,
-                  snp_des: v.des,
-                  snp_color: v.color,
-                  snp_click_label: "snp"+snpi+"_"+i,
-                  x: (0 + Math.sin(v.pos * snp_k + d[self.initGenome[v.chr]].startAngle) * (self.SNPsettings.minRadius + ( (v.value-self.snp_value_maxmin(self.SNP[snpi])[1])/(self.snp_value_maxmin(self.SNP[snpi])[0]-self.snp_value_maxmin(self.SNP[snpi])[1])*(self.SNPsettings.maxRadius-self.SNPsettings.minRadius) ))),  //self.snp_value_maxmin(self.SNP[snpi])[0] max
-                  y: (0 - Math.cos(v.pos * snp_k + d[self.initGenome[v.chr]].startAngle) * (self.SNPsettings.minRadius + ( (v.value-self.snp_value_maxmin(self.SNP[snpi])[1])/(self.snp_value_maxmin(self.SNP[snpi])[0]-self.snp_value_maxmin(self.SNP[snpi])[1])*(self.SNPsettings.maxRadius-self.SNPsettings.minRadius) )))
-                };
-              });
-            }
 
         }
 
@@ -2794,6 +2826,24 @@ var BioCircos;
     }
 
     if(self.LINK.length > 0){
+            function BioCircosLINK(d) {
+              return self.LINK[linki].map(function(v, i) {
+                var start_k = (d[self.initGenome[v.g1chr]].endAngle - d[self.initGenome[v.g1chr]].startAngle) / d[self.initGenome[v.g1chr]].value;
+                var end_k = (d[self.initGenome[v.g2chr]].endAngle - d[self.initGenome[v.g2chr]].startAngle) / d[self.initGenome[v.g2chr]].value;
+                return {
+                  link_angle1: (v.g1start/2+v.g1end/2) * start_k + d[self.initGenome[v.g1chr]].startAngle,
+                  link_angle2: (v.g2start/2+v.g2end/2) * end_k + d[self.initGenome[v.g2chr]].startAngle,
+                  link_label1: v.g1name,
+                  link_label2: v.g2name,
+                  link_pair: v.fusion,
+                  link_width: self.LINKsettings.LinkWidth,
+                  link_X1: (0 + Math.sin((v.g1start/2+v.g1end/2) * start_k + d[self.initGenome[v.g1chr]].startAngle) * (self.LINKsettings.LinkRadius)),
+                  link_Y1: (0 - Math.cos((v.g1start/2+v.g1end/2) * start_k + d[self.initGenome[v.g1chr]].startAngle) * (self.LINKsettings.LinkRadius)),
+                  link_X2: (0 + Math.sin((v.g2start/2+v.g2end/2) * end_k + d[self.initGenome[v.g2chr]].startAngle) * (self.LINKsettings.LinkRadius)),
+                  link_Y2: (0 - Math.cos((v.g2start/2+v.g2end/2) * end_k + d[self.initGenome[v.g2chr]].startAngle) * (self.LINKsettings.LinkRadius))
+                };
+              });
+            }
         for(var linki=0; linki<self.LINK.length; linki++){
             self.update_LINKsettings(self.LINKConfig[linki]);
 
@@ -2845,36 +2895,17 @@ var BioCircos;
             }
             self.init_LINKsettings();
 
-            var draglinklabel = d3.behavior.drag()
-                      .on("drag", draglinkmove);
-
             function draglinkmove(d) {
                 d3.select(this)
                   .attr("x", d3.event.x )
                   .attr("y", d3.event.y );
             }
+			
+            var draglinklabel = d3.behavior.drag()
+                      .on("drag", draglinkmove);
 
             if(self.settings.LINKLabelDragEvent==true){
                 svg.selectAll("text.BioCircosLINKLabel").call(draglinklabel);
-            }
-
-            function BioCircosLINK(d) {
-              return self.LINK[linki].map(function(v, i) {
-                var start_k = (d[self.initGenome[v.g1chr]].endAngle - d[self.initGenome[v.g1chr]].startAngle) / d[self.initGenome[v.g1chr]].value;
-                var end_k = (d[self.initGenome[v.g2chr]].endAngle - d[self.initGenome[v.g2chr]].startAngle) / d[self.initGenome[v.g2chr]].value;
-                return {
-                  link_angle1: (v.g1start/2+v.g1end/2) * start_k + d[self.initGenome[v.g1chr]].startAngle,
-                  link_angle2: (v.g2start/2+v.g2end/2) * end_k + d[self.initGenome[v.g2chr]].startAngle,
-                  link_label1: v.g1name,
-                  link_label2: v.g2name,
-                  link_pair: v.fusion,
-                  link_width: self.LINKsettings.LinkWidth,
-                  link_X1: (0 + Math.sin((v.g1start/2+v.g1end/2) * start_k + d[self.initGenome[v.g1chr]].startAngle) * (self.LINKsettings.LinkRadius)),
-                  link_Y1: (0 - Math.cos((v.g1start/2+v.g1end/2) * start_k + d[self.initGenome[v.g1chr]].startAngle) * (self.LINKsettings.LinkRadius)),
-                  link_X2: (0 + Math.sin((v.g2start/2+v.g2end/2) * end_k + d[self.initGenome[v.g2chr]].startAngle) * (self.LINKsettings.LinkRadius)),
-                  link_Y2: (0 - Math.cos((v.g2start/2+v.g2end/2) * end_k + d[self.initGenome[v.g2chr]].startAngle) * (self.LINKsettings.LinkRadius))
-                };
-              });
             }
 
         }
