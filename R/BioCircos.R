@@ -3,10 +3,12 @@
 #' Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
 #'
 #' @import htmlwidgets
+#' @import RColorBrewer
 #'
 #' @export
 BioCircos <- function(message, 
-  genome = "hg19", sex = "M", 
+  genome = "hg19", sex = "M",
+  genomeFillColor = "Spectral",
   width = NULL, height = NULL, elementId = NULL) {
 
   # If genome is a string, convert to corresponding chromosome lengths
@@ -42,10 +44,21 @@ BioCircos <- function(message,
     }
   }
 
+  # If genomeFillColor is a string, create corresponding palette
+  if(class(genomeFillColor) == "character"){
+    if(genomeFillColor %in% rownames(RColorBrewer::brewer.pal.info)){
+      genomeFillColor = grDevices::colorRampPalette(RColorBrewer::brewer.pal(8, genomeFillColor))(length(genome))
+    }
+    else{
+      stop("\'genomeFillColor\' parameter should be either a vector of chromosome colors or the name of a RColorBrewer brewer.")
+    }
+  }
+
   # forward options using x
   x = list(
     message = message,
-    genome = genome
+    genome = genome,
+    genomeFillColor = genomeFillColor
   )
 
   # create widget

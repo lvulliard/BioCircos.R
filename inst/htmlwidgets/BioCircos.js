@@ -26,7 +26,7 @@ HTMLWidgets.widget({
         opts = x // Rename variable
 
         el.innerText = opts.message; // Display input message
-        
+
         d3.selectAll("p").style("color", "red"); // D3: paragraphs are now written in red
 
         var BioCircosGenome = objToArray(opts.genome);
@@ -41,7 +41,7 @@ HTMLWidgets.widget({
            innerRadius: 0.7*maxRadius,
            outerRadius: 0.8*maxRadius,
            zoom : true,
-           genomeFillColor: ["rgb(153,102,0)", "rgb(102,102,0)", "rgb(153,153,30)", "rgb(204,0,0)","rgb(255,0,0)", "rgb(255,0,204)", "rgb(255,204,204)", "rgb(255,153,0)", "rgb(255,204,0)", "rgb(255,255,0)", "rgb(204,255,0)", "rgb(0,255,0)","rgb(53,128,0)", "rgb(0,0,204)", "rgb(102,153,255)", "rgb(153,204,255)", "rgb(0,255,255)", "rgb(204,255,255)", "rgb(153,0,204)", "rgb(204,51,255)","rgb(204,153,255)", "rgb(102,102,102)", "rgb(153,153,153)", "rgb(204,204,204)"],
+           genomeFillColor: opts.genomeFillColor,
            CNVMouseOnDisplay : true,
            HEATMAPMouseOnDisplay : true,
            SNPMouseOnDisplay : true,

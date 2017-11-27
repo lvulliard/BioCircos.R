@@ -11,7 +11,7 @@ shinyUi <- fluidPage(
 
 shinyServer <- function(input, output) {
 	output$testBioCircos <- renderBioCircos({
-		BioCircos(input$testInput)
+		BioCircos(input$testInput, genomeFillColor = "RdGy")
 	})
 }
 
