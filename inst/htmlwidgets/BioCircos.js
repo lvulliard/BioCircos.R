@@ -37,7 +37,7 @@ HTMLWidgets.widget({
            target : el.id,
            svgWidth : width,
            svgHeight : height,
-           chrPad : 0.04,
+           chrPad : opts.chrPad,
            innerRadius: 0.7*maxRadius,
            outerRadius: 0.8*maxRadius,
            zoom : true,
@@ -49,9 +49,9 @@ HTMLWidgets.widget({
            HISTOGRAMMouseOnDisplay: true,
            LINEMouseOnDisplay: true,
            genomeBorder : {
-              display : true,
-              borderColor : "#000",
-              borderSize : 0.5
+              display : opts.displayGenomeBorder,
+              borderColor : opts.genomeBorderColor,
+              borderSize : opts.genomeBorderSize
            },
            ticks : {
               display : true,

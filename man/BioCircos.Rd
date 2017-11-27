@@ -5,8 +5,9 @@
 \title{BioCircos}
 \usage{
 BioCircos(message, genome = "hg19", yChr = TRUE,
-  genomeFillColor = "Spectral", width = NULL, height = NULL,
-  elementId = NULL, ...)
+  genomeFillColor = "Spectral", chrPad = 0.04, displayGenomeBorder = TRUE,
+  genomeBorderColor = "#000", genomeBorderSize = 0.5, width = NULL,
+  height = NULL, elementId = NULL, ...)
 }
 \arguments{
 \item{message}{A message to display.}
@@ -19,6 +20,11 @@ the chromosomes 1 to 22 and the sexual chromosomes according to the hg19 referen
 \item{genomeFillColor}{The color to display in each chromosome. Can be a RColorBrewer palette name used to
 generate one color per chromosome, or a character or vector of characters stating RGB values in hexadecimal
 format or base R colors. If the vector is shorter than the reference genome, values will be repeated.}
+
+\item{chrPad}{Distance between chromosomes.}
+
+\item{displayGenomeBorder, genomeBorderColor, genomeBorderSize}{Should the reference genome have borders?
+If yes specify the color, in RGB hexadecimal format, and the thickness.}
 
 \item{width, height}{Must be a valid CSS unit (like \code{'100\%'},
 \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
