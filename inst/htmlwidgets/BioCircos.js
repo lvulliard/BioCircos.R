@@ -8,40 +8,28 @@ HTMLWidgets.widget({
 
     // TODO: define shared variables for this instance
 
+    function objToArray(objectLiteral) {
+      var piece1 = Object.keys(objectLiteral);
+      var piece2 = Object.values(objectLiteral);
+      var result = [];
+      for (var i = 0; i < piece1.length; i++) {
+        result.push([piece1[i], piece2[i]])
+      }
+      return result;
+    }
+
+
     return {
 
       renderValue: function(x) {
 
-        // TODO: code to render the widget, e.g.
-        el.innerText = x.message;
-        d3.selectAll("p").style("color", "red");
+        opts = x // Rename variable
 
-        var BioCircosGenome = [
-           ["1" , 249250621],
-           ["2" , 243199373],
-           ["3" , 198022430],
-           ["4" , 191154276],
-           ["5" , 180915260],
-           ["6" , 171115067],
-           ["7" , 159138663],
-           ["8" , 146364022],
-           ["9" , 141213431],
-           ["10" , 135534747],
-           ["11" , 135006516],
-           ["12" , 133851895],
-           ["13" , 115169878],
-           ["14" , 107349540],
-           ["15" , 102531392],
-           ["16" , 90354753],
-           ["17" , 81195210],
-           ["18" , 78077248],
-           ["19" , 59128983],
-           ["20" , 63025520],
-           ["21" , 48129895],
-           ["22" , 51304566],
-           ["X" , 155270560],
-           ["Y" , 59373566]
-        ];
+        el.innerText = opts.message; // Display input message
+        
+        d3.selectAll("p").style("color", "red"); // D3: paragraphs are now written in red
+
+        var BioCircosGenome = objToArray(opts.genome);
 
         var maxRadius = Math.min(height, width)/2;
 

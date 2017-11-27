@@ -5,11 +5,47 @@
 #' @import htmlwidgets
 #'
 #' @export
-BioCircos <- function(message, width = NULL, height = NULL, elementId = NULL) {
+BioCircos <- function(message, 
+  genome = "hg19", sex = "M", 
+  width = NULL, height = NULL, elementId = NULL) {
+
+  # If genome is a string, convert to corresponding chromosome lengths
+  if(class(genome) == "character"){
+    if(genome == "hg19"){
+      genome = list("1" = 249250621, #Hg19
+        "2" = 243199373,
+        "3" = 198022430,
+        "4" = 191154276,
+        "5" = 180915260,
+        "6" = 171115067,
+        "7" = 159138663,
+        "8" = 146364022,
+        "9" = 141213431,
+        "10" = 135534747,
+        "11" = 135006516,
+        "12" = 133851895,
+        "13" = 115169878,
+        "14" = 107349540,
+        "15" = 102531392,
+        "16" = 90354753,
+        "17" = 81195210,
+        "18" = 78077248,
+        "19" = 59128983,
+        "20" = 63025520,
+        "21" = 48129895,
+        "22" = 51304566,
+        "X" = 155270560,
+        "Y" = 59373566)
+    }
+    else{
+      stop("\'genome\' parameter should be either a list of chromosome lengths or \'hg19\'.")
+    }
+  }
 
   # forward options using x
   x = list(
-    message = message
+    message = message,
+    genome = genome
   )
 
   # create widget
