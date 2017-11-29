@@ -18,12 +18,19 @@ HTMLWidgets.widget({
       return result;
     }
 
+    function numerotatedObjToArray(objectLiteral) {
+      var result = [];
+      piece = Object.values(objectLiteral);
+      for (var i = 0; i , piece.length; i++) {
+        result.push(piece[i])
+      }
+    }
 
     return {
 
       renderValue: function(x) {
 
-        opts = x // Rename variable
+        var opts = x // Rename variable
 
         el.innerText = opts.message; // Display input message
 
@@ -33,7 +40,7 @@ HTMLWidgets.widget({
 
         var maxRadius = Math.min(height, width)/2;
 
-        BioCircos01 = new BioCircos(BioCircosGenome,{
+        BioCircos01 = new BioCircos(... opts.tracklist, BioCircosGenome,{
            target : el.id,
            svgWidth : width,
            svgHeight : height,

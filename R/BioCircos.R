@@ -4,6 +4,8 @@
 #'
 #' @import htmlwidgets
 #' @import RColorBrewer
+#' @import plyr
+#' @import jsonlite
 #'
 #' @export
 
@@ -12,6 +14,7 @@
 #' Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
 #' 
 #' @param message A message to display.
+#' @param tracks A list of tracks to display.
 #' @param genome A list of chromosome lengths to be used as reference for the vizualization or 'hg19' to use
 #'  the chromosomes 1 to 22 and the sexual chromosomes according to the hg19 reference.
 #' @param yChr A logical stating if the Y chromosome should be displayed. Used only when genome is set to 'hg19'.
@@ -37,7 +40,7 @@
 #' @param ... Ignored
 #' 
 #' @export
-BioCircos <- function(message, 
+BioCircos <- function(message, tracklist,
   genome = "hg19", yChr = TRUE,
   genomeFillColor = "Spectral",
   chrPad = 0.04, 
@@ -104,6 +107,7 @@ BioCircos <- function(message,
   # forward options using x
   x = list(
     message = message,
+    tracklist = tracklist,
     genome = genome,
     genomeFillColor = genomeFillColor,
     chrPad = chrPad, 
@@ -160,4 +164,55 @@ BioCircosOutput <- function(outputId, width = '100%', height = '400px'){
 renderBioCircos <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   htmlwidgets::shinyRenderWidget(expr, BioCircosOutput, env, quoted = TRUE)
+}
+
+#' Create a track with SNPs to be added to a BioCircos tracklist
+#'
+#' SNPs are defined by genomic coordinates and associated with a numerical value
+#' 
+#' @param tracklist The list of tracks of your BioCircos visualization.
+#' 
+#' @param trackname The name of the new track.
+#' 
+#' @param chromosomes A vector containing the chromosomes on which each SNP are found.
+#'  Values should match the chromosome names given in the genome parameter of the BioCircos function.
+#' @param positions A vector containing the coordinates on which each SNP are found.
+#'  Values should be inferior to the chromosome lengths given in the genome parameter of the BioCircos function.
+#' @param values A vector of numerical values associated with each SNPs, used to determine the 
+#'  radial coordinates of each point on the visualization.
+#' 
+#' @export
+BioCircosSNPTrack <- function(trackname, chromosomes, positions, values){
+  track1 = paste("SNP", trackname, sep="_")
+  track2 = list(maxRadius = 120, minRadius = 100, 
+    SNPFillColor = "#9400D3",
+    PointType = "circle",
+    circleSize = 2,
+    rectWidth = 2,
+    rectHeight = 2)
+  tabSNP = rbind(chromosomes, positions, values, "#40B9D4", "rs603424")
+  rownames(tabSNP) = c("chr", "pos", "value", "color", "des")
+  track3 = unname(alply(tabSNP, 2, as.list))
+  return(list(track1, track2, track3))
+}
+
+#' Create a list of BioCircos tracks
+#'
+#' This allows the use of the '+' operator on these lists
+#' 
+#' @name BioCircosTracklist
+#' 
+#' @export
+BioCircosTracklist <- function(){
+  x = list()
+  class(x) <- c("BioCircosTracklist")
+    return(x)
+}
+
+#' @rdname BioCircosTracklist
+#' @export
+"+.BioCircosTracklist" <- function(x,...) {
+  x <- append(x,list(...))
+  class(x) <- c("BioCircosTracklist")
+  return(x)
 }

@@ -4,7 +4,7 @@
 \alias{BioCircos}
 \title{BioCircos}
 \usage{
-BioCircos(message, genome = "hg19", yChr = TRUE,
+BioCircos(message, tracklist, genome = "hg19", yChr = TRUE,
   genomeFillColor = "Spectral", chrPad = 0.04, displayGenomeBorder = TRUE,
   genomeBorderColor = "#000", genomeBorderSize = 0.5,
   genomeTicksDisplay = TRUE, genomeTicksLen = 5,
@@ -43,6 +43,8 @@ and radius shifts for the label texts can be added}
 string and have \code{'px'} appended.}
 
 \item{...}{Ignored}
+
+\item{tracks}{A list of tracks to display.}
 }
 \description{
 Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
