@@ -13,7 +13,6 @@
 #'
 #' Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
 #' 
-#' @param message A message to display.
 #' @param tracks A list of tracks to display.
 #' @param genome A list of chromosome lengths to be used as reference for the vizualization or 'hg19' to use
 #'  the chromosomes 1 to 22 and the sexual chromosomes according to the hg19 reference.
@@ -58,7 +57,7 @@
 #' @param ... Ignored
 #' 
 #' @export
-BioCircos <- function(message, tracklist,
+BioCircos <- function(tracklist,
   genome = "hg19", yChr = TRUE,
   genomeFillColor = "Spectral",
   chrPad = 0.04, 
@@ -336,6 +335,47 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
     rectHeight = 2)
   tabSNP = suppressWarnings(rbind(chromosomes, positions, values, colors, labels))
   rownames(tabSNP) = c("chr", "pos", "value", "color", "des")
+  track3 = unname(alply(tabSNP, 2, as.list))
+
+  track = BioCircosTracklist() + list(list(track1, track2, track3))
+  return(track)
+}
+
+#' Create a track with arcs to be added to a BioCircos tracklist
+#'
+#' Arcs are defined by beginning and ending genomic coordinates
+#' 
+#' @param trackname The name of the new track.
+#' 
+#' @param chromosomes A vector containing the chromosomes on which each arcs are found.
+#'  Values should match the chromosome names given in the genome parameter of the BioCircos function.
+#' @param starts,ends Vectors containing the coordinates on which each arcs begin or end.
+#'  Values should be inferior to the chromosome lengths given in the genome parameter of the BioCircos function.
+#' 
+#' @param colors The colors for each arc. Can be a RColorBrewer palette name used to
+#'  generate one color per arc, or a character object or vector of character objects stating RGB values in hexadecimal
+#'  format or base R colors. If the vector is shorter than the number of arcs, values will be repeated.
+#' @param labels One or multiple character objects to label each arc.
+#' 
+#' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
+#' 
+#' @param ... Ignored
+#' 
+#' @export
+BioCircosArcTrack <- function(trackname, chromosomes, starts, ends,
+  colors = "#40B9D4", labels = "",
+  maxRadius = 0.9, minRadius = 0.5, ...){
+  
+  # If colors is a palette, create corresponding color vector
+  colors = .BioCircosColorCheck(colors, length(starts), "colors")
+
+  track1 = paste("ARC", trackname, sep="_")
+  track2 = list(outerRadius = maxRadius - 8/7, innerRadius = minRadius- 1) # In JS lib the innerRadius and outerRadius are
+  # based on the inner and outer radii of the chromosome. Here we convert the arc coordinates to percentage of the space
+  # inside the chromosome, based on the assumption that the inner and outer radii of the chromosome are respectively at 70
+  # and 80 percents of the widget minimal dimension. The conversion to absolute values is performed on the JavaScript side. 
+  tabSNP = suppressWarnings(rbind(chromosomes, starts, ends, colors, labels))
+  rownames(tabSNP) = c("chr", "start", "end", "color", "des")
   track3 = unname(alply(tabSNP, 2, as.list))
 
   track = BioCircosTracklist() + list(list(track1, track2, track3))

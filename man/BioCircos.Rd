@@ -4,7 +4,7 @@
 \alias{BioCircos}
 \title{BioCircos}
 \usage{
-BioCircos(message, tracklist, genome = "hg19", yChr = TRUE,
+BioCircos(tracklist, genome = "hg19", yChr = TRUE,
   genomeFillColor = "Spectral", chrPad = 0.04, displayGenomeBorder = TRUE,
   genomeBorderColor = "#000", genomeBorderSize = 0.5,
   genomeTicksDisplay = TRUE, genomeTicksLen = 5,
@@ -23,8 +23,6 @@ BioCircos(message, tracklist, genome = "hg19", yChr = TRUE,
   width = NULL, height = NULL, elementId = NULL, ...)
 }
 \arguments{
-\item{message}{A message to display.}
-
 \item{genome}{A list of chromosome lengths to be used as reference for the vizualization or 'hg19' to use
 the chromosomes 1 to 22 and the sexual chromosomes according to the hg19 reference.}
 

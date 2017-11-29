@@ -20,12 +20,7 @@ HTMLWidgets.widget({
 
     return {
 
-      renderValue: function(x) {
-
-        var opts = x // Rename variable
-
-        el.innerText = opts.message; // Display input message
-
+      renderValue: function(opts) {
         d3.selectAll("p").style("color", "red"); // D3: paragraphs are now written in red
 
         var BioCircosGenome = objToArray(opts.genome);
@@ -38,6 +33,8 @@ HTMLWidgets.widget({
           opts.tracklist[i][1].minRadius *= 0.7*maxRadius
           opts.tracklist[i][1].BgouterRadius *= 0.7*maxRadius
           opts.tracklist[i][1].BginnerRadius *= 0.7*maxRadius
+          opts.tracklist[i][1].outerRadius *= 0.7*maxRadius
+          opts.tracklist[i][1].innerRadius *= 0.7*maxRadius
           opts.tracklist[i][1].x *= 0.7*maxRadius
           opts.tracklist[i][1].y *= 0.7*maxRadius
         }
