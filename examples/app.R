@@ -13,7 +13,7 @@ shinyUi <- fluidPage(
 shinyServer <- function(input, output) {
 	output$testBioCircos <- renderBioCircos({
 		tracks = BioCircosSNPTrack("testTrack1", as.character(rep(1:10,10)), round(runif(100, 1, 135534747)), 
-			runif(100, 0, 10), colors = "Spectral")
+			runif(100, 0, 10), colors = "Spectral", minRadius = 0.3, maxRadius = 0.5)
 		tracks = tracks + BioCircosSNPTrack("testTrack2", as.character(rep(1:15,5)), round(runif(75, 1, 102531392)), 
 			runif(75, 2, 12), colors = c("#FF0000", "#DD1111", "#BB2222", "#993333"))
 		BioCircos(input$testInput, tracks, genomeFillColor = "Spectral", yChr = T, chrPad = 0, displayGenomeBorder = F, 

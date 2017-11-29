@@ -5,7 +5,8 @@
 \title{Create a track with SNPs to be added to a BioCircos tracklist}
 \usage{
 BioCircosSNPTrack(trackname, chromosomes, positions, values,
-  colors = "#40B9D4", labels = "", ...)
+  colors = "#40B9D4", labels = "", maxRadius = 0.9, minRadius = 0.5,
+  ...)
 }
 \arguments{
 \item{trackname}{The name of the new track.}

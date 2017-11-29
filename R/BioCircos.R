@@ -174,13 +174,14 @@ renderBioCircos <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' 
 #' @export
 BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
-  colors = "#40B9D4", labels = "", ...){
+  colors = "#40B9D4", labels = "",
+  maxRadius = 0.9, minRadius = 0.5, ...){
   
   # If colors is a palette, create corresponding color vector
   colors = .BioCircosColorCheck(colors, length(positions), "colors")
 
   track1 = paste("SNP", trackname, sep="_")
-  track2 = list(maxRadius = 120, minRadius = 100, 
+  track2 = list(maxRadius = maxRadius, minRadius = minRadius, 
     SNPFillColor = "#9400D3",
     PointType = "circle",
     circleSize = 2,

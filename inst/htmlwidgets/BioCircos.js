@@ -6,7 +6,7 @@ HTMLWidgets.widget({
 
   factory: function(el, width, height) {
 
-    // TODO: define shared variables for this instance
+    // Define shared variables for this instance
 
     function objToArray(objectLiteral) {
       var piece1 = Object.keys(objectLiteral);
@@ -16,14 +16,6 @@ HTMLWidgets.widget({
         result.push([piece1[i], piece2[i]])
       }
       return result;
-    }
-
-    function numerotatedObjToArray(objectLiteral) {
-      var result = [];
-      piece = Object.values(objectLiteral);
-      for (var i = 0; i , piece.length; i++) {
-        result.push(piece[i])
-      }
     }
 
     return {
@@ -38,7 +30,13 @@ HTMLWidgets.widget({
 
         var BioCircosGenome = objToArray(opts.genome);
 
-        var maxRadius = Math.min(height, width)/2;
+        var maxRadius = Math.min(height, width)/2; // Compute maximal radial space
+
+        // Adapt the radii from relative to absolute values
+        for (var i = 0; i < opts.tracklist.length; i++) { // For each track
+          opts.tracklist[i][1].maxRadius *= 0.7*maxRadius
+          opts.tracklist[i][1].minRadius *= 0.7*maxRadius
+        }
 
         BioCircos01 = new BioCircos(... opts.tracklist, BioCircosGenome,{
            target : el.id,
@@ -82,7 +80,7 @@ HTMLWidgets.widget({
 
       resize: function(width, height) {
 
-        // TODO: code to re-render the widget with a new size
+        // code to re-render the widget with a new size
 
       }
 
