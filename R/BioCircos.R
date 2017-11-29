@@ -85,24 +85,8 @@ BioCircos <- function(message, tracklist,
     }
   }
 
-  # If genomeFillColor is a string, create corresponding palette
-  genomeFillColorError = "\'genomeFillColor\' parameter should be either a vector of chromosome colors or the name of a RColorBrewer brewer."
-  if(class(genomeFillColor) == "character"){
-    if((genomeFillColor %in% rownames(RColorBrewer::brewer.pal.info))&&(length(genomeFillColor) == 1)) { # RColorBrewer's brewer
-      genomeFillColor = grDevices::colorRampPalette(RColorBrewer::brewer.pal(8, genomeFillColor))(length(genome))
-    }
-    else if(!all(grepl("^#", genomeFillColor))){ # Not RGB values
-      if(all(genomeFillColor %in% colors())){
-        genomeFillColor = rgb(t(col2rgb(genomeFillColor))/255)
-      }
-      else{ # Unknown format
-        stop(genomeFillColorError)
-      }
-    }
-  }
-  else{
-      stop(genomeFillColorError)
-  }
+  # If genomeFillColor is a palette, create corresponding color vector
+  genomeFillColor = .BioCircosColorCheck(genomeFillColor, length(genome), "genomeFillColor")
 
   # forward options using x
   x = list(
@@ -186,9 +170,15 @@ renderBioCircos <- function(expr, env = parent.frame(), quoted = FALSE) {
 #'  format or base R colors. If the vector is shorter than the number of points, values will be repeated.
 #' @param labels One or multiple character objects to label each point.
 #' 
+#' @param ... Ignored
+#' 
 #' @export
 BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
-  colors = "#40B9D4", labels = ""){
+  colors = "#40B9D4", labels = "", ...){
+  
+  # If colors is a palette, create corresponding color vector
+  colors = .BioCircosColorCheck(colors, length(positions), "colors")
+
   track1 = paste("SNP", trackname, sep="_")
   track2 = list(maxRadius = 120, minRadius = 100, 
     SNPFillColor = "#9400D3",
@@ -199,6 +189,7 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
   tabSNP = rbind(chromosomes, positions, values, colors, labels)
   rownames(tabSNP) = c("chr", "pos", "value", "color", "des")
   track3 = unname(alply(tabSNP, 2, as.list))
+
   track = BioCircosTracklist() + list(list(track1, track2, track3))
   return(track)
 }
@@ -224,4 +215,27 @@ BioCircosTracklist <- function(){
     class(x) <- c("BioCircosTracklist")
   }
   return(x)
+}
+
+.BioCircosColorCheck <- function(colVar, colLength, varName = "Color") {
+# If genomeFillColor is a string, create corresponding palette
+  colorError = paste0("\'", varName, 
+    "\' parameter should be either a vector of chromosome colors or the name of a RColorBrewer brewer.")
+  if(class(colVar) == "character"){
+    if((colVar %in% rownames(RColorBrewer::brewer.pal.info))&&(length(colVar) == 1)) { # RColorBrewer's brewer
+      colVar = grDevices::colorRampPalette(RColorBrewer::brewer.pal(8, colVar))(colLength)
+    }
+    else if(!all(grepl("^#", colVar))){ # Not RGB values
+      if(all(colVar %in% colors())){
+        colVar = rgb(t(col2rgb(colVar))/255)
+      }
+      else{ # Unknown format
+        stop(colorError)
+      }
+    }
+  }
+  else{
+      stop(colorError)
+  }
+  return(colVar)
 }
