@@ -23,6 +23,10 @@ HTMLWidgets.widget({
       renderValue: function(opts) {
         d3.selectAll("p").style("color", "red"); // D3: paragraphs are now written in red
 
+        console.log(d3.select(el.id))        
+        console.log(d3.select(el.id).selectAll("svg"))
+        d3.select(el.id).selectAll("svg").remove()
+
         var BioCircosGenome = objToArray(opts.genome);
 
         var maxRadius = Math.min(height, width)/2; // Compute maximal radial space
