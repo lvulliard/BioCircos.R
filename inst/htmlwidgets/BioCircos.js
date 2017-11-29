@@ -23,9 +23,8 @@ HTMLWidgets.widget({
       renderValue: function(opts) {
         d3.selectAll("p").style("color", "red"); // D3: paragraphs are now written in red
 
-        console.log(d3.select(el.id))        
-        console.log(d3.select(el.id).selectAll("svg"))
-        d3.select(el.id).selectAll("svg").remove()
+        // Remove previous occurences of plots in the <div> if any
+        d3.select("#"+el.id).selectAll("svg").remove()
 
         var BioCircosGenome = objToArray(opts.genome);
 
