@@ -36,6 +36,8 @@ HTMLWidgets.widget({
         for (var i = 0; i < opts.tracklist.length; i++) { // For each track
           opts.tracklist[i][1].maxRadius *= 0.7*maxRadius
           opts.tracklist[i][1].minRadius *= 0.7*maxRadius
+          opts.tracklist[i][1].BgouterRadius *= 0.7*maxRadius
+          opts.tracklist[i][1].BginnerRadius *= 0.7*maxRadius
         }
 
         BioCircos01 = new BioCircos(... opts.tracklist, BioCircosGenome,{

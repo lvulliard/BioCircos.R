@@ -2,6 +2,7 @@
 
 S3method("+",BioCircosTracklist)
 export(BioCircos)
+export(BioCircosBackgroundTrack)
 export(BioCircosOutput)
 export(BioCircosSNPTrack)
 export(BioCircosTracklist)

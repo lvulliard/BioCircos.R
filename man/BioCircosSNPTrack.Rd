@@ -26,9 +26,9 @@ format or base R colors. If the vector is shorter than the number of points, val
 
 \item{labels}{One or multiple character objects to label each point.}
 
-\item{...}{Ignored}
+\item{minRadius, maxRadius}{Where the track should begin and end, in proportion of the inner radius of the plot.}
 
-\item{tracklist}{The list of tracks of your BioCircos visualization.}
+\item{...}{Ignored}
 }
 \description{
 SNPs are defined by genomic coordinates and associated with a numerical value

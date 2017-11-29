@@ -150,11 +150,36 @@ renderBioCircos <- function(expr, env = parent.frame(), quoted = FALSE) {
   htmlwidgets::shinyRenderWidget(expr, BioCircosOutput, env, quoted = TRUE)
 }
 
+#' Create a background track to be added to a BioCircos tracklist
+#'
+#' Simple background to display behind another track
+#' 
+#' @param trackname The name of the new track.
+#' 
+#' @param fillColors The color of the background element, in hexadecimal RGB format.
+#' @param borderColors The color of the background borders, in hexadecimal RGB format.
+#' 
+#' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
+#' @param borderSize The thickness of the background borders.
+#' 
+#' @param ... Ignored
+#' 
+#' @export
+BioCircosBackgroundTrack <- function(trackname, 
+  fillColors = "#EEEEFF", borderColors = "#000000",
+  maxRadius = 0.9, minRadius = 0.5, borderSize = 0.3, ...){
+  track1 = paste("BACKGROUND", trackname, sep="_")
+  track2 = list(BgouterRadius = maxRadius, BginnerRadius = minRadius, 
+    BgFillColor = fillColors,
+    BgborderColor = borderColors,
+    BgborderSize = borderSize)
+  track = BioCircosTracklist() + list(list(track1, track2))
+  return(track)
+}
+
 #' Create a track with SNPs to be added to a BioCircos tracklist
 #'
 #' SNPs are defined by genomic coordinates and associated with a numerical value
-#' 
-#' @param tracklist The list of tracks of your BioCircos visualization.
 #' 
 #' @param trackname The name of the new track.
 #' 
@@ -169,6 +194,8 @@ renderBioCircos <- function(expr, env = parent.frame(), quoted = FALSE) {
 #'  generate one color per point, or a character object or vector of character objects stating RGB values in hexadecimal
 #'  format or base R colors. If the vector is shorter than the number of points, values will be repeated.
 #' @param labels One or multiple character objects to label each point.
+#' 
+#' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
 #' 
 #' @param ... Ignored
 #' 
@@ -194,6 +221,7 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
   track = BioCircosTracklist() + list(list(track1, track2, track3))
   return(track)
 }
+
 
 #' Create a list of BioCircos tracks
 #'
