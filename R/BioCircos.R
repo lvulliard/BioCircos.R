@@ -35,6 +35,8 @@
 #' 
 #' @param zoom Is zooming and moving in the visualization allowed?
 #' 
+#' @param TEXTModuleDragEvent Are text annotations draggable?
+#' 
 #' @param SNPMouseOverDisplay Display the tooltip when mouse hover on a SNP point.
 #' @param SNPMouseOverColor Color of the SNP point when hovered by the mouse, in hexadecimal RGB format.
 #' @param SNPMouseOverCircleSize Size of the SNP point when hovered by the mouse.
@@ -65,7 +67,7 @@ BioCircos <- function(message, tracklist,
   genomeTicksTextSize = 10, genomeTicksTextColor = "#000", genomeTicksScale = 30000000,
   genomeLabelDisplay = TRUE, genomeLabelTextSize = 15, genomeLabelTextColor = "#000",
   genomeLabelDx = 0.028, genomeLabelDy = "-0.55em",
-  zoom = TRUE,
+  zoom = TRUE, TEXTModuleDragEvent = FALSE,
   SNPMouseOverDisplay = TRUE, SNPMouseOverColor = "#FF0000", SNPMouseOverCircleSize = 3,
   SNPMouseOverCircleOpacity = 0.9,
   SNPMouseOutDisplay = TRUE, SNPMouseOutColor = "none",
@@ -194,7 +196,8 @@ BioCircos <- function(message, tracklist,
     SNPMouseOverTooltipsHtml04 =  SNPMouseOverTooltipsHtml04,
     SNPMouseOverTooltipsHtml05 =  SNPMouseOverTooltipsHtml05,
     SNPMouseOverTooltipsBorderWidth = 0,
-    zoom = zoom
+    zoom = zoom,
+    TEXTModuleDragEvent = TEXTModuleDragEvent
   )
 
   # create widget

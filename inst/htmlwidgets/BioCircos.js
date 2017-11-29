@@ -139,7 +139,8 @@ HTMLWidgets.widget({
             textColor : opts.genomeLabelTextColor,
             dx : opts.genomeLabelDx,
             dy : opts.genomeLabelDy
-          }
+          },
+          TEXTModuleDragEvent : opts.TEXTModuleDragEvent
         });
 
         BioCircos01.draw_genome(BioCircos01.genomeLength);

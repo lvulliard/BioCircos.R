@@ -12,10 +12,11 @@ BioCircos(message, tracklist, genome = "hg19", yChr = TRUE,
   genomeTicksTextColor = "#000", genomeTicksScale = 3e+07,
   genomeLabelDisplay = TRUE, genomeLabelTextSize = 15,
   genomeLabelTextColor = "#000", genomeLabelDx = 0.028,
-  genomeLabelDy = "-0.55em", zoom = TRUE, SNPMouseOverDisplay = TRUE,
-  SNPMouseOverColor = "#FF0000", SNPMouseOverCircleSize = 3,
-  SNPMouseOverCircleOpacity = 0.9, SNPMouseOutDisplay = TRUE,
-  SNPMouseOutColor = "none", SNPMouseOverTooltipsHtml01 = "Chromosome: ",
+  genomeLabelDy = "-0.55em", zoom = TRUE, TEXTModuleDragEvent = FALSE,
+  SNPMouseOverDisplay = TRUE, SNPMouseOverColor = "#FF0000",
+  SNPMouseOverCircleSize = 3, SNPMouseOverCircleOpacity = 0.9,
+  SNPMouseOutDisplay = TRUE, SNPMouseOutColor = "none",
+  SNPMouseOverTooltipsHtml01 = "Chromosome: ",
   SNPMouseOverTooltipsHtml02 = "<br/>Position: ",
   SNPMouseOverTooltipsHtml03 = "<br/>Value: ",
   SNPMouseOverTooltipsHtml04 = "<br/>", SNPMouseOverTooltipsHtml05 = "",
@@ -45,6 +46,8 @@ size and color, and spaced by how many bases?}
 and radius shifts for the label texts can be added}
 
 \item{zoom}{Is zooming and moving in the visualization allowed?}
+
+\item{TEXTModuleDragEvent}{Are text annotations draggable?}
 
 \item{SNPMouseOverDisplay}{Display the tooltip when mouse hover on a SNP point.}
 
