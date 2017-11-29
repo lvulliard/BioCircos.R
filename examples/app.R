@@ -19,6 +19,7 @@ shinyServer <- function(input, output) {
 		tracks = tracks + BioCircosBackgroundTrack("testBGtrack1", minRadius = 0.3, maxRadius = 0.45,
 			borderColors = "#FFFFFF", borderSize = 0.6)		
 		tracks = tracks + BioCircosBackgroundTrack("testBGtrack2", borderColors = "#FFFFFF", fillColor = "#FFEEEE", borderSize = 0.6)
+		tracks = tracks + BioCircosTextTrack("testText", "Patient #61", weight = "lighter")
 		BioCircos(input$testInput, tracks, genomeFillColor = "Spectral", yChr = T, chrPad = 0, displayGenomeBorder = F, 
 			genomeTicksLen = 3, genomeTicksTextSize = 0, genomeTicksScale = 50000000,
 			genomeLabelTextSize = 18, genomeLabelDy = 0)

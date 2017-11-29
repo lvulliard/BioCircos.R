@@ -263,6 +263,37 @@ BioCircosBackgroundTrack <- function(trackname,
   return(track)
 }
 
+#' Create a Text track to be added to a BioCircos tracklist
+#'
+#' Simple text annotation displayed in the visualization
+#' 
+#' @param trackname The name of the new track.
+#' 
+#' @param text The text to be displayed.
+#' 
+#' @param x,y Coordinates of the lower left corner of the annotation, in proportion of the inner radius of the plot.
+#' @param size Font size.
+#' @param color Font color, in hexadecimal RGB format.
+#' @param weight Font weight. Can be "normal", "bold", "bolder" or "lighter".
+#' @param opacity Font opacity.
+#' 
+#' @param ... Ignored
+#' 
+#' @export
+BioCircosTextTrack <- function(trackname, text,
+  x = -0.15, y = 0, size = 20, weight = "bold", opacity = 1, color = "#000000", ...){
+  track1 = paste("TEXT", trackname, sep="_")
+  track2 = list(x = x,
+     y = y,
+     textSize = size,
+     textWeight = weight,
+     textColor = color,
+     textOpacity = opacity,
+     text = text)
+  track = BioCircosTracklist() + list(list(track1, track2))
+  return(track)
+}
+
 #' Create a track with SNPs to be added to a BioCircos tracklist
 #'
 #' SNPs are defined by genomic coordinates and associated with a numerical value
