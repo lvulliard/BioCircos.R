@@ -193,7 +193,8 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values){
   tabSNP = rbind(chromosomes, positions, values, "#40B9D4", "rs603424")
   rownames(tabSNP) = c("chr", "pos", "value", "color", "des")
   track3 = unname(alply(tabSNP, 2, as.list))
-  return(list(track1, track2, track3))
+  track = BioCircosTracklist() + list(list(track1, track2, track3))
+  return(track)
 }
 
 #' Create a list of BioCircos tracks
@@ -212,7 +213,9 @@ BioCircosTracklist <- function(){
 #' @rdname BioCircosTracklist
 #' @export
 "+.BioCircosTracklist" <- function(x,...) {
-  x <- append(x,list(...))
-  class(x) <- c("BioCircosTracklist")
+  x <- append(x,...)
+  if(class(x) != "BioCircosTracklist"){
+    class(x) <- c("BioCircosTracklist")
+  }
   return(x)
 }
