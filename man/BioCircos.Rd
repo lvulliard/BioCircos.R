@@ -24,7 +24,7 @@ the chromosomes 1 to 22 and the sexual chromosomes according to the hg19 referen
 \item{yChr}{A logical stating if the Y chromosome should be displayed. Used only when genome is set to 'hg19'.}
 
 \item{genomeFillColor}{The color to display in each chromosome. Can be a RColorBrewer palette name used to
-generate one color per chromosome, or a character or vector of characters stating RGB values in hexadecimal
+generate one color per chromosome, or a character object or vector of character objects stating RGB values in hexadecimal
 format or base R colors. If the vector is shorter than the reference genome, values will be repeated.}
 
 \item{chrPad}{Distance between chromosomes.}

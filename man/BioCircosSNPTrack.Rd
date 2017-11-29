@@ -4,7 +4,8 @@
 \alias{BioCircosSNPTrack}
 \title{Create a track with SNPs to be added to a BioCircos tracklist}
 \usage{
-BioCircosSNPTrack(trackname, chromosomes, positions, values)
+BioCircosSNPTrack(trackname, chromosomes, positions, values,
+  colors = "#40B9D4", labels = "")
 }
 \arguments{
 \item{trackname}{The name of the new track.}
@@ -17,6 +18,12 @@ Values should be inferior to the chromosome lengths given in the genome paramete
 
 \item{values}{A vector of numerical values associated with each SNPs, used to determine the 
 radial coordinates of each point on the visualization.}
+
+\item{colors}{The colors for each point. Can be a RColorBrewer palette name used to
+generate one color per point, or a character object or vector of character objects stating RGB values in hexadecimal
+format or base R colors. If the vector is shorter than the number of points, values will be repeated.}
+
+\item{labels}{One or multiple character objects to label each point.}
 
 \item{tracklist}{The list of tracks of your BioCircos visualization.}
 }

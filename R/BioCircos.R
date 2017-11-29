@@ -19,7 +19,7 @@
 #'  the chromosomes 1 to 22 and the sexual chromosomes according to the hg19 reference.
 #' @param yChr A logical stating if the Y chromosome should be displayed. Used only when genome is set to 'hg19'.
 #' @param genomeFillColor The color to display in each chromosome. Can be a RColorBrewer palette name used to
-#'  generate one color per chromosome, or a character or vector of characters stating RGB values in hexadecimal
+#'  generate one color per chromosome, or a character object or vector of character objects stating RGB values in hexadecimal
 #'  format or base R colors. If the vector is shorter than the reference genome, values will be repeated.
 #' @param chrPad Distance between chromosomes.
 #' 
@@ -181,8 +181,14 @@ renderBioCircos <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @param values A vector of numerical values associated with each SNPs, used to determine the 
 #'  radial coordinates of each point on the visualization.
 #' 
+#' @param colors The colors for each point. Can be a RColorBrewer palette name used to
+#'  generate one color per point, or a character object or vector of character objects stating RGB values in hexadecimal
+#'  format or base R colors. If the vector is shorter than the number of points, values will be repeated.
+#' @param labels One or multiple character objects to label each point.
+#' 
 #' @export
-BioCircosSNPTrack <- function(trackname, chromosomes, positions, values){
+BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
+  colors = "#40B9D4", labels = ""){
   track1 = paste("SNP", trackname, sep="_")
   track2 = list(maxRadius = 120, minRadius = 100, 
     SNPFillColor = "#9400D3",
@@ -190,7 +196,7 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values){
     circleSize = 2,
     rectWidth = 2,
     rectHeight = 2)
-  tabSNP = rbind(chromosomes, positions, values, "#40B9D4", "rs603424")
+  tabSNP = rbind(chromosomes, positions, values, colors, labels)
   rownames(tabSNP) = c("chr", "pos", "value", "color", "des")
   track3 = unname(alply(tabSNP, 2, as.list))
   track = BioCircosTracklist() + list(list(track1, track2, track3))

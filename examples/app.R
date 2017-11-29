@@ -5,7 +5,7 @@ library(BioCircos)
 library(shiny)
 
 shinyUi <- fluidPage(
-	mainPanel(p("BioCircos output:"),BioCircosOutput("testBioCircos")),
+	mainPanel(p("BioCircos output:"),BioCircosOutput("testBioCircos", height = 600)),
 	sidebarPanel(textInput("testInput", "Your input:")),	
 	title = "BioCircos example"
 )
