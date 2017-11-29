@@ -33,6 +33,22 @@
 #'  Should the reference genome have labels on each chromosome, in which font size and color? Moreover rotation
 #'  and radius shifts for the label texts can be added
 #' 
+#' @param zoom Is zooming and moving in the visualization allowed?
+#' 
+#' @param SNPMouseOverDisplay Display the tooltip when mouse hover on a SNP point.
+#' @param SNPMouseOverColor Color of the SNP point when hovered by the mouse, in hexadecimal RGB format.
+#' @param SNPMouseOverCircleSize Size of the SNP point when hovered by the mouse.
+#' 
+#' @param SNPMouseOutDisplay Hide tooltip when mouse is not hovering a SNP point anymore.
+#' @param SNPMouseOutColor Color of the SNP point when mouse is not hovering a SNP point anymore, in hexadecimal
+#'  RGB format. To revert back to original color, use the value "none".
+#' 
+#' @param SNPMouseOverTooltipsHtml01 Label displayed in tooltip in first position, before chromosome number.
+#' @param SNPMouseOverTooltipsHtml02 Label displayed in tooltip in second position, before genomic position.
+#' @param SNPMouseOverTooltipsHtml03 Label displayed in tooltip in third position, before value.
+#' @param SNPMouseOverTooltipsHtml04 Label displayed in tooltip in fourth position, before SNP labels if any.
+#' @param SNPMouseOverTooltipsHtml05 Label displayed in tooltip in fifth position, after SNP labels if any.
+#' 
 #' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 #'   string and have \code{'px'} appended.
@@ -49,6 +65,12 @@ BioCircos <- function(message, tracklist,
   genomeTicksTextSize = 10, genomeTicksTextColor = "#000", genomeTicksScale = 30000000,
   genomeLabelDisplay = TRUE, genomeLabelTextSize = 15, genomeLabelTextColor = "#000",
   genomeLabelDx = 0.028, genomeLabelDy = "-0.55em",
+  zoom = TRUE,
+  SNPMouseOverDisplay = TRUE, SNPMouseOverColor = "#FF0000", SNPMouseOverCircleSize = 3,
+  SNPMouseOverCircleOpacity = 0.9,
+  SNPMouseOutDisplay = TRUE, SNPMouseOutColor = "none",
+  SNPMouseOverTooltipsHtml01 = "Chromosome: ", SNPMouseOverTooltipsHtml02 = "<br/>Position: ",
+  SNPMouseOverTooltipsHtml03 = "<br/>Value: ", SNPMouseOverTooltipsHtml04 = "<br/>",  SNPMouseOverTooltipsHtml05 = "",
   width = NULL, height = NULL, elementId = NULL, ...) {
 
   # If genome is a string, convert to corresponding chromosome lengths
@@ -108,7 +130,71 @@ BioCircos <- function(message, tracklist,
     genomeLabelTextSize = genomeLabelTextSize, 
     genomeLabelTextColor = genomeLabelTextColor,
     genomeLabelDx = genomeLabelDx, 
-    genomeLabelDy = genomeLabelDy 
+    genomeLabelDy = genomeLabelDy,
+    SNPMouseEvent = T,
+    SNPMouseClickDisplay = F,
+    SNPMouseClickColor = "red",
+    SNPMouseClickCircleSize = 4,
+    SNPMouseClickCircleOpacity = 1.0,
+    SNPMouseClickCircleStrokeColor = "#F26223",
+    SNPMouseClickCircleStrokeWidth = 0,
+    SNPMouseClickTextFromData = "fourth",
+    SNPMouseClickTextOpacity = 1.0,
+    SNPMouseClickTextColor = "red",
+    SNPMouseClickTextSize = 8,
+    SNPMouseClickTextPostionX = 1.0,
+    SNPMouseClickTextPostionY = 10.0,
+    SNPMouseClickTextDrag = T,
+    SNPMouseDownDisplay = F,
+    SNPMouseDownColor = "green",
+    SNPMouseDownCircleSize = 4,
+    SNPMouseDownCircleOpacity = 1.0,
+    SNPMouseDownCircleStrokeColor = "#F26223",
+    SNPMouseDownCircleStrokeWidth = 0,
+    SNPMouseEnterDisplay = F,
+    SNPMouseEnterColor = "yellow",
+    SNPMouseEnterCircleSize = 4,
+    SNPMouseEnterCircleOpacity = 1.0,
+    SNPMouseEnterCircleStrokeColor = "#F26223",
+    SNPMouseEnterCircleStrokeWidth = 0,
+    SNPMouseLeaveDisplay = F,
+    SNPMouseLeaveColor = "pink",
+    SNPMouseLeaveCircleSize = 4,
+    SNPMouseLeaveCircleOpacity = 1.0,
+    SNPMouseLeaveCircleStrokeColor = "#F26223",
+    SNPMouseLeaveCircleStrokeWidth = 0,
+    SNPMouseMoveDisplay = F,
+    SNPMouseMoveColor = "red",
+    SNPMouseMoveCircleSize = 2,
+    SNPMouseMoveCircleOpacity = 1.0,
+    SNPMouseMoveCircleStrokeColor = "#F26223",
+    SNPMouseMoveCircleStrokeWidth = 0,
+    SNPMouseOutDisplay = SNPMouseOutDisplay,
+    SNPMouseOutAnimationTime = 500,
+    SNPMouseOutColor = SNPMouseOutColor,
+    SNPMouseOutCircleSize = 2,
+    SNPMouseOutCircleOpacity = 1.0,
+    SNPMouseOutCircleStrokeColor = "red",
+    SNPMouseOutCircleStrokeWidth = 0,
+    SNPMouseUpDisplay = F,
+    SNPMouseUpColor = "grey",
+    SNPMouseUpCircleSize = 4,
+    SNPMouseUpCircleOpacity = 1.0,
+    SNPMouseUpCircleStrokeColor = "#F26223",
+    SNPMouseUpCircleStrokeWidth = 0,
+    SNPMouseOverDisplay = SNPMouseOverDisplay,
+    SNPMouseOverColor = SNPMouseOverColor,
+    SNPMouseOverCircleSize = SNPMouseOverCircleSize,
+    SNPMouseOverCircleOpacity = SNPMouseOverCircleOpacity,
+    SNPMouseOverCircleStrokeColor = "#F26223",
+    SNPMouseOverCircleStrokeWidth = 1,
+    SNPMouseOverTooltipsHtml01 =  SNPMouseOverTooltipsHtml01,
+    SNPMouseOverTooltipsHtml02 =  SNPMouseOverTooltipsHtml02,
+    SNPMouseOverTooltipsHtml03 =  SNPMouseOverTooltipsHtml03,
+    SNPMouseOverTooltipsHtml04 =  SNPMouseOverTooltipsHtml04,
+    SNPMouseOverTooltipsHtml05 =  SNPMouseOverTooltipsHtml05,
+    SNPMouseOverTooltipsBorderWidth = 0,
+    zoom = zoom
   )
 
   # create widget
@@ -214,7 +300,7 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
     circleSize = 2,
     rectWidth = 2,
     rectHeight = 2)
-  tabSNP = rbind(chromosomes, positions, values, colors, labels)
+  tabSNP = suppressWarnings(rbind(chromosomes, positions, values, colors, labels))
   rownames(tabSNP) = c("chr", "pos", "value", "color", "des")
   track3 = unname(alply(tabSNP, 2, as.list))
 

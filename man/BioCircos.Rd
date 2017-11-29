@@ -12,8 +12,14 @@ BioCircos(message, tracklist, genome = "hg19", yChr = TRUE,
   genomeTicksTextColor = "#000", genomeTicksScale = 3e+07,
   genomeLabelDisplay = TRUE, genomeLabelTextSize = 15,
   genomeLabelTextColor = "#000", genomeLabelDx = 0.028,
-  genomeLabelDy = "-0.55em", width = NULL, height = NULL,
-  elementId = NULL, ...)
+  genomeLabelDy = "-0.55em", zoom = TRUE, SNPMouseOverDisplay = TRUE,
+  SNPMouseOverColor = "#FF0000", SNPMouseOverCircleSize = 3,
+  SNPMouseOverCircleOpacity = 0.9, SNPMouseOutDisplay = TRUE,
+  SNPMouseOutColor = "none", SNPMouseOverTooltipsHtml01 = "Chromosome: ",
+  SNPMouseOverTooltipsHtml02 = "<br/>Position: ",
+  SNPMouseOverTooltipsHtml03 = "<br/>Value: ",
+  SNPMouseOverTooltipsHtml04 = "<br/>", SNPMouseOverTooltipsHtml05 = "",
+  width = NULL, height = NULL, elementId = NULL, ...)
 }
 \arguments{
 \item{message}{A message to display.}
@@ -37,6 +43,29 @@ size and color, and spaced by how many bases?}
 
 \item{genomeLabelDisplay, genomeLabelTextSize, genomeLabelTextColor, genomeLabelDx, genomeLabelDy}{Should the reference genome have labels on each chromosome, in which font size and color? Moreover rotation
 and radius shifts for the label texts can be added}
+
+\item{zoom}{Is zooming and moving in the visualization allowed?}
+
+\item{SNPMouseOverDisplay}{Display the tooltip when mouse hover on a SNP point.}
+
+\item{SNPMouseOverColor}{Color of the SNP point when hovered by the mouse, in hexadecimal RGB format.}
+
+\item{SNPMouseOverCircleSize}{Size of the SNP point when hovered by the mouse.}
+
+\item{SNPMouseOutDisplay}{Hide tooltip when mouse is not hovering a SNP point anymore.}
+
+\item{SNPMouseOutColor}{Color of the SNP point when mouse is not hovering a SNP point anymore, in hexadecimal
+RGB format. To revert back to original color, use the value "none".}
+
+\item{SNPMouseOverTooltipsHtml01}{Label displayed in tooltip in first position, before chromosome number.}
+
+\item{SNPMouseOverTooltipsHtml02}{Label displayed in tooltip in second position, before genomic position.}
+
+\item{SNPMouseOverTooltipsHtml03}{Label displayed in tooltip in third position, before value.}
+
+\item{SNPMouseOverTooltipsHtml04}{Label displayed in tooltip in fourth position, before SNP labels if any.}
+
+\item{SNPMouseOverTooltipsHtml05}{Label displayed in tooltip in fifth position, after SNP labels if any.}
 
 \item{width, height}{Must be a valid CSS unit (like \code{'100\%'},
 \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a

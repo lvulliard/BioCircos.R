@@ -41,40 +41,103 @@ HTMLWidgets.widget({
         }
 
         BioCircos01 = new BioCircos(... opts.tracklist, BioCircosGenome,{
-           target : el.id,
-           svgWidth : width,
-           svgHeight : height,
-           chrPad : opts.chrPad,
-           innerRadius: 0.7*maxRadius,
-           outerRadius: 0.8*maxRadius,
-           zoom : true,
-           genomeFillColor: opts.genomeFillColor,
-           CNVMouseOnDisplay : true,
-           HEATMAPMouseOnDisplay : true,
-           SNPMouseOnDisplay : true,
-           FUSIONMouseOnDisplay: true,
-           HISTOGRAMMouseOnDisplay: true,
-           LINEMouseOnDisplay: true,
-           genomeBorder : {
-              display : opts.displayGenomeBorder,
-              borderColor : opts.genomeBorderColor,
-              borderSize : opts.genomeBorderSize
-           },
-           ticks : {
-              display : opts.genomeTicksDisplay,
-              len : opts.genomeTicksLen,
-              color : opts.genomeTicksColor,
-              textSize : opts.genomeTicksTextSize,
-              textColor : opts.genomeTicksTextColor,
-              scale : opts.genomeTicksScale
-           },
-           genomeLabel : {
-              display : opts.genomeLabelDisplay,
-              textSize : opts.genomeLabelTextSize,
-              textColor : opts.genomeLabelTextColor,
-              dx : opts.genomeLabelDx,
-              dy : opts.genomeLabelDy
-           }
+          // Main configuration
+          target : el.id,
+          svgWidth : width,
+          svgHeight : height,
+          chrPad : opts.chrPad,
+          innerRadius: 0.7*maxRadius,
+          outerRadius: 0.8*maxRadius,
+          zoom : opts.zoom, // Allow zoom and translation
+
+          // SNP interaction options
+          SNPMouseEvent : opts.SNPMouseEvent,
+          SNPMouseClickDisplay : opts.SNPMouseClickDisplay,
+          SNPMouseClickColor : opts.SNPMouseClickColor,
+          SNPMouseClickCircleSize : opts.SNPMouseClickCircleSize,
+          SNPMouseClickCircleOpacity : opts.SNPMouseClickCircleOpacity,
+          SNPMouseClickCircleStrokeColor : opts.SNPMouseClickCircleStrokeColor,
+          SNPMouseClickCircleStrokeWidth : opts.SNPMouseClickCircleStrokeWidth,
+          SNPMouseClickTextFromData : opts.SNPMouseClickTextFromData,
+          SNPMouseClickTextOpacity : opts.SNPMouseClickTextOpacity,
+          SNPMouseClickTextColor : opts.SNPMouseClickTextColor,
+          SNPMouseClickTextSize : opts.SNPMouseClickTextSize,
+          SNPMouseClickTextPostionX : opts.SNPMouseClickTextPostionX,
+          SNPMouseClickTextPostionY : opts.SNPMouseClickTextPostionY,
+          SNPMouseClickTextDrag : opts.SNPMouseClickTextDrag,
+          SNPMouseDownDisplay : opts.SNPMouseDownDisplay,
+          SNPMouseDownColor : opts.SNPMouseDownColor,
+          SNPMouseDownCircleSize : opts.SNPMouseDownCircleSize,
+          SNPMouseDownCircleOpacity : opts.SNPMouseDownCircleOpacity,
+          SNPMouseDownCircleStrokeColor : opts.SNPMouseDownCircleStrokeColor,
+          SNPMouseDownCircleStrokeWidth : opts.SNPMouseDownCircleStrokeWidth,
+          SNPMouseEnterDisplay : opts.SNPMouseEnterDisplay,
+          SNPMouseEnterColor : opts.SNPMouseEnterColor,
+          SNPMouseEnterCircleSize : opts.SNPMouseEnterCircleSize,
+          SNPMouseEnterCircleOpacity : opts.SNPMouseEnterCircleOpacity,
+          SNPMouseEnterCircleStrokeColor : opts.SNPMouseEnterCircleStrokeColor,
+          SNPMouseEnterCircleStrokeWidth : opts.SNPMouseEnterCircleStrokeWidth,
+          SNPMouseLeaveDisplay : opts.SNPMouseLeaveDisplay,
+          SNPMouseLeaveColor : opts.SNPMouseLeaveColor,
+          SNPMouseLeaveCircleSize : opts.SNPMouseLeaveCircleSize,
+          SNPMouseLeaveCircleOpacity : opts.SNPMouseLeaveCircleOpacity,
+          SNPMouseLeaveCircleStrokeColor : opts.SNPMouseLeaveCircleStrokeColor,
+          SNPMouseLeaveCircleStrokeWidth : opts.SNPMouseLeaveCircleStrokeWidth,
+          SNPMouseMoveDisplay : opts.SNPMouseMoveDisplay,
+          SNPMouseMoveColor : opts.SNPMouseMoveColor,
+          SNPMouseMoveCircleSize : opts.SNPMouseMoveCircleSize,
+          SNPMouseMoveCircleOpacity : opts.SNPMouseMoveCircleOpacity,
+          SNPMouseMoveCircleStrokeColor : opts.SNPMouseMoveCircleStrokeColor,
+          SNPMouseMoveCircleStrokeWidth : opts.SNPMouseMoveCircleStrokeWidth,
+          SNPMouseOutDisplay : opts.SNPMouseOutDisplay,
+          SNPMouseOutAnimationTime : opts.SNPMouseOutAnimationTime,
+          SNPMouseOutColor : opts.SNPMouseOutColor,
+          SNPMouseOutCircleSize : opts.SNPMouseOutCircleSize,
+          SNPMouseOutCircleOpacity : opts.SNPMouseOutCircleOpacity,
+          SNPMouseOutCircleStrokeColor : opts.SNPMouseOutCircleStrokeColor,
+          SNPMouseOutCircleStrokeWidth : opts.SNPMouseOutCircleStrokeWidth,
+          SNPMouseUpDisplay : opts.SNPMouseUpDisplay,
+          SNPMouseUpColor : opts.SNPMouseUpColor,
+          SNPMouseUpCircleSize : opts.SNPMouseUpCircleSize,
+          SNPMouseUpCircleOpacity : opts.SNPMouseUpCircleOpacity,
+          SNPMouseUpCircleStrokeColor : opts.SNPMouseUpCircleStrokeColor,
+          SNPMouseUpCircleStrokeWidth : opts.SNPMouseUpCircleStrokeWidth,
+          SNPMouseOverDisplay : opts.SNPMouseOverDisplay,
+          SNPMouseOverColor : opts.SNPMouseOverColor,
+          SNPMouseOverCircleSize : opts.SNPMouseOverCircleSize,
+          SNPMouseOverCircleOpacity : opts.SNPMouseOverCircleOpacity,
+          SNPMouseOverCircleStrokeColor : opts.SNPMouseOverCircleStrokeColor,
+          SNPMouseOverCircleStrokeWidth : opts.SNPMouseOverCircleStrokeWidth,
+
+          SNPMouseOverTooltipsHtml01 : opts.SNPMouseOverTooltipsHtml01,
+          SNPMouseOverTooltipsHtml02 : opts.SNPMouseOverTooltipsHtml02,
+          SNPMouseOverTooltipsHtml03 : opts.SNPMouseOverTooltipsHtml03,
+          SNPMouseOverTooltipsHtml04 : opts.SNPMouseOverTooltipsHtml04,
+          SNPMouseOverTooltipsHtml05 : opts.SNPMouseOverTooltipsHtml05,
+          SNPMouseOverTooltipsBorderWidth : opts.SNPMouseOverTooltipsBorderWidth,
+
+          // Genome options
+          genomeFillColor: opts.genomeFillColor,
+          genomeBorder : {
+            display : opts.displayGenomeBorder,
+            borderColor : opts.genomeBorderColor,
+            borderSize : opts.genomeBorderSize
+          },
+          ticks : {
+            display : opts.genomeTicksDisplay,
+            len : opts.genomeTicksLen,
+            color : opts.genomeTicksColor,
+            textSize : opts.genomeTicksTextSize,
+            textColor : opts.genomeTicksTextColor,
+            scale : opts.genomeTicksScale
+          },
+          genomeLabel : {
+            display : opts.genomeLabelDisplay,
+            textSize : opts.genomeLabelTextSize,
+            textColor : opts.genomeLabelTextColor,
+            dx : opts.genomeLabelDx,
+            dy : opts.genomeLabelDy
+          }
         });
 
         BioCircos01.draw_genome(BioCircos01.genomeLength);
