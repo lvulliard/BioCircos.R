@@ -393,13 +393,16 @@ BioCircosTextTrack <- function(trackname, text,
 #'  format or base R colors. If the vector is shorter than the number of points, values will be repeated.
 #' @param labels One or multiple character objects to label each point.
 #' 
+#' @param size The size of each point
+#' @param shape Shape of th points. Can be "circle" or "rect"
+#' 
 #' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
 #' 
 #' @param ... Ignored
 #' 
 #' @export
 BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
-  colors = "#40B9D4", labels = "",
+  colors = "#40B9D4", labels = "", size = 2, shape = "circle",
   maxRadius = 0.9, minRadius = 0.5, ...){
   
   # If colors is a palette, create corresponding color vector
@@ -408,10 +411,10 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
   track1 = paste("SNP", trackname, sep="_")
   track2 = list(maxRadius = maxRadius, minRadius = minRadius, 
     SNPFillColor = "#9400D3",
-    PointType = "circle",
-    circleSize = 2,
-    rectWidth = 2,
-    rectHeight = 2)
+    PointType = shape,
+    circleSize = size,
+    rectWidth = size,
+    rectHeight = size)
   tabSNP = suppressWarnings(rbind(chromosomes, positions, values, colors, labels))
   rownames(tabSNP) = c("chr", "pos", "value", "color", "des")
   track3 = unname(alply(tabSNP, 2, as.list))
