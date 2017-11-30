@@ -462,6 +462,44 @@ BioCircosArcTrack <- function(trackname, chromosomes, starts, ends,
 }
 
 
+#' Create an inner track with links to be added to a BioCircos tracklist
+#'
+#' Links are defined by beginning and ending genomic coordinates of the 2 regions to linked,
+#'  such as the positions linked in genomic fusions.
+#' 
+#' @param trackname The name of the new track.
+#' 
+#' @param gene1Chromosomes,gene1Starts,gene1Ends,gene1Names,gene2Chromosomes,gene2Starts,gene2Ends,gene2Names
+#'  Vectors with the chromosomes, genomic coordinates of beginning and end, and names of both genes to link.
+#'  Chromosomes and positions should respect the chromosome names and lengths given in the genome parameter of
+#'  the BioCircos function.
+#' 
+#' @param color The color for the links, in hexadecimal RGB format.
+#' @param width The thickness of the links.
+#' @param labels A vector of character objects to label each link.
+#' 
+#' @param maxRadius Where the track should end, in proportion of the inner radius of the plot.
+#' 
+#' @param ... Ignored
+#' 
+#' @export
+BioCircosLinkTrack <- function(trackname, gene1Chromosomes, gene1Starts, gene1Ends,
+  gene2Chromosomes, gene2Starts, gene2Ends, color = "#40B9D4", labels = "",
+  maxRadius = 0.4, width = "0.1em",
+  gene1Names = "", gene2Names = "", ...){
+  
+  track1 = paste("LINK", trackname, sep="_")
+  track2 = list(LinkRadius = maxRadius, LinkFillColor = color, LinkWidth = width)
+  tabSNP = suppressWarnings(rbind(labels, gene1Chromosomes, gene1Starts, gene1Ends, gene1Names, gene2Chromosomes,
+    gene2Starts, gene2Ends, gene2Names))
+  rownames(tabSNP) = c("fusion", "g1chr", "g1start", "g1end", "g1name", "g2chr", "g2start", "g2end", "g2name")
+  track3 = unname(alply(tabSNP, 2, as.list))
+
+  track = BioCircosTracklist() + list(list(track1, track2, track3))
+  return(track)
+}
+
+
 #' Create a list of BioCircos tracks
 #'
 #' This allows the use of the '+' operator on these lists

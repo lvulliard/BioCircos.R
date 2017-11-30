@@ -40,6 +40,7 @@ HTMLWidgets.widget({
           opts.tracklist[i][1].innerRadius *= 0.7*maxRadius
           opts.tracklist[i][1].x *= 0.7*maxRadius
           opts.tracklist[i][1].y *= 0.7*maxRadius
+          opts.tracklist[i][1].LinkRadius *= 0.7*maxRadius 
         }
 
         BioCircos01 = new BioCircos(... opts.tracklist, BioCircosGenome,{
