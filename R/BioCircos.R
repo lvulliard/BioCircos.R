@@ -49,6 +49,7 @@
 #' @param SNPMouseOverTooltipsHtml03 Label displayed in tooltip in third position, before value.
 #' @param SNPMouseOverTooltipsHtml04 Label displayed in tooltip in fourth position, before SNP labels if any.
 #' @param SNPMouseOverTooltipsHtml05 Label displayed in tooltip in fifth position, after SNP labels if any.
+#' @param SNPMouseOverTooltipsBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
 #' 
 #' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
@@ -72,6 +73,7 @@ BioCircos <- function(tracklist,
   SNPMouseOutDisplay = TRUE, SNPMouseOutColor = "none",
   SNPMouseOverTooltipsHtml01 = "Chromosome: ", SNPMouseOverTooltipsHtml02 = "<br/>Position: ",
   SNPMouseOverTooltipsHtml03 = "<br/>Value: ", SNPMouseOverTooltipsHtml04 = "<br/>",  SNPMouseOverTooltipsHtml05 = "",
+  SNPMouseOverTooltipsBorderWidth = "1px",
   width = NULL, height = NULL, elementId = NULL, ...) {
 
   # If genome is a string, convert to corresponding chromosome lengths
@@ -194,7 +196,7 @@ BioCircos <- function(tracklist,
     SNPMouseOverTooltipsHtml03 =  SNPMouseOverTooltipsHtml03,
     SNPMouseOverTooltipsHtml04 =  SNPMouseOverTooltipsHtml04,
     SNPMouseOverTooltipsHtml05 =  SNPMouseOverTooltipsHtml05,
-    SNPMouseOverTooltipsBorderWidth = 0,
+    SNPMouseOverTooltipsBorderWidth = SNPMouseOverTooltipsBorderWidth,
     zoom = zoom,
     TEXTModuleDragEvent = TEXTModuleDragEvent
   )
@@ -274,7 +276,7 @@ BioCircosBackgroundTrack <- function(trackname,
 #' @param text The text to be displayed.
 #' 
 #' @param x,y Coordinates of the lower left corner of the annotation, in proportion of the inner radius of the plot.
-#' @param size Font size.
+#' @param size Font size, with units specified (such as em or px).
 #' @param color Font color, in hexadecimal RGB format.
 #' @param weight Font weight. Can be "normal", "bold", "bolder" or "lighter".
 #' @param opacity Font opacity.
@@ -283,7 +285,7 @@ BioCircosBackgroundTrack <- function(trackname,
 #' 
 #' @export
 BioCircosTextTrack <- function(trackname, text,
-  x = -0.15, y = 0, size = 20, weight = "bold", opacity = 1, color = "#000000", ...){
+  x = -0.15, y = 0, size = "1.2em", weight = "bold", opacity = 1, color = "#000000", ...){
   track1 = paste("TEXT", trackname, sep="_")
   track2 = list(x = x,
      y = y,

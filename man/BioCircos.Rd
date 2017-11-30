@@ -20,7 +20,8 @@ BioCircos(tracklist, genome = "hg19", yChr = TRUE,
   SNPMouseOverTooltipsHtml02 = "<br/>Position: ",
   SNPMouseOverTooltipsHtml03 = "<br/>Value: ",
   SNPMouseOverTooltipsHtml04 = "<br/>", SNPMouseOverTooltipsHtml05 = "",
-  width = NULL, height = NULL, elementId = NULL, ...)
+  SNPMouseOverTooltipsBorderWidth = "1px", width = NULL, height = NULL,
+  elementId = NULL, ...)
 }
 \arguments{
 \item{genome}{A list of chromosome lengths to be used as reference for the vizualization or 'hg19' to use
@@ -67,6 +68,8 @@ RGB format. To revert back to original color, use the value "none".}
 \item{SNPMouseOverTooltipsHtml04}{Label displayed in tooltip in fourth position, before SNP labels if any.}
 
 \item{SNPMouseOverTooltipsHtml05}{Label displayed in tooltip in fifth position, after SNP labels if any.}
+
+\item{SNPMouseOverTooltipsBorderWidth}{The thickness of the tooltip borders, with units specified (such as em or px).}
 
 \item{width, height}{Must be a valid CSS unit (like \code{'100\%'},
 \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a

@@ -4,7 +4,7 @@
 \alias{BioCircosTextTrack}
 \title{Create a Text track to be added to a BioCircos tracklist}
 \usage{
-BioCircosTextTrack(trackname, text, x = -0.15, y = 0, size = 20,
+BioCircosTextTrack(trackname, text, x = -0.15, y = 0, size = "1.2em",
   weight = "bold", opacity = 1, color = "#000000", ...)
 }
 \arguments{
@@ -14,7 +14,7 @@ BioCircosTextTrack(trackname, text, x = -0.15, y = 0, size = 20,
 
 \item{x, y}{Coordinates of the lower left corner of the annotation, in proportion of the inner radius of the plot.}
 
-\item{size}{Font size.}
+\item{size}{Font size, with units specified (such as em or px).}
 
 \item{weight}{Font weight. Can be "normal", "bold", "bolder" or "lighter".}
 
