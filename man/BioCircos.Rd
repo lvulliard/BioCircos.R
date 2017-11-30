@@ -20,7 +20,14 @@ BioCircos(tracklist, genome = "hg19", yChr = TRUE,
   SNPMouseOverTooltipsHtml02 = "<br/>Position: ",
   SNPMouseOverTooltipsHtml03 = "<br/>Value: ",
   SNPMouseOverTooltipsHtml04 = "<br/>", SNPMouseOverTooltipsHtml05 = "",
-  SNPMouseOverTooltipsBorderWidth = "1px", width = NULL, height = NULL,
+  SNPMouseOverTooltipsBorderWidth = "1px", ARCMouseOverDisplay = TRUE,
+  ARCMouseOverColor = "#FF0000", ARCMouseOverArcOpacity = 0.9,
+  ARCMouseOutDisplay = TRUE, ARCMouseOutColor = "none",
+  ARCMouseOverTooltipsHtml01 = "Chromosome: ",
+  ARCMouseOverTooltipsHtml02 = "<br/>Start: ",
+  ARCMouseOverTooltipsHtml03 = "<br/>End: ",
+  ARCMouseOverTooltipsHtml04 = "<br/>", ARCMouseOverTooltipsHtml05 = "",
+  ARCMouseOverTooltipsBorderWidth = "1px", width = NULL, height = NULL,
   elementId = NULL, ...)
 }
 \arguments{
@@ -54,6 +61,8 @@ and radius shifts for the label texts can be added}
 
 \item{SNPMouseOverCircleSize}{Size of the SNP point when hovered by the mouse.}
 
+\item{SNPMouseOverCircleOpacity}{Opacity of the SNP point when hovered by the mouse.}
+
 \item{SNPMouseOutDisplay}{Hide tooltip when mouse is not hovering a SNP point anymore.}
 
 \item{SNPMouseOutColor}{Color of the SNP point when mouse is not hovering a SNP point anymore, in hexadecimal
@@ -70,6 +79,29 @@ RGB format. To revert back to original color, use the value "none".}
 \item{SNPMouseOverTooltipsHtml05}{Label displayed in tooltip in fifth position, after SNP labels if any.}
 
 \item{SNPMouseOverTooltipsBorderWidth}{The thickness of the tooltip borders, with units specified (such as em or px).}
+
+\item{ARCMouseOverDisplay}{Display the tooltip when mouse hover on an arc.}
+
+\item{ARCMouseOverColor}{Color of the arc when hovered by the mouse, in hexadecimal RGB format.}
+
+\item{ARCMouseOverArcOpacity}{Opacity of the arc when hovered by the mouse.}
+
+\item{ARCMouseOutDisplay}{Hide tooltip when mouse is not hovering an arc anymore.}
+
+\item{ARCMouseOutColor}{Color of the arc when mouse is not hovering an arc anymore, in hexadecimal
+RGB format. To revert back to original color, use the value "none".}
+
+\item{ARCMouseOverTooltipsHtml01}{Label displayed in tooltip in first position, before chromosome number.}
+
+\item{ARCMouseOverTooltipsHtml02}{Label displayed in tooltip in second position, before genomic position.}
+
+\item{ARCMouseOverTooltipsHtml03}{Label displayed in tooltip in third position, before value.}
+
+\item{ARCMouseOverTooltipsHtml04}{Label displayed in tooltip in fourth position, before ARC labels if any.}
+
+\item{ARCMouseOverTooltipsHtml05}{Label displayed in tooltip in fifth position, after ARC labels if any.}
+
+\item{ARCMouseOverTooltipsBorderWidth}{The thickness of the tooltip borders, with units specified (such as em or px).}
 
 \item{width, height}{Must be a valid CSS unit (like \code{'100\%'},
 \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a

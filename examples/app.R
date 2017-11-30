@@ -20,7 +20,7 @@ shinyServer <- function(input, output) {
 			borderColors = "#FFFFFF", borderSize = 0.6)		
 		tracks = tracks + BioCircosBackgroundTrack("testBGtrack2", borderColors = "#FFFFFF", fillColor = "#FFEEEE",
 			borderSize = 0.6, maxRadius = 0.8)
-		tracks = tracks + BioCircosTextTrack("testText", input$testInput, weight = "lighter")
+		tracks = tracks + BioCircosTextTrack("testText", input$testInput, weight = "lighter", x = - 0.15)
 		arcsEnds = round(runif(7, 50000001, 133851895))
 		arcsLengths = round(runif(7, 1, 50000000))
 		tracks = tracks + BioCircosArcTrack("fredTestArc", as.character(sample(1:12, 7, replace=T)), 

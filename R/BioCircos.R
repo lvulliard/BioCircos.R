@@ -39,6 +39,7 @@
 #' @param SNPMouseOverDisplay Display the tooltip when mouse hover on a SNP point.
 #' @param SNPMouseOverColor Color of the SNP point when hovered by the mouse, in hexadecimal RGB format.
 #' @param SNPMouseOverCircleSize Size of the SNP point when hovered by the mouse.
+#' @param SNPMouseOverCircleOpacity Opacity of the SNP point when hovered by the mouse.
 #' 
 #' @param SNPMouseOutDisplay Hide tooltip when mouse is not hovering a SNP point anymore.
 #' @param SNPMouseOutColor Color of the SNP point when mouse is not hovering a SNP point anymore, in hexadecimal
@@ -50,6 +51,21 @@
 #' @param SNPMouseOverTooltipsHtml04 Label displayed in tooltip in fourth position, before SNP labels if any.
 #' @param SNPMouseOverTooltipsHtml05 Label displayed in tooltip in fifth position, after SNP labels if any.
 #' @param SNPMouseOverTooltipsBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
+#' 
+#' @param ARCMouseOverDisplay Display the tooltip when mouse hover on an arc.
+#' @param ARCMouseOverColor Color of the arc when hovered by the mouse, in hexadecimal RGB format.
+#' @param ARCMouseOverArcOpacity Opacity of the arc when hovered by the mouse.
+#' 
+#' @param ARCMouseOutDisplay Hide tooltip when mouse is not hovering an arc anymore.
+#' @param ARCMouseOutColor Color of the arc when mouse is not hovering an arc anymore, in hexadecimal
+#'  RGB format. To revert back to original color, use the value "none".
+#' 
+#' @param ARCMouseOverTooltipsHtml01 Label displayed in tooltip in first position, before chromosome number.
+#' @param ARCMouseOverTooltipsHtml02 Label displayed in tooltip in second position, before genomic position.
+#' @param ARCMouseOverTooltipsHtml03 Label displayed in tooltip in third position, before value.
+#' @param ARCMouseOverTooltipsHtml04 Label displayed in tooltip in fourth position, before ARC labels if any.
+#' @param ARCMouseOverTooltipsHtml05 Label displayed in tooltip in fifth position, after ARC labels if any.
+#' @param ARCMouseOverTooltipsBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
 #' 
 #' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
@@ -74,6 +90,12 @@ BioCircos <- function(tracklist,
   SNPMouseOverTooltipsHtml01 = "Chromosome: ", SNPMouseOverTooltipsHtml02 = "<br/>Position: ",
   SNPMouseOverTooltipsHtml03 = "<br/>Value: ", SNPMouseOverTooltipsHtml04 = "<br/>",  SNPMouseOverTooltipsHtml05 = "",
   SNPMouseOverTooltipsBorderWidth = "1px",
+  ARCMouseOverDisplay = TRUE, ARCMouseOverColor = "#FF0000",
+  ARCMouseOverArcOpacity = 0.9,
+  ARCMouseOutDisplay = TRUE, ARCMouseOutColor = "none",
+  ARCMouseOverTooltipsHtml01 = "Chromosome: ", ARCMouseOverTooltipsHtml02 = "<br/>Start: ",
+  ARCMouseOverTooltipsHtml03 = "<br/>End: ", ARCMouseOverTooltipsHtml04 = "<br/>",  ARCMouseOverTooltipsHtml05 = "",
+  ARCMouseOverTooltipsBorderWidth = "1px",
   width = NULL, height = NULL, elementId = NULL, ...) {
 
   # If genome is a string, convert to corresponding chromosome lengths
@@ -198,7 +220,62 @@ BioCircos <- function(tracklist,
     SNPMouseOverTooltipsHtml05 =  SNPMouseOverTooltipsHtml05,
     SNPMouseOverTooltipsBorderWidth = SNPMouseOverTooltipsBorderWidth,
     zoom = zoom,
-    TEXTModuleDragEvent = TEXTModuleDragEvent
+    TEXTModuleDragEvent = TEXTModuleDragEvent,
+    ARCMouseEvent = T,
+    ARCMouseClickDisplay = F,
+    ARCMouseClickColor = "red",
+    ARCMouseClickArcOpacity = 1.0,
+    ARCMouseClickArcStrokeColor = "#F26223",
+    ARCMouseClickArcStrokeWidth = 1,
+    ARCMouseClickTextFromData = "fourth",
+    ARCMouseClickTextOpacity = 1,
+    ARCMouseClickTextColor = "red",
+    ARCMouseClickTextSize = 8,
+    ARCMouseClickTextPostionX = 0,
+    ARCMouseClickTextPostionY = 0,
+    ARCMouseClickTextDrag = T,
+    ARCMouseDownDisplay = F,
+    ARCMouseDownColor = "green",
+    ARCMouseDownArcOpacity = 1.0,
+    ARCMouseDownArcStrokeColor = "#F26223",
+    ARCMouseDownArcStrokeWidth = 0,
+    ARCMouseEnterDisplay = F,
+    ARCMouseEnterColor = "yellow",
+    ARCMouseEnterArcOpacity = 1.0,
+    ARCMouseEnterArcStrokeColor = "#F26223",
+    ARCMouseEnterArcStrokeWidth = 0,
+    ARCMouseLeaveDisplay = F,
+    ARCMouseLeaveColor = "pink",
+    ARCMouseLeaveArcOpacity = 1.0,
+    ARCMouseLeaveArcStrokeColor = "#F26223",
+    ARCMouseLeaveArcStrokeWidth = 0,
+    ARCMouseMoveDisplay = F,
+    ARCMouseMoveColor = "red",
+    ARCMouseMoveArcOpacity = 1.0,
+    ARCMouseMoveArcStrokeColor = "#F26223",
+    ARCMouseMoveArcStrokeWidth = 0,
+    ARCMouseOutDisplay = ARCMouseOutDisplay,
+    ARCMouseOutAnimationTime = 500,
+    ARCMouseOutColor = ARCMouseOutColor,
+    ARCMouseOutArcOpacity = 1.0,
+    ARCMouseOutArcStrokeColor = "red",
+    ARCMouseOutArcStrokeWidth = 0,
+    ARCMouseUpDisplay = F,
+    ARCMouseUpColor = "grey",
+    ARCMouseUpArcOpacity = 1.0,
+    ARCMouseUpArcStrokeColor = "#F26223",
+    ARCMouseUpArcStrokeWidth = 0,
+    ARCMouseOverDisplay = ARCMouseOverDisplay,
+    ARCMouseOverColor = ARCMouseOverColor,
+    ARCMouseOverArcOpacity = ARCMouseOverArcOpacity,
+    ARCMouseOverArcStrokeColor = "#F26223",
+    ARCMouseOverArcStrokeWidth = 3,
+    ARCMouseOverTooltipsHtml01 =  ARCMouseOverTooltipsHtml01,
+    ARCMouseOverTooltipsHtml02 =  ARCMouseOverTooltipsHtml02,
+    ARCMouseOverTooltipsHtml03 =  ARCMouseOverTooltipsHtml03,
+    ARCMouseOverTooltipsHtml04 =  ARCMouseOverTooltipsHtml04,
+    ARCMouseOverTooltipsHtml05 =  ARCMouseOverTooltipsHtml05,
+    ARCMouseOverTooltipsBorderWidth = ARCMouseOverTooltipsBorderWidth
   )
 
   # create widget
