@@ -20,7 +20,7 @@ shinyServer <- function(input, output) {
 			borderColors = "#FFFFFF", borderSize = 0.6)		
 		tracks = tracks + BioCircosBackgroundTrack("testBGtrack2", borderColors = "#FFFFFF", fillColor = "#FFEEEE",
 			borderSize = 0.6, maxRadius = 0.8)
-		tracks = tracks + BioCircosTextTrack("testText", input$testInput, weight = "lighter", x = - 0.17, y = - 0.9)
+		tracks = tracks + BioCircosTextTrack("testText", input$testInput, weight = "lighter", x = - 0.17, y = - 0.87)
 		arcsEnds = round(runif(7, 50000001, 133851895))
 		arcsLengths = round(runif(7, 1, 50000000))
 		tracks = tracks + BioCircosArcTrack("fredTestArc", as.character(sample(1:12, 7, replace=T)), 
@@ -34,12 +34,12 @@ shinyServer <- function(input, output) {
 		chr3 = sample(1:22, 5, replace = T)
 		chr4 = sample(1:22, 5, replace = T)
 		tracks = tracks + BioCircosLinkTrack("testLink", gene1Chromosomes = chr1, 
-			gene1Starts = linkPos1, gene1Ends = linkPos1+1, gene2Chromosomes = chr2,
-			color = "#FFFF66", width = "0.3em",
+			gene1Starts = linkPos1, gene1Ends = linkPos1+1, gene2Chromosomes = chr2, axisPadding = 6,
+			color = "#EEEE55", width = "0.3em", labels = paste(chr1, chr2, sep = "*"), displayLabel = F,
 			gene2Starts = linkPos2, gene2Ends = linkPos2+1, maxRadius = 0.42)
 		tracks = tracks + BioCircosLinkTrack("testLink", gene1Chromosomes = chr3, 
-			gene1Starts = linkPos3, gene1Ends = linkPos3+5000000, gene2Chromosomes = chr4,
-			color = "#FF6666",
+			gene1Starts = linkPos3, gene1Ends = linkPos3+5000000, gene2Chromosomes = chr4, axisPadding = 6,
+			color = "#FF6666", labels = paste(chr3, chr4, sep = "-"), displayLabel = F,
 			gene2Starts = linkPos4, gene2Ends = linkPos4+2500000, maxRadius = 0.42)
 		BioCircos(tracks, genomeFillColor = "Spectral", yChr = T, chrPad = 0, displayGenomeBorder = F, 
 			genomeTicksLen = 3, genomeTicksTextSize = 0, genomeTicksScale = 50000000,

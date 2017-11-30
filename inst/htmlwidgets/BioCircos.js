@@ -21,8 +21,6 @@ HTMLWidgets.widget({
     return {
 
       renderValue: function(opts) {
-        d3.selectAll("p").style("color", "red"); // D3: paragraphs are now written in red
-
         // Remove previous occurences of plots in the <div> if any
         d3.select("#"+el.id).selectAll("svg").remove()
 
@@ -176,6 +174,42 @@ HTMLWidgets.widget({
           ARCMouseOverTooltipsHtml04 : opts.ARCMouseOverTooltipsHtml04,
           ARCMouseOverTooltipsHtml05 : opts.ARCMouseOverTooltipsHtml05,
           ARCMouseOverTooltipsBorderWidth : opts.ARCMouseOverTooltipsBorderWidth,
+
+          // Link interaction options
+          LINKMouseEvent : opts.LINKMouseEvent,
+          LINKMouseClickDisplay : opts.LINKMouseClickDisplay,
+          LINKMouseClickColor : opts.LINKMouseClickColor,
+          LINKMouseClickTextFromData : opts.LINKMouseClickTextFromData,
+          LINKMouseClickTextOpacity : opts.LINKMouseClickTextOpacity,
+          LINKMouseClickTextColor : opts.LINKMouseClickTextColor,
+          LINKMouseClickTextSize : opts.LINKMouseClickTextSize,
+          LINKMouseClickTextPostionX : opts.LINKMouseClickTextPostionX,
+          LINKMouseClickTextPostionY : opts.LINKMouseClickTextPostionY,
+          LINKMouseClickTextDrag : opts.LINKMouseClickTextDrag,
+          LINKMouseDownDisplay : opts.LINKMouseDownDisplay,
+          LINKMouseDownColor : opts.LINKMouseDownColor,
+          LINKMouseEnterDisplay : opts.LINKMouseEnterDisplay,
+          LINKMouseEnterColor : opts.LINKMouseEnterColor,
+          LINKMouseLeaveDisplay : opts.LINKMouseLeaveDisplay,
+          LINKMouseLeaveColor : opts.LINKMouseLeaveColor,
+          LINKMouseMoveDisplay : opts.LINKMouseMoveDisplay,
+          LINKMouseMoveColor : opts.LINKMouseMoveColor,
+          LINKMouseOutDisplay : opts.LINKMouseOutDisplay,
+          LINKMouseOutAnimationTime : opts.LINKMouseOutAnimationTime,
+          LINKMouseOutStrokeColor : opts.LINKMouseOutStrokeColor,
+          LINKMouseOutStrokeWidth : opts.LINKMouseOutStrokeWidth,
+          LINKMouseUpDisplay : opts.LINKMouseUpDisplay,
+          LINKMouseUpColor : opts.LINKMouseUpColor,
+          LINKMouseOverOpacity : opts.LINKMouseOverOpacity,
+          LINKMouseOverDisplay : opts.LINKMouseOverDisplay,
+          LINKMouseOverStrokeColor : opts.LINKMouseOverStrokeColor,
+          
+          LINKMouseOverTooltipsHtml01 : opts.LINKMouseOverTooltipsHtml01,
+          LINKMouseOverTooltipsHtml02 : opts.LINKMouseOverTooltipsHtml02,
+          LINKMouseOverTooltipsHtml03 : opts.LINKMouseOverTooltipsHtml03,
+          LINKMouseOverTooltipsHtml04 : opts.LINKMouseOverTooltipsHtml04,
+          LINKMouseOverTooltipsHtml05 : opts.LINKMouseOverTooltipsHtml05,
+          LINKMouseOverTooltipsBorderWidth : opts.ARCMouseOverTooltipsBorderWidth,
 
           // Genome options
           genomeFillColor: opts.genomeFillColor,

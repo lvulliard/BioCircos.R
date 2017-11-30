@@ -67,6 +67,20 @@
 #' @param ARCMouseOverTooltipsHtml05 Label displayed in tooltip in fifth position, after ARC labels if any.
 #' @param ARCMouseOverTooltipsBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
 #' 
+#' @param LINKMouseOverDisplay Display the tooltip when mouse hover on a link.
+#' @param LINKMouseOverStrokeColor Color of the link when hovered.
+#' @param LINKMouseOverOpacity Opacity of the link when hovered.
+#' @param LINKMouseOverStrokeWidth Thickness of the link when hovered.
+#' 
+#' @param LINKMouseOutDisplay Hide tooltip when mouse is not hovering a link anymore.
+#' @param LINKMouseOutStrokeColor Color of the link when mouse is not hovering anymore, in hexadecimal
+#'  RGB format. To revert back to original color, use the value "none".
+#' @param LINKMouseOutStrokeWidth Thickness of the link when mouse is not hovering a link anymore.
+#' 
+#' @param LINKMouseOverTooltipsHtml01 Label displayed in tooltip in first position, before label.
+#' @param LINKMouseOverTooltipsHtml02 Label displayed in tooltip in second position, after label.
+#' @param LINKMouseOverTooltipsBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
+#' 
 #' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 #'   string and have \code{'px'} appended.
@@ -96,6 +110,11 @@ BioCircos <- function(tracklist,
   ARCMouseOverTooltipsHtml01 = "Chromosome: ", ARCMouseOverTooltipsHtml02 = "<br/>Start: ",
   ARCMouseOverTooltipsHtml03 = "<br/>End: ", ARCMouseOverTooltipsHtml04 = "<br/>",  ARCMouseOverTooltipsHtml05 = "",
   ARCMouseOverTooltipsBorderWidth = "1px",
+  LINKMouseOverDisplay = TRUE, LINKMouseOverStrokeColor = "#FF00FF",
+  LINKMouseOverOpacity = 0.9,
+  LINKMouseOutDisplay = TRUE, LINKMouseOutStrokeColor = "none",
+  LINKMouseOverTooltipsHtml01 = "Fusion: ", LINKMouseOverTooltipsHtml02 = "",
+  LINKMouseOverTooltipsBorderWidth = "1px", LINKMouseOverStrokeWidth = 5, LINKMouseOutStrokeWidth = "none",
   width = NULL, height = NULL, elementId = NULL, ...) {
 
   # If genome is a string, convert to corresponding chromosome lengths
@@ -275,7 +294,38 @@ BioCircos <- function(tracklist,
     ARCMouseOverTooltipsHtml03 =  ARCMouseOverTooltipsHtml03,
     ARCMouseOverTooltipsHtml04 =  ARCMouseOverTooltipsHtml04,
     ARCMouseOverTooltipsHtml05 =  ARCMouseOverTooltipsHtml05,
-    ARCMouseOverTooltipsBorderWidth = ARCMouseOverTooltipsBorderWidth
+    ARCMouseOverTooltipsBorderWidth = ARCMouseOverTooltipsBorderWidth,
+    LINKMouseEvent = T,
+    LINKMouseClickDisplay = F,
+    LINKMouseClickColor = "red",
+    LINKMouseClickTextFromData = "fourth",
+    LINKMouseClickTextOpacity = 1,
+    LINKMouseClickTextColor = "red",
+    LINKMouseClickTextSize = 8,
+    LINKMouseClickTextPostionX = 0,
+    LINKMouseClickTextPostionY = 0,
+    LINKMouseClickTextDrag = T,
+    LINKMouseDownDisplay = F,
+    LINKMouseDownColor = "green",
+    LINKMouseEnterDisplay = F,
+    LINKMouseEnterColor = "yellow",
+    LINKMouseLeaveDisplay = F,
+    LINKMouseLeaveColor = "pink",
+    LINKMouseMoveDisplay = F,
+    LINKMouseMoveColor = "red",
+    LINKMouseOutDisplay = LINKMouseOutDisplay,
+    LINKMouseOutAnimationTime = 500,
+    LINKMouseOutStrokeColor = LINKMouseOutStrokeColor,
+    LINKMouseUpDisplay = F,
+    LINKMouseUpColor = "grey",
+    LINKMouseOverOpacity = LINKMouseOverOpacity,
+    LINKMouseOverDisplay = LINKMouseOverDisplay,
+    LINKMouseOverStrokeColor = LINKMouseOverStrokeColor,
+    LINKMouseOverTooltipsHtml01 =  LINKMouseOverTooltipsHtml01,
+    LINKMouseOverTooltipsHtml02 =  LINKMouseOverTooltipsHtml02,
+    LINKMouseOverStrokeWidth = LINKMouseOverStrokeWidth,
+    LINKMouseOutStrokeWidth = LINKMouseOutStrokeWidth,
+    LINKMouseOverTooltipsBorderWidth = LINKMouseOverTooltipsBorderWidth
   )
 
   # create widget
@@ -481,6 +531,12 @@ BioCircosArcTrack <- function(trackname, chromosomes, starts, ends,
 #' @param width The thickness of the links.
 #' @param labels A vector of character objects to label each link.
 #' 
+#' @param displayAxis Display additional axis (i.e. circle) around the track.
+#' @param axisColor,axisWidth,axisPadding Color, thickness and padding of the additional axis.
+#' 
+#' @param displayLabel Display labels of the track.
+#' @param labelColor,labelSize,labelPadding Color, font size and padding of the labels around the track.
+#' 
 #' @param maxRadius Where the track should end, in proportion of the inner radius of the plot.
 #' 
 #' @param ... Ignored
@@ -489,10 +545,16 @@ BioCircosArcTrack <- function(trackname, chromosomes, starts, ends,
 BioCircosLinkTrack <- function(trackname, gene1Chromosomes, gene1Starts, gene1Ends,
   gene2Chromosomes, gene2Starts, gene2Ends, color = "#40B9D4", labels = "",
   maxRadius = 0.4, width = "0.1em",
-  gene1Names = "", gene2Names = "", ...){
+  gene1Names = "", gene2Names = "", displayAxis = TRUE, axisColor = "#B8B8B8", axisWidth = 0.5,
+  axisPadding = 0, displayLabel = TRUE, labelColor = "#000000",
+  labelSize = "1em", labelPadding = 3, ...){
   
   track1 = paste("LINK", trackname, sep="_")
-  track2 = list(LinkRadius = maxRadius, LinkFillColor = color, LinkWidth = width)
+  track2 = list(LinkRadius = maxRadius, LinkFillColor = color, LinkWidth = width,
+  displayLinkAxis = displayAxis, LinkAxisColor = axisColor, LinkAxisWidth = axisWidth,
+  LinkAxisPad = axisPadding, displayLinkLabel = displayLabel, LinkLabelColor = labelColor,
+  LinkLabelSize = labelSize, LinkLabelPad = labelPadding)
+
   tabSNP = suppressWarnings(rbind(labels, gene1Chromosomes, gene1Starts, gene1Ends, gene1Names, gene2Chromosomes,
     gene2Starts, gene2Ends, gene2Names))
   rownames(tabSNP) = c("fusion", "g1chr", "g1start", "g1end", "g1name", "g2chr", "g2start", "g2end", "g2name")

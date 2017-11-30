@@ -27,7 +27,13 @@ BioCircos(tracklist, genome = "hg19", yChr = TRUE,
   ARCMouseOverTooltipsHtml02 = "<br/>Start: ",
   ARCMouseOverTooltipsHtml03 = "<br/>End: ",
   ARCMouseOverTooltipsHtml04 = "<br/>", ARCMouseOverTooltipsHtml05 = "",
-  ARCMouseOverTooltipsBorderWidth = "1px", width = NULL, height = NULL,
+  ARCMouseOverTooltipsBorderWidth = "1px", LINKMouseOverDisplay = TRUE,
+  LINKMouseOverStrokeColor = "#FF00FF", LINKMouseOverOpacity = 0.9,
+  LINKMouseOutDisplay = TRUE, LINKMouseOutStrokeColor = "none",
+  LINKMouseOverTooltipsHtml01 = "Fusion: ",
+  LINKMouseOverTooltipsHtml02 = "",
+  LINKMouseOverTooltipsBorderWidth = "1px", LINKMouseOverStrokeWidth = 5,
+  LINKMouseOutStrokeWidth = "none", width = NULL, height = NULL,
   elementId = NULL, ...)
 }
 \arguments{
@@ -102,6 +108,27 @@ RGB format. To revert back to original color, use the value "none".}
 \item{ARCMouseOverTooltipsHtml05}{Label displayed in tooltip in fifth position, after ARC labels if any.}
 
 \item{ARCMouseOverTooltipsBorderWidth}{The thickness of the tooltip borders, with units specified (such as em or px).}
+
+\item{LINKMouseOverDisplay}{Display the tooltip when mouse hover on a link.}
+
+\item{LINKMouseOverStrokeColor}{Color of the link when hovered.}
+
+\item{LINKMouseOverOpacity}{Opacity of the link when hovered.}
+
+\item{LINKMouseOutDisplay}{Hide tooltip when mouse is not hovering a link anymore.}
+
+\item{LINKMouseOutStrokeColor}{Color of the link when mouse is not hovering anymore, in hexadecimal
+RGB format. To revert back to original color, use the value "none".}
+
+\item{LINKMouseOverTooltipsHtml01}{Label displayed in tooltip in first position, before label.}
+
+\item{LINKMouseOverTooltipsHtml02}{Label displayed in tooltip in second position, after label.}
+
+\item{LINKMouseOverTooltipsBorderWidth}{The thickness of the tooltip borders, with units specified (such as em or px).}
+
+\item{LINKMouseOverStrokeWidth}{Thickness of the link when hovered.}
+
+\item{LINKMouseOutStrokeWidth}{Thickness of the link when mouse is not hovering a link anymore.}
 
 \item{width, height}{Must be a valid CSS unit (like \code{'100\%'},
 \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a

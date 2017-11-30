@@ -7,7 +7,9 @@
 BioCircosLinkTrack(trackname, gene1Chromosomes, gene1Starts, gene1Ends,
   gene2Chromosomes, gene2Starts, gene2Ends, color = "#40B9D4", labels = "",
   maxRadius = 0.4, width = "0.1em", gene1Names = "", gene2Names = "",
-  ...)
+  displayAxis = TRUE, axisColor = "#B8B8B8", axisWidth = 0.5,
+  axisPadding = 0, displayLabel = TRUE, labelColor = "#000000",
+  labelSize = "1em", labelPadding = 3, ...)
 }
 \arguments{
 \item{trackname}{The name of the new track.}
@@ -23,6 +25,14 @@ the BioCircos function.}
 \item{maxRadius}{Where the track should end, in proportion of the inner radius of the plot.}
 
 \item{width}{The thickness of the links.}
+
+\item{displayAxis}{Display additional axis (i.e. circle) around the track.}
+
+\item{axisColor, axisWidth, axisPadding}{Color, thickness and padding of the additional axis.}
+
+\item{displayLabel}{Display labels of the track.}
+
+\item{labelColor, labelSize, labelPadding}{Color, font size and padding of the labels around the track.}
 
 \item{...}{Ignored}
 }

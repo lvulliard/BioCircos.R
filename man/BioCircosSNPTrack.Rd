@@ -5,8 +5,8 @@
 \title{Create a track with SNPs to be added to a BioCircos tracklist}
 \usage{
 BioCircosSNPTrack(trackname, chromosomes, positions, values,
-  colors = "#40B9D4", labels = "", maxRadius = 0.9, minRadius = 0.5,
-  ...)
+  colors = "#40B9D4", labels = "", size = 2, shape = "circle",
+  maxRadius = 0.9, minRadius = 0.5, ...)
 }
 \arguments{
 \item{trackname}{The name of the new track.}
@@ -25,6 +25,10 @@ generate one color per point, or a character object or vector of character objec
 format or base R colors. If the vector is shorter than the number of points, values will be repeated.}
 
 \item{labels}{One or multiple character objects to label each point.}
+
+\item{size}{The size of each point}
+
+\item{shape}{Shape of th points. Can be "circle" or "rect"}
 
 \item{minRadius, maxRadius}{Where the track should begin and end, in proportion of the inner radius of the plot.}
 
