@@ -465,7 +465,7 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
     circleSize = size,
     rectWidth = size,
     rectHeight = size)
-  tabSNP = suppressWarnings(rbind(chromosomes, positions, values, colors, labels))
+  tabSNP = suppressWarnings(rbind(unname(chromosomes), unname(positions), unname(values), unname(colors), unname(labels)))
   rownames(tabSNP) = c("chr", "pos", "value", "color", "des")
   track3 = unname(alply(tabSNP, 2, as.list))
 
@@ -506,7 +506,7 @@ BioCircosArcTrack <- function(trackname, chromosomes, starts, ends,
   # based on the inner and outer radii of the chromosome. Here we convert the arc coordinates to percentage of the space
   # inside the chromosome, based on the assumption that the inner and outer radii of the chromosome are respectively at 70
   # and 80 percents of the widget minimal dimension. The conversion to absolute values is performed on the JavaScript side. 
-  tabSNP = suppressWarnings(rbind(chromosomes, starts, ends, colors, labels))
+  tabSNP = suppressWarnings(rbind(unname(chromosomes), unname(starts), unname(ends), unname(colors), unname(labels)))
   rownames(tabSNP) = c("chr", "start", "end", "color", "des")
   track3 = unname(alply(tabSNP, 2, as.list))
 
@@ -555,8 +555,8 @@ BioCircosLinkTrack <- function(trackname, gene1Chromosomes, gene1Starts, gene1En
   LinkAxisPad = axisPadding, displayLinkLabel = displayLabel, LinkLabelColor = labelColor,
   LinkLabelSize = labelSize, LinkLabelPad = labelPadding)
 
-  tabSNP = suppressWarnings(rbind(labels, gene1Chromosomes, gene1Starts, gene1Ends, gene1Names, gene2Chromosomes,
-    gene2Starts, gene2Ends, gene2Names))
+  tabSNP = suppressWarnings(rbind(unname(labels), unname(gene1Chromosomes), unname(gene1Starts), unname(gene1Ends), 
+    unname(gene1Names), unname(gene2Chromosomes), unname(gene2Starts), unname(gene2Ends), unname(gene2Names)))
   rownames(tabSNP) = c("fusion", "g1chr", "g1start", "g1end", "g1name", "g2chr", "g2start", "g2end", "g2name")
   track3 = unname(alply(tabSNP, 2, as.list))
 
