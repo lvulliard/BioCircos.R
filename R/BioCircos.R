@@ -447,13 +447,15 @@ BioCircosTextTrack <- function(trackname, text,
 #' @param shape Shape of th points. Can be "circle" or "rect"
 #' 
 #' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
+#' @param range a vector of the values to be mapped to the minimum and maximum radii of the track.
+#'  Default to 0, mapping the minimal and maximal values input in the values parameter.
 #' 
 #' @param ... Ignored
 #' 
 #' @export
 BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
   colors = "#40B9D4", labels = "", size = 2, shape = "circle",
-  maxRadius = 0.9, minRadius = 0.5, ...){
+  maxRadius = 0.9, minRadius = 0.5, range = 0, ...){
   
   # If colors is a palette, create corresponding color vector
   colors = .BioCircosColorCheck(colors, length(positions), "colors")
@@ -464,7 +466,8 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
     PointType = shape,
     circleSize = size,
     rectWidth = size,
-    rectHeight = size)
+    rectHeight = size,
+    range = range)
   tabSNP = suppressWarnings(rbind(unname(chromosomes), unname(positions), unname(values), unname(colors), unname(labels)))
   rownames(tabSNP) = c("chr", "pos", "value", "color", "des")
   track3 = unname(alply(tabSNP, 2, as.list))

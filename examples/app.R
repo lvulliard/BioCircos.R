@@ -41,6 +41,7 @@ shinyServer <- function(input, output) {
 			gene1Starts = linkPos3, gene1Ends = linkPos3+5000000, gene2Chromosomes = chr4, axisPadding = 6,
 			color = "#FF6666", labels = paste(chr3, chr4, sep = "-"), displayLabel = F,
 			gene2Starts = linkPos4, gene2Ends = linkPos4+2500000, maxRadius = 0.42)
+		tracks = tracks + BioCircosSNPTrack("testSNP3", "7", 1, 0, minRadius = 0.3, maxRadius = 0.9, size = 6, range = c(-0.5,0.5))
 		BioCircos(tracks, genomeFillColor = "Spectral", yChr = T, chrPad = 0, displayGenomeBorder = F, 
 			genomeTicksLen = 3, genomeTicksTextSize = 0, genomeTicksScale = 50000000,
 			genomeLabelTextSize = 18, genomeLabelDy = 0)

@@ -12,7 +12,7 @@
 * from BioCircos.js website "http://bioinfo.ibp.ac.cn/biocircos/".
 * 
 * @author <a href="cui_ya@163.com">Ya Cui</a>, <a href="chenxiaowei@moon.ibp.ac.cn">Xiaowei Chen</a>
-* @version 1.1.2
+* @version 1.1.2+
 *
 * @example 
 *      var BioCircosGenome = [
@@ -2559,6 +2559,14 @@ var BioCircos;
             function BioCircosSNP(d) {
               return self.SNP[snpi].map(function(v, i) {
                 var snp_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
+                // Check if a range is given
+                if(self.SNPsettings.range){
+                  console.log(self.SNPsettings)
+                  var snp_value_maxmin_instance = self.SNPsettings.range;
+                }
+                else{
+                  var snp_value_maxmin_instance = self.snp_value_maxmin(self.SNP[snpi]);
+                }
                 return {
                   snp_angle: v.pos * snp_k + d[self.initGenome[v.chr]].startAngle,
                   snp_chr: v.chr,
@@ -2568,8 +2576,8 @@ var BioCircos;
                   snp_color: v.color,
                   snp_link: v.link,
                   snp_click_label: "snp"+snpi+"_"+i,
-                  x: (0 + Math.sin(v.pos * snp_k + d[self.initGenome[v.chr]].startAngle) * (self.SNPsettings.minRadius + ( (v.value-self.snp_value_maxmin(self.SNP[snpi])[1])/(self.snp_value_maxmin(self.SNP[snpi])[0]-self.snp_value_maxmin(self.SNP[snpi])[1])*(self.SNPsettings.maxRadius-self.SNPsettings.minRadius) ))),  //self.snp_value_maxmin(self.SNP[snpi])[0] max
-                  y: (0 - Math.cos(v.pos * snp_k + d[self.initGenome[v.chr]].startAngle) * (self.SNPsettings.minRadius + ( (v.value-self.snp_value_maxmin(self.SNP[snpi])[1])/(self.snp_value_maxmin(self.SNP[snpi])[0]-self.snp_value_maxmin(self.SNP[snpi])[1])*(self.SNPsettings.maxRadius-self.SNPsettings.minRadius) )))
+                  x: (0 + Math.sin(v.pos * snp_k + d[self.initGenome[v.chr]].startAngle) * (self.SNPsettings.minRadius + ( (v.value-snp_value_maxmin_instance[1])/(snp_value_maxmin_instance[0]-snp_value_maxmin_instance[1])*(self.SNPsettings.maxRadius-self.SNPsettings.minRadius) ))),  //snp_value_maxmin_instance[0] max
+                  y: (0 - Math.cos(v.pos * snp_k + d[self.initGenome[v.chr]].startAngle) * (self.SNPsettings.minRadius + ( (v.value-snp_value_maxmin_instance[1])/(snp_value_maxmin_instance[0]-snp_value_maxmin_instance[1])*(self.SNPsettings.maxRadius-self.SNPsettings.minRadius) )))
                 };
               });
             }
