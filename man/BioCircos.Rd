@@ -4,11 +4,11 @@
 \alias{BioCircos}
 \title{BioCircos}
 \usage{
-BioCircos(tracklist, genome = "hg19", yChr = TRUE,
+BioCircos(tracklist = BioCircosTracklist(), genome = "hg19", yChr = TRUE,
   genomeFillColor = "Spectral", chrPad = 0.04, displayGenomeBorder = TRUE,
   genomeBorderColor = "#000", genomeBorderSize = 0.5,
   genomeTicksDisplay = TRUE, genomeTicksLen = 5,
-  genomeTicksColor = "#000", genomeTicksTextSize = 10,
+  genomeTicksColor = "#000", genomeTicksTextSize = "0.6em",
   genomeTicksTextColor = "#000", genomeTicksScale = 3e+07,
   genomeLabelDisplay = TRUE, genomeLabelTextSize = 15,
   genomeLabelTextColor = "#000", genomeLabelDx = 0.028,
@@ -55,7 +55,7 @@ If yes specify the color, in RGB hexadecimal format, and the thickness.}
 size and color, and spaced by how many bases?}
 
 \item{genomeLabelDisplay, genomeLabelTextSize, genomeLabelTextColor, genomeLabelDx, genomeLabelDy}{Should the reference genome have labels on each chromosome, in which font size and color? Moreover rotation
-and radius shifts for the label texts can be added}
+and radius shifts for the label texts can be adde}
 
 \item{zoom}{Is zooming and moving in the visualization allowed?}
 

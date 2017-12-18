@@ -7,8 +7,6 @@
 #' @import plyr
 #' @import jsonlite
 #'
-#' @export
-
 #' BioCircos widget
 #'
 #' Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
@@ -30,7 +28,7 @@
 #' size and color, and spaced by how many bases?
 #' @param genomeLabelDisplay,genomeLabelTextSize,genomeLabelTextColor,genomeLabelDx,genomeLabelDy
 #'  Should the reference genome have labels on each chromosome, in which font size and color? Moreover rotation
-#'  and radius shifts for the label texts can be added
+#'  and radius shifts for the label texts can be adde
 #' 
 #' @param zoom Is zooming and moving in the visualization allowed?
 #' 
@@ -88,13 +86,13 @@
 #' @param ... Ignored
 #' 
 #' @export
-BioCircos <- function(tracklist,
+BioCircos <- function(tracklist = BioCircosTracklist(),
   genome = "hg19", yChr = TRUE,
   genomeFillColor = "Spectral",
   chrPad = 0.04, 
   displayGenomeBorder = TRUE, genomeBorderColor = "#000", genomeBorderSize = 0.5,
   genomeTicksDisplay = TRUE, genomeTicksLen = 5, genomeTicksColor = "#000", 
-  genomeTicksTextSize = 10, genomeTicksTextColor = "#000", genomeTicksScale = 30000000,
+  genomeTicksTextSize = "0.6em", genomeTicksTextColor = "#000", genomeTicksScale = 30000000,
   genomeLabelDisplay = TRUE, genomeLabelTextSize = 15, genomeLabelTextColor = "#000",
   genomeLabelDx = 0.028, genomeLabelDy = "-0.55em",
   zoom = TRUE, TEXTModuleDragEvent = FALSE,

@@ -1,5 +1,6 @@
 setwd("../")
-devtools::document() 
+devtools::document() # Generate documentation
+devtools::build_vignettes() # Generate vignettes
 devtools::install() # Build library
 library(BioCircos)
 library(shiny)
