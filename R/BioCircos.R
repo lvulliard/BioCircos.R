@@ -1,4 +1,4 @@
-#' BioCircos
+#' BioCircos 
 #'
 #' Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
 #'
@@ -7,6 +7,8 @@
 #' @import plyr
 #' @import jsonlite
 #'
+#' @export
+
 #' BioCircos widget
 #'
 #' Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’

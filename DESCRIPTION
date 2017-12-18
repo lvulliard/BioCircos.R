@@ -1,6 +1,6 @@
 Package: BioCircos
 Title: Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
-Version: 0.0.1.1
+Version: 0.0.2.1
 Authors@R: c(person("Loan", "Vulliard", email = "lvulliard@cemm.at", role = c("trl", "cre")),
 	person("Xiaowei", "Chen", email = "chenxiaowei@moon.ibp.ac.cn", role = c("aut")),
 	person("Ya", "Cui", email = "cui_ya@163.com", role = c("aut")))
