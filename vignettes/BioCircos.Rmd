@@ -66,17 +66,143 @@ BioCircos()
 
 ### Genome configuration
 
+A genome needs to be set in order to map all the coordinates of the tracks on it.  
+For now, the only pre-configured genome available is *hg19* (GRCh37), for which the length of the main 22 genomic autosomal chromosome pairs and of the sexual chromosomes are available. The Y chromosome can be removed using the *ychr* parameter. Visual parameters are also available, such as by giving a vector of colors or a *RColorBrewer* palette to change the colors of each chromosome (parameter *genomeFillColor*), the space between each chromosome (*chrPad*) or their borders (*displayGenomeBorder*).  
+The ticks, displaying the scale on each chromosome, can be removed with *genomeTicksDisplay*, and the genome labels (chromosome names) can be brought closer or further away from the chromosomes with *genomeLabelDy*.
+
+```{r}
+library(BioCircos)
+
+BioCircos(genome = "hg19", yChr = FALSE, genomeFillColor = "Reds", chrPad = 0, 
+	displayGenomeBorder = FALSE, genomeTicksDisplay = FALSE, genomeLabelDy = 0)
+```
+
+To use your own reference genome, you need to define a named list of chromosomal lengths and use it as the *genome* parameter. The names and lengths should match the coordinates you plan on using later for your tracks.  
+You may want to change the scale of the ticks on the chromosomes, to fit to your reference genome, with the *genomeTickScale* parameters.
+
+```{r}
+library(BioCircos)
+
+myGenome = list("A" = 10560,
+        "B" = 8808,
+        "C" = 12014,
+        "D" = 7664,
+        "E" = 9403,
+        "F" = 8661)
+
+BioCircos(genome = myGenome, genomeFillColor = c("tomato2", "darkblue"),
+	genomeTicksScale = 4e+3)
+```
+
 ### Tracklists
 
-## SNP track
+The different levels of information will be displayed on different *tracks* of different types and located at different radii on the visualization. All the track-generating functions of this package return tracklists that can be added together into a single tracklist, to be given as the *tracks* argument of the *BioCircos* method.  
+The different kinds of tracks are presented in the following sections.  
+All tracks need to be named.
 
-## Arc track
+## Text track
 
-## Link track
+A first track simply corresponds to text annotations. The obligatory parameters are the track name and the text to be displayed. 
+Some parameters such as the size, the opacity and the coordinates can be customized.
+
+```{r}
+library(BioCircos)
+
+tracklist = BioCircosTextTrack('myTextTrack', 'Some text', size = "2em", opacity = 0.5, x = -0.67, y = -0.5)
+
+BioCircos(tracklist, genomeFillColor = "PuOr",
+	chrPad = 0, displayGenomeBorder = FALSE, 
+	genomeTicksLen = 2, genomeTicksTextSize = 0, genomeTicksScale = 1e+8,
+	genomeLabelTextSize = "9pt", genomeLabelDy = 0)
+```
+
 
 ## Background track
 
-## Text track
+Another simple track type correspond to backgrounds, displayed under other tracks, in a given radius interval.
+
+```{r}
+library(BioCircos)
+
+tracklist = BioCircosBackgroundTrack("myBackgroundTrack", minRadius = 0.5, maxRadius = 0.8,
+	borderColors = "#AAAAAA", borderSize = 0.6, fillColors = "#FFBBBB")	
+
+BioCircos(tracklist, genomeFillColor = "PuOr",
+	chrPad = 0.05, displayGenomeBorder = FALSE, 
+	genomeTicksDisplay = FALSE,	genomeLabelTextSize = "9pt", genomeLabelDy = 0)
+```
+
+## SNP track
+
+To map punctual information associated with a single-dimensional value on the reference genome, such as a variant or an SNP associated with a confidence score, SNP tracks can be used.  
+It is therefore needed to specify the chromosome and coordinates where each points are mapped, as well as the corresponding value, which will be used to compute the radial coordinate of the points.  
+By default, points display a tooltip when hovered by the mouse.
+
+```{r}
+library(BioCircos)
+
+points_chromosomes = c('X', '2', '7', '13', '9') # Chromosomes on which the points should be displayed
+points_coordinates = c(102621, 140253678, 98567307, 28937403, 20484611) # Chromosomes on which the points should be displayed
+points_values = 0:4 # Values associated with each point, used as radial coordinate on a scale going to minRadius for the lowest value to maxRadius for the highest value
+
+tracklist = BioCircosSNPTrack('mySNPTrack', points_chromosomes, points_coordinates, points_values,
+	colors = c("tomato2", "darkblue"), minRadius = 0.5, maxRadius = 0.9)
+
+# Background are always placed below other tracks
+tracklist = tracklist + BioCircosBackgroundTrack("myBackgroundTrack", minRadius = 0.5, maxRadius = 0.9,
+	borderColors = "#AAAAAA", borderSize = 0.6, fillColors = "#B3E6FF")	
+
+BioCircos(tracklist, genomeFillColor = "PuOr",
+	chrPad = 0.05, displayGenomeBorder = FALSE, yChr =  FALSE,
+	genomeTicksDisplay = FALSE,	genomeLabelTextSize = 18, genomeLabelDy = 0)
+```
+
+## Arc track
+
+Arc tracks are displaying arcs along the genomic circle, between the radii given as the *minRadius* and *maxRadius* parameters. As for an SNP track, the chromosome and coordinates (here corresponding to the beginning and end of each arc) should be specified.
+By default, arcs display a tooltip when hovered by the mouse.
+
+```{r}
+library(BioCircos)
+
+arcs_chromosomes = c('X', '2', '9') # Chromosomes on which the arcs should be displayed
+arcs_begin = c(1, 140253678, 20484611)
+arcs_end = c(155270560, 154978472, 42512974)
+
+tracklist = BioCircosArcTrack('myArcTrack', arcs_chromosomes, arcs_begin, arcs_end,
+	minRadius = 1.18, maxRadius = 1.25)
+
+BioCircos(tracklist, genomeFillColor = "PuOr",
+	chrPad = 0.02, displayGenomeBorder = FALSE, yChr =  FALSE,
+	genomeTicksDisplay = FALSE,	genomeLabelTextSize = 0)
+```
+
+## Link track
+
+Links track represent links between different genomic position. They are displayed at the center of the visualization, and out to a radius specified by the *maxRadius* parameter. The chromosomes and positions of the beginning and end of each links are necessary, and labels can be added.  
+By default, links display a tooltip when hovered by the mouse.
+
+```{r}
+library(BioCircos)
+
+links_chromosomes_1 = c('X', '2', '9') # Chromosomes on which the links should start
+links_chromosomes_2 = c('3', '18', '9') # Chromosomes on which the links should end
+
+links_pos_1 = c(155270560, 154978472, 42512974)
+links_pos_2 = c(102621477, 140253678, 20484611)
+links_labels = c("Link 1", "Link 2", "Link 3")
+
+tracklist = BioCircosBackgroundTrack("myBackgroundTrack", minRadius = 0, maxRadius = 0.55,
+	borderSize = 0, fillColors = "#EEFFEE")	
+
+tracklist = tracklist + BioCircosLinkTrack('myLinkTrack', links_chromosomes_1, links_pos_1, links_pos_1 + 50000000,
+	links_chromosomes_2, links_pos_2, links_pos_2 + 75000000,
+	maxRadius = 0.55, labels = links_labels)
+
+BioCircos(tracklist, genomeFillColor = "PuOr",
+	chrPad = 0.02, displayGenomeBorder = FALSE, yChr =  FALSE,
+	genomeTicksDisplay = FALSE,	genomeLabelTextSize = "8pt", genomeLabelDy = 0)
+```
 
 ## Contact
 

@@ -11,7 +11,7 @@
 
 #' BioCircos widget
 #'
-#' Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
+#' Interactive circular visualisation of genomic data using 'htmlwidgets' and 'BioCircos.js'
 #' 
 #' @param tracks A list of tracks to display.
 #' @param genome A list of chromosome lengths to be used as reference for the vizualization or 'hg19' to use
@@ -95,7 +95,7 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
   displayGenomeBorder = TRUE, genomeBorderColor = "#000", genomeBorderSize = 0.5,
   genomeTicksDisplay = TRUE, genomeTicksLen = 5, genomeTicksColor = "#000", 
   genomeTicksTextSize = "0.6em", genomeTicksTextColor = "#000", genomeTicksScale = 30000000,
-  genomeLabelDisplay = TRUE, genomeLabelTextSize = 15, genomeLabelTextColor = "#000",
+  genomeLabelDisplay = TRUE, genomeLabelTextSize = "10pt", genomeLabelTextColor = "#000",
   genomeLabelDx = 0.028, genomeLabelDy = "-0.55em",
   zoom = TRUE, TEXTModuleDragEvent = FALSE,
   SNPMouseOverDisplay = TRUE, SNPMouseOverColor = "#FF0000", SNPMouseOverCircleSize = 3,
@@ -443,8 +443,8 @@ BioCircosTextTrack <- function(trackname, text,
 #'  format or base R colors. If the vector is shorter than the number of points, values will be repeated.
 #' @param labels One or multiple character objects to label each point.
 #' 
-#' @param size The size of each point
-#' @param shape Shape of th points. Can be "circle" or "rect"
+#' @param size The size of each point.
+#' @param shape Shape of the points. Can be "circle" or "rect".
 #' 
 #' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
 #' @param range a vector of the values to be mapped to the minimum and maximum radii of the track.

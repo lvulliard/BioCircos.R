@@ -26,9 +26,9 @@ format or base R colors. If the vector is shorter than the number of points, val
 
 \item{labels}{One or multiple character objects to label each point.}
 
-\item{size}{The size of each point}
+\item{size}{The size of each point.}
 
-\item{shape}{Shape of th points. Can be "circle" or "rect"}
+\item{shape}{Shape of the points. Can be "circle" or "rect".}
 
 \item{minRadius, maxRadius}{Where the track should begin and end, in proportion of the inner radius of the plot.}
 
