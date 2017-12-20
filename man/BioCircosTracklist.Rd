@@ -3,12 +3,15 @@
 \name{BioCircosTracklist}
 \alias{BioCircosTracklist}
 \alias{+.BioCircosTracklist}
+\alias{-.BioCircosTracklist}
 \title{Create a list of BioCircos tracks}
 \usage{
 BioCircosTracklist()
 
 \method{+}{BioCircosTracklist}(x, ...)
+
+\method{-}{BioCircosTracklist}(x, ...)
 }
 \description{
-This allows the use of the '+' operator on these lists
+This allows the use of the '+' and '-' operator on these lists
 }

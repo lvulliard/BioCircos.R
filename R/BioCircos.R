@@ -570,7 +570,7 @@ BioCircosLinkTrack <- function(trackname, gene1Chromosomes, gene1Starts, gene1En
 
 #' Create a list of BioCircos tracks
 #'
-#' This allows the use of the '+' operator on these lists
+#' This allows the use of the '+' and '-' operator on these lists
 #' 
 #' @name BioCircosTracklist
 #' 
@@ -589,6 +589,20 @@ BioCircosTracklist <- function(){
     class(x) <- c("BioCircosTracklist")
   }
   return(x)
+}
+
+#' @rdname BioCircosTracklist
+#' @export
+"-.BioCircosTracklist" <- function(x,...) {
+  indicesToDelete = list()
+  for (i in 1:length(x)){
+    if(paste(strsplit(tracks[[i]][[1]], '_')[[1]][-1], collapse = "_") %in% ...){
+      indicesToDelete = append(indicesToDelete, i)
+    }
+  }
+  y <- x
+  y[unlist(indicesToDelete)] <- NULL
+  return(y)
 }
 
 .BioCircosColorCheck <- function(colVar, colLength, varName = "Color") {
