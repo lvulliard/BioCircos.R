@@ -12,6 +12,11 @@ BioCircosTracklist()
 
 \method{-}{BioCircosTracklist}(x, ...)
 }
+\arguments{
+\item{x}{The tracklist on which other tracks should be added or removed.}
+
+\item{...}{The tracks to add (as tracklists) or to remove (as track names).}
+}
 \description{
 This allows the use of the '+' and '-' operator on these lists
 }

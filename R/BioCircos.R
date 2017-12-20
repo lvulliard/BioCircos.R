@@ -86,7 +86,7 @@
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 #'   string and have \code{'px'} appended.
 #' 
-#' @param elementID the name of the HTML id to be used to contain the visualization.
+#' @param elementId the name of the HTML id to be used to contain the visualization.
 #' 
 #' @param ... Ignored
 #' 
@@ -576,6 +576,9 @@ BioCircosLinkTrack <- function(trackname, gene1Chromosomes, gene1Starts, gene1En
 #' This allows the use of the '+' and '-' operator on these lists
 #' 
 #' @name BioCircosTracklist
+#' 
+#' @param x The tracklist on which other tracks should be added or removed.
+#' @param ... The tracks to add (as tracklists) or to remove (as track names).
 #' 
 #' @export
 BioCircosTracklist <- function(){
