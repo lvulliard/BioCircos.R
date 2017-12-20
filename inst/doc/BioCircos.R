@@ -104,6 +104,16 @@ BioCircos(tracklist, genomeFillColor = "PuOr",
   chrPad = 0.02, displayGenomeBorder = FALSE, yChr =  FALSE,
   genomeTicksDisplay = FALSE,  genomeLabelTextSize = "8pt", genomeLabelDy = 0)
 
+## ------------------------------------------------------------------------
+library(BioCircos)
+
+# Create a tracklist with a text annotation and backgrounds
+tracklist = BioCircosTextTrack('t1', 'hi')
+tracklist = tracklist + BioCircosBackgroundTrack('b1')
+
+# Remove the text annotation and display the result
+BioCircos(tracklist - 't1')
+
 ## ----figMultiTrack, fig.width=5, fig.height=5, fig.align = 'center'------
 library(BioCircos)
 

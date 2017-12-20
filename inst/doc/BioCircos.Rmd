@@ -206,6 +206,23 @@ BioCircos(tracklist, genomeFillColor = "PuOr",
   genomeTicksDisplay = FALSE,  genomeLabelTextSize = "8pt", genomeLabelDy = 0)
 ```
 
+
+## Removing track
+
+Tracks can be removed from a track list by substracting the name of the corresponding track.
+
+```{r}
+library(BioCircos)
+
+# Create a tracklist with a text annotation and backgrounds
+tracklist = BioCircosTextTrack('t1', 'hi')
+tracklist = tracklist + BioCircosBackgroundTrack('b1')
+
+# Remove the text annotation and display the result
+BioCircos(tracklist - 't1')
+```
+
+
 ## Multi-track example
 
 You can combine and overlap as many tracks as you want. 

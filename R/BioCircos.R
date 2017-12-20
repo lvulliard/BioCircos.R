@@ -596,7 +596,7 @@ BioCircosTracklist <- function(){
 "-.BioCircosTracklist" <- function(x,...) {
   indicesToDelete = list()
   for (i in 1:length(x)){
-    if(paste(strsplit(tracks[[i]][[1]], '_')[[1]][-1], collapse = "_") %in% ...){
+    if(paste(strsplit(x[[i]][[1]], '_')[[1]][-1], collapse = "_") %in% ...){
       indicesToDelete = append(indicesToDelete, i)
     }
   }
