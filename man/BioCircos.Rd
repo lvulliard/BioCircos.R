@@ -37,7 +37,9 @@ BioCircos(tracklist = BioCircosTracklist(), genome = "hg19", yChr = TRUE,
   elementId = NULL, ...)
 }
 \arguments{
-\item{genome}{A list of chromosome lengths to be used as reference for the vizualization or 'hg19' to use
+\item{tracklist}{A list of tracks to display.}
+
+\item{genome}{A list of chromosome lengths to be used as reference for the visualization or 'hg19' to use
 the chromosomes 1 to 22 and the sexual chromosomes according to the hg19 reference.}
 
 \item{yChr}{A logical stating if the Y chromosome should be displayed. Used only when genome is set to 'hg19'.}
@@ -136,8 +138,8 @@ string and have \code{'px'} appended.}
 
 \item{...}{Ignored}
 
-\item{tracks}{A list of tracks to display.}
+\item{elementID}{the name of the HTML id to be used to contain the visualization.}
 }
 \description{
-Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
+Interactive circular visualization of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
 }

@@ -14,7 +14,7 @@ author: "Loan Vulliard"
 
 ## Introduction
 
-This package allows to implement in 'R' Circos-like vizualizations of genomic data, as proposed by the BioCircos.js JavaScript library, based on the JQuery and D3 technologies.  
+This package allows to implement in 'R' Circos-like visualizations of genomic data, as proposed by the BioCircos.js JavaScript library, based on the JQuery and D3 technologies.  
 We will demonstrate here how to generate easily such plots and what are the main parameters to customize them. Each example can be run independently of the others.  
 For a complete list of all the parameters available, please refer to the package documentation.
 

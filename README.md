@@ -5,7 +5,7 @@ Simple htmlwidgets binding R commands to the BioCircos.js library
 
 ## Introduction
 
-This package allows to implement in 'R' Circos-like vizualizations of genomic data, as proposed by the BioCircos.js JavaScript library, based on the JQuery and D3 technologies.  
+This package allows to implement in 'R' Circos-like visualizations of genomic data, as proposed by the BioCircos.js JavaScript library, based on the JQuery and D3 technologies.  
 For a complete list of all the parameters available, please refer to the package documentation.
 
 

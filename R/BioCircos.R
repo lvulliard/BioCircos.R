@@ -1,20 +1,21 @@
 #' BioCircos 
 #'
-#' Interactive circular visualisation of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
+#' Interactive circular visualization of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
 #'
 #' @import htmlwidgets
 #' @import RColorBrewer
 #' @import plyr
 #' @import jsonlite
+#' @import grDevices
 #'
 #' @export
 
 #' BioCircos widget
 #'
-#' Interactive circular visualisation of genomic data using 'htmlwidgets' and 'BioCircos.js'
+#' Interactive circular visualization of genomic data using 'htmlwidgets' and 'BioCircos.js'
 #' 
-#' @param tracks A list of tracks to display.
-#' @param genome A list of chromosome lengths to be used as reference for the vizualization or 'hg19' to use
+#' @param tracklist A list of tracks to display.
+#' @param genome A list of chromosome lengths to be used as reference for the visualization or 'hg19' to use
 #'  the chromosomes 1 to 22 and the sexual chromosomes according to the hg19 reference.
 #' @param yChr A logical stating if the Y chromosome should be displayed. Used only when genome is set to 'hg19'.
 #' @param genomeFillColor The color to display in each chromosome. Can be a RColorBrewer palette name used to
@@ -84,6 +85,8 @@
 #' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 #'   string and have \code{'px'} appended.
+#' 
+#' @param elementID the name of the HTML id to be used to contain the visualization.
 #' 
 #' @param ... Ignored
 #' 
