@@ -29,3 +29,7 @@ format or base R colors. If the vector is shorter than the number of arcs, value
 \description{
 Arcs are defined by beginning and ending genomic coordinates
 }
+\examples{
+BioCircos(BioCircosArcTrack('ArcTrack', chromosomes = 1:5, starts = 2e+7*1:5, ends = 2.5e+7*2:6))
+
+}

@@ -90,6 +90,9 @@
 #' 
 #' @param ... Ignored
 #' 
+#' @examples
+#' BioCircos(yChr = FALSE, chrPad = 0, genomeFillColor = "Blues")
+#' 
 #' @export
 BioCircos <- function(tracklist = BioCircosTracklist(),
   genome = "hg19", yChr = TRUE,
@@ -384,6 +387,9 @@ renderBioCircos <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' 
 #' @param ... Ignored
 #' 
+#' @examples
+#' BioCircos(BioCircosBackgroundTrack('bgTrack', fillColors="#FFEEEE", borderSize = 1))
+#' 
 #' @export
 BioCircosBackgroundTrack <- function(trackname, 
   fillColors = "#EEEEFF", borderColors = "#000000",
@@ -412,6 +418,9 @@ BioCircosBackgroundTrack <- function(trackname,
 #' @param opacity Font opacity.
 #' 
 #' @param ... Ignored
+#' 
+#' @examples
+#' BioCircos(BioCircosTextTrack('textTrack', 'Annotation', color = '#DD2222', x = -0.3))
 #' 
 #' @export
 BioCircosTextTrack <- function(trackname, text,
@@ -454,6 +463,10 @@ BioCircosTextTrack <- function(trackname, text,
 #'  Default to 0, mapping the minimal and maximal values input in the values parameter.
 #' 
 #' @param ... Ignored
+#' 
+#' @examples
+#' BioCircos(BioCircosSNPTrack('SNPTrack', chromosomes = 1:3, positions = 1e+7*2:4, 
+#'   values = 1:3, colors = "Accent", labels = c('A', 'B', 'C')) + BioCircosBackgroundTrack('BGTrack'))
 #' 
 #' @export
 BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
@@ -498,6 +511,9 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
 #' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
 #' 
 #' @param ... Ignored
+#' 
+#' @examples
+#' BioCircos(BioCircosArcTrack('ArcTrack', chromosomes = 1:5, starts = 2e+7*1:5, ends = 2.5e+7*2:6))
 #' 
 #' @export
 BioCircosArcTrack <- function(trackname, chromosomes, starts, ends,
@@ -546,6 +562,14 @@ BioCircosArcTrack <- function(trackname, chromosomes, starts, ends,
 #' @param maxRadius Where the track should end, in proportion of the inner radius of the plot.
 #' 
 #' @param ... Ignored
+#' 
+#' @examples
+#' start_chromosomes <- 1:5
+#' end_chromosomes <- 2*10:6
+#' start_pos <- 2.5e+7*2:6
+#' end_pos <- 2e+7*1:5
+#' BioCircos(BioCircosLinkTrack('LinkTrack', start_chromosomes, start_pos, start_pos+1,
+#'   end_chromosomes, end_pos, end_pos+1, color = '#FF00FF'))
 #' 
 #' @export
 BioCircosLinkTrack <- function(trackname, gene1Chromosomes, gene1Starts, gene1Ends,

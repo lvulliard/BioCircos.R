@@ -40,3 +40,8 @@ Default to 0, mapping the minimal and maximal values input in the values paramet
 \description{
 SNPs are defined by genomic coordinates and associated with a numerical value
 }
+\examples{
+BioCircos(BioCircosSNPTrack('SNPTrack', chromosomes = 1:3, positions = 1e+7*2:4, 
+  values = 1:3, colors = "Accent", labels = c('A', 'B', 'C')) + BioCircosBackgroundTrack('BGTrack'))
+
+}

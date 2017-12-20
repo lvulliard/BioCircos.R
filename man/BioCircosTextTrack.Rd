@@ -27,3 +27,7 @@ BioCircosTextTrack(trackname, text, x = -0.15, y = 0, size = "1.2em",
 \description{
 Simple text annotation displayed in the visualization
 }
+\examples{
+BioCircos(BioCircosTextTrack('textTrack', 'Annotation', color = '#DD2222', x = -0.3))
+
+}

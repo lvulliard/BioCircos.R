@@ -1,12 +1,15 @@
 Package: BioCircos
-Title: Interactive circular visualization of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
-Version: 0.0.2.2
+Title: Interactive Circular Visualization of Genomic Data using 'htmlwidgets' and 'BioCircos.js'
+Version: 0.2.2
 Authors@R: c(person("Loan", "Vulliard", email = "lvulliard@cemm.at", role = c("trl", "cre")),
 	person("Xiaowei", "Chen", email = "chenxiaowei@moon.ibp.ac.cn", role = c("aut")),
 	person("Ya", "Cui", email = "cui_ya@163.com", role = c("aut")))
-Description: Implement in 'R' Circos-like visualizations of genomic data,
-    as proposed by the BioCircos.js JavaScript library, based on the JQuery and D3 technologies.
-Depends: R (>= 3.4.1)
+Description: Implement in 'R' interactive Circos-like visualizations of genomic data, to map information
+	such as genetic variants, genomic fusions and aberrations to a circular genome, as proposed by the
+	'JavaScript' library 'BioCircos.js', based on the 'JQuery' and 'D3' technologies. The output can be
+	integrated in 'R Markdown' documents, 'Shiny' applications, or by will be displayed by default in
+	stand-alone HTML documents or in the 'RStudio' viewer pane.
+Depends: R (>= 3.1.0)
 License: GPL-2 | file LICENSE
 Encoding: UTF-8
 URL: https://github.com/lvulliard/BioCircos.R

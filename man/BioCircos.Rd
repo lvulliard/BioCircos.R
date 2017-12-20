@@ -143,3 +143,7 @@ string and have \code{'px'} appended.}
 \description{
 Interactive circular visualization of genomic data using ‘htmlwidgets’ and ‘BioCircos.js’
 }
+\examples{
+BioCircos(yChr = FALSE, chrPad = 0, genomeFillColor = "Blues")
+
+}

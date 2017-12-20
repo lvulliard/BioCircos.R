@@ -24,3 +24,7 @@ BioCircosBackgroundTrack(trackname, fillColors = "#EEEEFF",
 \description{
 Simple background to display behind another track
 }
+\examples{
+BioCircos(BioCircosBackgroundTrack('bgTrack', fillColors="#FFEEEE", borderSize = 1))
+
+}
