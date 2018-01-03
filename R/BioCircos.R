@@ -223,7 +223,7 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
     SNPMouseOutAnimationTime = 500,
     SNPMouseOutColor = SNPMouseOutColor,
     SNPMouseOutCircleSize = 2,
-    SNPMouseOutCircleOpacity = 1.0,
+    SNPMouseOutCircleOpacity = "none",
     SNPMouseOutCircleStrokeColor = "red",
     SNPMouseOutCircleStrokeWidth = 0,
     SNPMouseUpDisplay = F,
@@ -454,6 +454,7 @@ BioCircosTextTrack <- function(trackname, text,
 #'  generate one color per point, or a character object or vector of character objects stating RGB values in hexadecimal
 #'  format or base R colors. If the vector is shorter than the number of points, values will be repeated.
 #' @param labels One or multiple character objects to label each point.
+#' @param opacities One or multiple opacity values for the points, between 0 and 1.
 #' 
 #' @param size The size of each point.
 #' @param shape Shape of the points. Can be "circle" or "rect".
@@ -470,7 +471,7 @@ BioCircosTextTrack <- function(trackname, text,
 #' 
 #' @export
 BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
-  colors = "#40B9D4", labels = "", size = 2, shape = "circle",
+  colors = "#40B9D4", labels = "", size = 2, shape = "circle", opacities = 1,
   maxRadius = 0.9, minRadius = 0.5, range = 0, ...){
   
   # If colors is a palette, create corresponding color vector
@@ -484,8 +485,9 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
     rectWidth = size,
     rectHeight = size,
     range = range)
-  tabSNP = suppressWarnings(rbind(unname(chromosomes), unname(positions), unname(values), unname(colors), unname(labels)))
-  rownames(tabSNP) = c("chr", "pos", "value", "color", "des")
+  tabSNP = suppressWarnings(rbind(unname(chromosomes), unname(positions), unname(values), unname(colors), 
+    unname(labels), unname(opacities)))
+  rownames(tabSNP) = c("chr", "pos", "value", "color", "des", "opacity")
   track3 = unname(alply(tabSNP, 2, as.list))
 
   track = BioCircosTracklist() + list(list(track1, track2, track3))
@@ -552,6 +554,7 @@ BioCircosArcTrack <- function(trackname, chromosomes, starts, ends,
 #' 
 #' @param color The color for the links, in hexadecimal RGB format.
 #' @param width The thickness of the links.
+#' 
 #' @param labels A vector of character objects to label each link.
 #' 
 #' @param displayAxis Display additional axis (i.e. circle) around the track.

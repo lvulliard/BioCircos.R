@@ -2576,6 +2576,7 @@ var BioCircos;
                   snp_des: v.des,
                   snp_color: v.color,
                   snp_link: v.link,
+                  snp_opacity: v.opacity,
                   snp_click_label: "snp"+snpi+"_"+i,
                   x: (0 + Math.sin(v.pos * snp_k + d[self.initGenome[v.chr]].startAngle) * (self.SNPsettings.minRadius + ( (v.value-snp_value_maxmin_instance[1])/(snp_value_maxmin_instance[0]-snp_value_maxmin_instance[1])*(self.SNPsettings.maxRadius-self.SNPsettings.minRadius) ))),  //snp_value_maxmin_instance[0] max
                   y: (0 - Math.cos(v.pos * snp_k + d[self.initGenome[v.chr]].startAngle) * (self.SNPsettings.minRadius + ( (v.value-snp_value_maxmin_instance[1])/(snp_value_maxmin_instance[0]-snp_value_maxmin_instance[1])*(self.SNPsettings.maxRadius-self.SNPsettings.minRadius) )))
@@ -2601,7 +2602,8 @@ var BioCircos;
                     .attr("fill", function(d,i) { if(d.snp_color!=undefined){return d.snp_color;}else{return self.SNPsettings.SNPFillColor;} })
                     .attr("r", self.SNPsettings.circleSize)
                     .attr("cx", function(d) { return d.x; })
-                    .attr("cy", function(d) { return d.y; });
+                    .attr("cy", function(d) { return d.y; })
+                    .attr("opacity", function(d,i) { return d.snp_opacity; });
                }
               if(self.SNPsettings.SNPAnimationDisplay==true){
                 svg.append("g")
@@ -2615,6 +2617,7 @@ var BioCircos;
                     .attr("id", "BioCircosSNP")
                     .attr("fill", function(d,i) { if(d.snp_color!=undefined){return d.snp_color;}else{return self.SNPsettings.SNPFillColor;} })
                     .attr("r", self.SNPsettings.circleSize)
+                    .attr("opacity", function(d,i) { return d.snp_opacity; })
 		    .attr("cx",function(d){
 			    return 0;
 		    })
@@ -2708,6 +2711,7 @@ var BioCircos;
                     .attr("width", self.SNPsettings.rectWidth)
                     .attr("height", self.SNPsettings.rectHeight)
                     //.attr("fill", self.SNPsettings.SNPFillColor);
+                    .attr("opacity", function(d,i) { return d.snp_opacity; })
                     .attr("fill", function(d,i) { if(d.snp_color!=undefined){return d.snp_color;}else{return self.SNPsettings.SNPFillColor;} });
             }
 
