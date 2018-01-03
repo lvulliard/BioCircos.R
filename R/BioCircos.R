@@ -238,11 +238,11 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
     SNPMouseOverCircleOpacity = SNPMouseOverCircleOpacity,
     SNPMouseOverCircleStrokeColor = "#F26223",
     SNPMouseOverCircleStrokeWidth = 1,
-    SNPMouseOverTooltipsHtml01 =  SNPMouseOverTooltipsHtml01,
-    SNPMouseOverTooltipsHtml02 =  SNPMouseOverTooltipsHtml02,
-    SNPMouseOverTooltipsHtml03 =  SNPMouseOverTooltipsHtml03,
-    SNPMouseOverTooltipsHtml04 =  SNPMouseOverTooltipsHtml04,
-    SNPMouseOverTooltipsHtml05 =  SNPMouseOverTooltipsHtml05,
+    SNPMouseOverTooltipsHtml01 = SNPMouseOverTooltipsHtml01,
+    SNPMouseOverTooltipsHtml02 = SNPMouseOverTooltipsHtml02,
+    SNPMouseOverTooltipsHtml03 = SNPMouseOverTooltipsHtml03,
+    SNPMouseOverTooltipsHtml04 = SNPMouseOverTooltipsHtml04,
+    SNPMouseOverTooltipsHtml05 = SNPMouseOverTooltipsHtml05,
     SNPMouseOverTooltipsBorderWidth = SNPMouseOverTooltipsBorderWidth,
     zoom = zoom,
     TEXTModuleDragEvent = TEXTModuleDragEvent,
@@ -282,7 +282,7 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
     ARCMouseOutDisplay = ARCMouseOutDisplay,
     ARCMouseOutAnimationTime = 500,
     ARCMouseOutColor = ARCMouseOutColor,
-    ARCMouseOutArcOpacity = 1.0,
+    ARCMouseOutArcOpacity = "none",
     ARCMouseOutArcStrokeColor = "red",
     ARCMouseOutArcStrokeWidth = 0,
     ARCMouseUpDisplay = F,
@@ -507,6 +507,7 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
 #'  generate one color per arc, or a character object or vector of character objects stating RGB values in hexadecimal
 #'  format or base R colors. If the vector is shorter than the number of arcs, values will be repeated.
 #' @param labels One or multiple character objects to label each arc.
+#' @param opacities One or multiple opacity values for the arcs, between 0 and 1.
 #' 
 #' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
 #' 
@@ -517,7 +518,7 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
 #' 
 #' @export
 BioCircosArcTrack <- function(trackname, chromosomes, starts, ends,
-  colors = "#40B9D4", labels = "",
+  colors = "#40B9D4", labels = "", opacities = 1,
   maxRadius = 0.9, minRadius = 0.5, ...){
   
   # If colors is a palette, create corresponding color vector
@@ -528,8 +529,8 @@ BioCircosArcTrack <- function(trackname, chromosomes, starts, ends,
   # based on the inner and outer radii of the chromosome. Here we convert the arc coordinates to percentage of the space
   # inside the chromosome, based on the assumption that the inner and outer radii of the chromosome are respectively at 70
   # and 80 percents of the widget minimal dimension. The conversion to absolute values is performed on the JavaScript side. 
-  tabSNP = suppressWarnings(rbind(unname(chromosomes), unname(starts), unname(ends), unname(colors), unname(labels)))
-  rownames(tabSNP) = c("chr", "start", "end", "color", "des")
+  tabSNP = suppressWarnings(rbind(unname(chromosomes), unname(starts), unname(ends), unname(colors), unname(labels), unname(opacities)))
+  rownames(tabSNP) = c("chr", "start", "end", "color", "des", "opacity")
   track3 = unname(alply(tabSNP, 2, as.list))
 
   track = BioCircosTracklist() + list(list(track1, track2, track3))

@@ -38,9 +38,18 @@ To install this package, you can use CRAN (the central R package repository) to 
 	devtools::install_github('lvulliard/BioCircos.R', build_vignettes = TRUE))
 
 
+## Compatibility and troubleshooting
+
+Since the visualizations are powered by JavaScript, they are affected by the environment in which they are displayed.  
+If nothing shows up in a shiny application or an Rmarkdown document, try to update your web browser. 
+See the vignettes for examples of BioCircos plots that should be correctly displayed.
+
+
 ## Tutorial
 
 See the vignettes to learn how to use BioCircos visualizations.
+
+	vignette('BioCircos')
 
 
 ## Original work
@@ -54,6 +63,13 @@ http://bioinfo.ibp.ac.cn/biocircos/
 http://www.ncbi.nlm.nih.gov/pubmed/26819473
 
 Documentation: http://bioinfo.ibp.ac.cn/biocircos/document/index.html
+
+### Modifications
+
+The following features have been added to the original BioCircos.js library, based on version 1.1.2:
+
+* Parameter *snp_value_maxmin_instance* set by *SNPsettings.range* when provided, to allow the use of a pre-defined range of values for the SNP track.
+* Parameter *opacity* added to each arc.
 
 
 ## Contact

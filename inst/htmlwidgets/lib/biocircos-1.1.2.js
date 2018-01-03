@@ -1276,6 +1276,7 @@ var BioCircos;
                   arc_color: v.color,
                   arc_des: v.des,
                   arc_link: v.link,
+                  arc_opacity: v.opacity,
                   arc_click_label: "arc"+arci+"_"+i,
                 };
               });
@@ -1299,7 +1300,8 @@ var BioCircos;
                 .append("path")
                 .attr("class", "BioCircosARC")
                 .attr("fill", function(d,i) { return d.arc_color; })
-                .attr("d", function(d,i) { return arc(d,i); });
+                .attr("d", function(d,i) { return arc(d,i); })
+                .attr("opacity", function(d,i){ return d.arc_opacity; });
                 if(self.settings.ARCMouseClickTextFromData=="first"){
                     svg.append("g")
                         .attr("class", "BioCircosARClabel")
@@ -2561,7 +2563,6 @@ var BioCircos;
                 var snp_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
                 // Check if a range is given
                 if(self.SNPsettings.range){
-                  console.log(self.SNPsettings)
                   var snp_value_maxmin_instance = self.SNPsettings.range;
                 }
                 else{

@@ -167,12 +167,12 @@ By default, arcs display a tooltip when hovered by the mouse.
 ```{r}
 library(BioCircos)
 
-arcs_chromosomes = c('X', '2', '9') # Chromosomes on which the arcs should be displayed
-arcs_begin = c(1, 140253678, 20484611)
-arcs_end = c(155270560, 154978472, 42512974)
+arcs_chromosomes = c('X', 'X', '2', '9') # Chromosomes on which the arcs should be displayed
+arcs_begin = c(1, 45270560, 140253678, 20484611)
+arcs_end = c(155270560, 145270560, 154978472, 42512974)
 
 tracklist = BioCircosArcTrack('myArcTrack', arcs_chromosomes, arcs_begin, arcs_end,
-  minRadius = 1.18, maxRadius = 1.25)
+  minRadius = 1.18, maxRadius = 1.25, opacities = c(0.4, 0.4, 1, 0.8))
 
 BioCircos(tracklist, genomeFillColor = "PuOr",
   chrPad = 0.02, displayGenomeBorder = FALSE, yChr =  FALSE,
