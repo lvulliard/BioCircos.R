@@ -82,6 +82,21 @@
 #' @param LINKMouseOverTooltipsHtml02 Label displayed in tooltip in second position, after label.
 #' @param LINKMouseOverTooltipsBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
 #' 
+#' @param BARMouseOverDisplay Display the tooltip when mouse hover on a bar.
+#' @param BARMouseOverColor Color of the bar when hovered.
+#' @param BARMouseOverOpacity Opacity of the bar when hovered.
+#' @param BARMouseOverTooltipsHtml01 Label displayed in tooltip in first position, before chromosome number.
+#' @param BARMouseOverTooltipsHtml02 Label displayed in tooltip in second position, before start position.
+#' @param BARMouseOverTooltipsHtml03 Label displayed in tooltip in second position, before end position.
+#' @param BARMouseOverTooltipsHtml04 Label displayed in tooltip in third position, before value.
+#' @param BARMouseOverTooltipsHtml05 Label displayed in tooltip in fourth position, before labels if any.
+#' @param BARMouseOverTooltipsHtml06 Label displayed in tooltip in fifth position, after labels if any.
+#' @param BARMouseOverTooltipsHtmlBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
+#' 
+#' @param BARMouseOutDisplay Hide tooltip when mouse is not hovering a bar anymore.
+#' @param BARMouseOutColor Color of the bar when mouse is not hovering anymore, in hexadecimal
+#'  RGB format. To revert back to original color, use the value "none".
+#' 
 #' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 #'   string and have \code{'px'} appended.
@@ -121,6 +136,11 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
   LINKMouseOutDisplay = TRUE, LINKMouseOutStrokeColor = "none",
   LINKMouseOverTooltipsHtml01 = "Fusion: ", LINKMouseOverTooltipsHtml02 = "",
   LINKMouseOverTooltipsBorderWidth = "1px", LINKMouseOverStrokeWidth = 5, LINKMouseOutStrokeWidth = "none",
+  BARMouseOutDisplay = TRUE, BARMouseOutColor = "none", BARMouseOverDisplay = TRUE, BARMouseOverColor = "#FF0000",
+  BARMouseOverOpacity = 0.9,
+  BARMouseOverTooltipsHtml01 = "Chromosome: ", BARMouseOverTooltipsHtml02 = "<br/>Start: ",
+  BARMouseOverTooltipsHtml03 = " End: ", BARMouseOverTooltipsHtml04 = "<br/>Value:",  BARMouseOverTooltipsHtml05 = "",
+  BARMouseOverTooltipsHtml06 = "", BARMouseOverTooltipsBorderWidth = "1px",
   width = NULL, height = NULL, elementId = NULL, ...) {
 
   # If genome is a string, convert to corresponding chromosome lengths
@@ -327,9 +347,9 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
     HISTOGRAMMouseMoveOpacity = 1.0,
     HISTOGRAMMouseMoveStrokeColor = "none",
     HISTOGRAMMouseMoveStrokeWidth = "none",
-    HISTOGRAMMouseOutDisplay = F,
+    HISTOGRAMMouseOutDisplay = BARMouseOutDisplay,
     HISTOGRAMMouseOutAnimationTime = 500,
-    HISTOGRAMMouseOutColor = "red",
+    HISTOGRAMMouseOutColor = BARMouseOutColor,
     HISTOGRAMMouseOutOpacity = 1.0,
     HISTOGRAMMouseOutStrokeColor = "none",
     HISTOGRAMMouseOutStrokeWidth = "none",
@@ -338,21 +358,21 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
     HISTOGRAMMouseUpOpacity = 1.0,
     HISTOGRAMMouseUpStrokeColor = "none",
     HISTOGRAMMouseUpStrokeWidth = "none",
-    HISTOGRAMMouseOverDisplay = F,
-    HISTOGRAMMouseOverColor = "red",
-    HISTOGRAMMouseOverOpacity = 1.0,
+    HISTOGRAMMouseOverDisplay = BARMouseOverDisplay,
+    HISTOGRAMMouseOverColor = BARMouseOverColor,
+    HISTOGRAMMouseOverOpacity = BARMouseOverOpacity,
     HISTOGRAMMouseOverStrokeColor = "none",
     HISTOGRAMMouseOverStrokeWidth = "none",
-    HISTOGRAMMouseOverTooltipsHtml01 = "chr:",
-    HISTOGRAMMouseOverTooltipsHtml02 = "<br>position:",
-    HISTOGRAMMouseOverTooltipsHtml03 = "-",
-    HISTOGRAMMouseOverTooltipsHtml04 = "<br>name:",
-    HISTOGRAMMouseOverTooltipsHtml05 = "<br>value:",
-    HISTOGRAMMouseOverTooltipsHtml06 = "",
+    HISTOGRAMMouseOverTooltipsHtml01 = BARMouseOverTooltipsHtml01,
+    HISTOGRAMMouseOverTooltipsHtml02 = BARMouseOverTooltipsHtml02,
+    HISTOGRAMMouseOverTooltipsHtml03 = BARMouseOverTooltipsHtml03,
+    HISTOGRAMMouseOverTooltipsHtml04 = BARMouseOverTooltipsHtml04,
+    HISTOGRAMMouseOverTooltipsHtml05 = BARMouseOverTooltipsHtml05,
+    HISTOGRAMMouseOverTooltipsHtml06 = BARMouseOverTooltipsHtml06,
     HISTOGRAMMouseOverTooltipsPosition = "absolute",
     HISTOGRAMMouseOverTooltipsBackgroundColor = "white",
     HISTOGRAMMouseOverTooltipsBorderStyle = "solid",
-    HISTOGRAMMouseOverTooltipsBorderWidth = 0,
+    HISTOGRAMMouseOverTooltipsBorderWidth = BARMouseOverTooltipsBorderWidth,
     HISTOGRAMMouseOverTooltipsPadding = "3px",
     HISTOGRAMMouseOverTooltipsBorderRadius = "3px",
     HISTOGRAMMouseOverTooltipsOpacity = 0.8,
