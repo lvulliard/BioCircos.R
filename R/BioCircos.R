@@ -578,7 +578,8 @@ BioCircosBarTrack <- function(trackname, chromosomes, starts, ends, values,
   
   track1 = paste("HISTOGRAM", trackname, sep="_")
   track2 = list(maxRadius = maxRadius, minRadius = minRadius, 
-    histogramFillColor = color)
+    histogramFillColor = color,
+    range = range)
   tabHist = suppressWarnings(rbind(unname(chromosomes), unname(starts), unname(ends), unname(labels), unname(values)))
   rownames(tabHist) = c("chr", "start", "end", "name", "value")
   track3 = unname(alply(tabHist, 2, as.list))
