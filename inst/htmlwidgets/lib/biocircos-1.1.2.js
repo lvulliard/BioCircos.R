@@ -1487,13 +1487,6 @@ var BioCircos;
             function BioCircosHISTOGRAM(d) {
               return self.HISTOGRAM[histogrami].map(function(v, i) {
                 var histogram_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
-                if(self.HISTOGRAMsettings.range){
-                  var value_maxmin_instance = self.HISTOGRAMsettings.range.reverse();
-                }
-                else{
-                  var value_maxmin_instance = self.histogram_value_maxmin(self.HISTOGRAM[histogrami]);
-                }
-                console.log(value_maxmin_instance);
                 return {
                   startAngle: v.start * histogram_k + d[self.initGenome[v.chr]].startAngle,
                   endAngle: v.end * histogram_k + d[self.initGenome[v.chr]].startAngle,
@@ -1502,8 +1495,7 @@ var BioCircos;
                   histogram_end: v.end,
                   histogram_name: v.name,
                   histogram_link: v.link,
-                  histogram_value: v.value,
-                  histogram_value_maxmin_instance: value_maxmin_instance,
+                  histogram_value: v.value
                 };
               });
             }
@@ -1511,6 +1503,15 @@ var BioCircos;
             self.update_HISTOGRAMsettings(self.HISTOGRAMConfig[histogrami]);
 
             var histogram_objects = BioCircosHISTOGRAM(chord.groups())
+            
+            if(self.HISTOGRAMsettings.range){
+              var histogram_value_maxmin_instance = self.HISTOGRAMsettings.range;
+              histogram_value_maxmin_instance.reverse();
+            }
+            else{
+              var histogram_value_maxmin_instance = self.histogram_value_maxmin(self.HISTOGRAM[histogrami]);
+            }
+            console.log(histogram_value_maxmin_instance);
 
             svg.append("g")
                 .attr("class", "BioCircosHISTOGRAM")
@@ -1522,7 +1523,7 @@ var BioCircos;
                 .append("path")
                 .attr("class", "BioCircosHISTOGRAM")
                 .attr("fill", self.HISTOGRAMsettings.histogramFillColor)
-                .attr("d", d3.svg.arc().innerRadius(self.HISTOGRAMsettings.minRadius).outerRadius(function(d) {return self.HISTOGRAMsettings.minRadius + ((d.histogram_value-d.histogram_value_maxmin_instance[1])*(self.HISTOGRAMsettings.maxRadius-self.HISTOGRAMsettings.minRadius)/( d.histogram_value_maxmin_instance[0]- d.histogram_value_maxmin_instance[1]));}));
+                .attr("d", d3.svg.arc().innerRadius(self.HISTOGRAMsettings.minRadius).outerRadius(function(d) {return self.HISTOGRAMsettings.minRadius + ((d.histogram_value-histogram_value_maxmin_instance[1])*(self.HISTOGRAMsettings.maxRadius-self.HISTOGRAMsettings.minRadius)/( histogram_value_maxmin_instance[0] - histogram_value_maxmin_instance[1]));}));
             self.init_HISTOGRAMsettings();
 
         }

@@ -96,6 +96,8 @@ BioCircos(genome = myGenome, genomeFillColor = c("tomato2", "darkblue"),
   genomeTicksScale = 4e+3)
 ```
 
+Another use of a custom genome can be seen in the [Bar tracks section](#barSection).
+
 ### Tracklists
 
 The different levels of information will be displayed on different *tracks* of different types and located at different radii on the visualization. All the track-generating functions of this package return tracklists that can be added together into a single tracklist, to be given as the *tracks* argument of the *BioCircos* method.  
@@ -205,6 +207,41 @@ BioCircos(tracklist, genomeFillColor = "PuOr",
   chrPad = 0.02, displayGenomeBorder = FALSE, yChr =  FALSE,
   genomeTicksDisplay = FALSE,  genomeLabelTextSize = "8pt", genomeLabelDy = 0)
 ```
+
+## Bar tracks {#barSection}
+
+Bar plots may be added on another type of tracks. The start and end coordinates of each bar, as well as the associated value need to be specified.  
+By default, the radial range of the track will stretch from the minimal to the maximum value of the track, but other boundaries may be specified with the *range* parameter.  
+Here, to add a track to the tracklist at each iteration of the loop, we initialize the *tracks* tracklist with an empty *BioCircosTracklist* object.
+
+```{r figBarTrack, fig.width=4, fig.height=4, fig.align = 'center'}
+library(BioCircos)
+library(RColorBrewer)
+library(grDevices)
+
+# Define a custom genome
+genomeChr = LETTERS
+lengthChr = 5*1:length(genomeChr)
+names(lengthChr) <- genomeChr
+
+tracks = BioCircosTracklist()
+# Add one track for each chromosome
+for (i in 1:length(genomeChr)){
+  # Define histogram/bars to be displayed
+  nbBars = lengthChr[i] - 1
+  barValues = sapply(1:nbBars, function(x) 10 + nbBars%%x)
+  barColor = colorRampPalette(brewer.pal(8, "YlOrBr"))(length(genomeChr))[i]
+  # Add a track with bars on the i-th chromosome
+  tracks = tracks + BioCircosBarTrack(paste0("bars", i), chromosome = genomeChr[i], starts = 1:nbBars, 
+    ends = 1 + (1:nbBars), values = barValues, color = barColor, range = c(5,75))
+}
+
+# Add background
+tracks = tracks + BioCircosBackgroundTrack("bars_background", colors = "#2222EE")
+
+BioCircos(tracks, genomeFillColor = "YlOrBr", genome = as.list(lengthChr), genomeTicksDisplay = F, genomeLabelDy = 0)
+```
+
 
 
 ## Removing track
