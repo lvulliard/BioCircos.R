@@ -301,6 +301,61 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
     ARCMouseOverTooltipsHtml04 =  ARCMouseOverTooltipsHtml04,
     ARCMouseOverTooltipsHtml05 =  ARCMouseOverTooltipsHtml05,
     ARCMouseOverTooltipsBorderWidth = ARCMouseOverTooltipsBorderWidth,
+    HISTOGRAMMouseEvent = T,
+    HISTOGRAMMouseClickDisplay = F,
+    HISTOGRAMMouseClickColor = "red",
+    HISTOGRAMMouseClickOpacity = 1.0,
+    HISTOGRAMMouseClickStrokeColor = "none",
+    HISTOGRAMMouseClickStrokeWidth = "none",
+    HISTOGRAMMouseDownDisplay = F,
+    HISTOGRAMMouseDownColor = "red",
+    HISTOGRAMMouseDownOpacity = 1.0,
+    HISTOGRAMMouseDownStrokeColor = "none",
+    HISTOGRAMMouseDownStrokeWidth = "none",
+    HISTOGRAMMouseEnterDisplay = F,
+    HISTOGRAMMouseEnterColor = "red",
+    HISTOGRAMMouseEnterOpacity = 1.0,
+    HISTOGRAMMouseEnterStrokeColor = "none",
+    HISTOGRAMMouseEnterStrokeWidth = "none",
+    HISTOGRAMMouseLeaveDisplay = F,
+    HISTOGRAMMouseLeaveColor = "red",
+    HISTOGRAMMouseLeaveOpacity = 1.0,
+    HISTOGRAMMouseLeaveStrokeColor = "none",
+    HISTOGRAMMouseLeaveStrokeWidth = "none",
+    HISTOGRAMMouseMoveDisplay = F,
+    HISTOGRAMMouseMoveColor = "red",
+    HISTOGRAMMouseMoveOpacity = 1.0,
+    HISTOGRAMMouseMoveStrokeColor = "none",
+    HISTOGRAMMouseMoveStrokeWidth = "none",
+    HISTOGRAMMouseOutDisplay = F,
+    HISTOGRAMMouseOutAnimationTime = 500,
+    HISTOGRAMMouseOutColor = "red",
+    HISTOGRAMMouseOutOpacity = 1.0,
+    HISTOGRAMMouseOutStrokeColor = "none",
+    HISTOGRAMMouseOutStrokeWidth = "none",
+    HISTOGRAMMouseUpDisplay = F,
+    HISTOGRAMMouseUpColor = "red",
+    HISTOGRAMMouseUpOpacity = 1.0,
+    HISTOGRAMMouseUpStrokeColor = "none",
+    HISTOGRAMMouseUpStrokeWidth = "none",
+    HISTOGRAMMouseOverDisplay = F,
+    HISTOGRAMMouseOverColor = "red",
+    HISTOGRAMMouseOverOpacity = 1.0,
+    HISTOGRAMMouseOverStrokeColor = "none",
+    HISTOGRAMMouseOverStrokeWidth = "none",
+    HISTOGRAMMouseOverTooltipsHtml01 = "chr:",
+    HISTOGRAMMouseOverTooltipsHtml02 = "<br>position:",
+    HISTOGRAMMouseOverTooltipsHtml03 = "-",
+    HISTOGRAMMouseOverTooltipsHtml04 = "<br>name:",
+    HISTOGRAMMouseOverTooltipsHtml05 = "<br>value:",
+    HISTOGRAMMouseOverTooltipsHtml06 = "",
+    HISTOGRAMMouseOverTooltipsPosition = "absolute",
+    HISTOGRAMMouseOverTooltipsBackgroundColor = "white",
+    HISTOGRAMMouseOverTooltipsBorderStyle = "solid",
+    HISTOGRAMMouseOverTooltipsBorderWidth = 0,
+    HISTOGRAMMouseOverTooltipsPadding = "3px",
+    HISTOGRAMMouseOverTooltipsBorderRadius = "3px",
+    HISTOGRAMMouseOverTooltipsOpacity = 0.8,
     LINKMouseEvent = T,
     LINKMouseClickDisplay = F,
     LINKMouseClickColor = "red",
@@ -494,15 +549,54 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
   return(track)
 }
 
+
+#' Create a track with a bar plot to be added to a BioCircos tracklist
+#'
+#' Bins are defined by a genomic range and associated with a numerical value
+#' 
+#' @param trackname The name of the new track.
+#' 
+#' @param chromosomes A vector containing the chromosomes on which each bar is found.
+#'  Values should match the chromosome names given in the genome parameter of the BioCircos function.
+#' @param starts,ends Vectors containing the coordinates on which each bin begins or ends.
+#' @param values A vector of numerical values associated with each bin, used to determine the 
+#'  height of each bar on the track.
+#' 
+#' @param labels One or multiple character objects to label each bar.
+#' 
+#' @param range a vector of the values to be mapped to the minimum and maximum radii of the track.
+#'  Default to 0, mapping the minimal and maximal values input in the values parameter.
+#' @param color The color for the bars, in hexadecimal RGB format.
+#' 
+#' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
+#' 
+#' @param ... Ignored
+#' 
+#' @export
+BioCircosBarTrack <- function(trackname, chromosomes, starts, ends, values,
+  labels = "", maxRadius = 0.9, minRadius = 0.5, color = "#40B9D4", range = 0, ...){
+  
+  track1 = paste("HISTOGRAM", trackname, sep="_")
+  track2 = list(maxRadius = maxRadius, minRadius = minRadius, 
+    histogramFillColor = color)
+  tabHist = suppressWarnings(rbind(unname(chromosomes), unname(starts), unname(ends), unname(labels), unname(values)))
+  rownames(tabHist) = c("chr", "start", "end", "name", "value")
+  track3 = unname(alply(tabHist, 2, as.list))
+
+  track = BioCircosTracklist() + list(list(track1, track2, track3))
+  return(track)
+}
+
+
 #' Create a track with arcs to be added to a BioCircos tracklist
 #'
 #' Arcs are defined by beginning and ending genomic coordinates
 #' 
 #' @param trackname The name of the new track.
 #' 
-#' @param chromosomes A vector containing the chromosomes on which each arcs are found.
+#' @param chromosomes A vector containing the chromosomes on which each arc is found.
 #'  Values should match the chromosome names given in the genome parameter of the BioCircos function.
-#' @param starts,ends Vectors containing the coordinates on which each arcs begin or end.
+#' @param starts,ends Vectors containing the coordinates on which each arc begins or ends.
 #'  Values should be inferior to the chromosome lengths given in the genome parameter of the BioCircos function.
 #' 
 #' @param colors The colors for each arc. Can be a RColorBrewer palette name used to

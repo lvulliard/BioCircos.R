@@ -85,3 +85,5 @@ This work is described in the following scientific article: BioCircos.js: an Int
 This package relies on several open source projects other R packages, and is made possible thanks to **shiny** and **htmlwidgets**. 
 
 The package **heatmaply** was used as a model for this vignette, as well as for the **htmlwidgets** configuration.
+
+[![](https://cranlogs.r-pkg.org/badges/BioCircos)](https://cran.r-project.org/package=BioCircos)
