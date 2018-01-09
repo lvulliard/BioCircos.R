@@ -609,6 +609,50 @@ BioCircosBarTrack <- function(trackname, chromosomes, starts, ends, values,
 }
 
 
+#' Create a heatmap track to be added to a BioCircos tracklist
+#'
+#' Heatmaps are defined by the genomic range and the color-associated numerical value
+#'  of each box of the heatmap layer
+#' 
+#' @param trackname The name of the new track.
+#' 
+#' @param chromosomes A vector containing the chromosomes on which each box is found.
+#'  Values should match the chromosome names given in the genome parameter of the BioCircos function.
+#' @param starts,ends Vectors containing the coordinates on which each box begins or ends.
+#' @param values A vector of numerical values associated with each box, used to determine the 
+#'  height of each bar on the track.
+#' 
+#' @param labels One or multiple character objects to label each bar.
+#' 
+#' @param range a vector of the values to be mapped to the minimum and maximum colors of the track.
+#'  Default to 0, mapping the minimal and maximal values input in the values parameter.
+#' @param color a vector of the colors in hexadecimal RGB format to be mapped to the minimum and 
+#'  maximum values of the track.
+#'  Colors of intermediate values will be linearly interpolated between this two colors.
+#' 
+#' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
+#' 
+#' @param ... Ignored
+#' 
+#' @export
+BioCircosHeatmapTrack <- function(trackname, chromosomes, starts, ends, values,
+  labels = "", maxRadius = 0.9, minRadius = 0.5, color = c("#40B9D4", "#F8B100"), range = 0, ...){
+  
+  track1 = paste("HEATMAP", trackname, sep="_")
+  track2 = list(outerRadius = maxRadius - 8/7, innerRadius = minRadius - 1,
+       minColor = color[1], maxColor = color[2])  # In JS lib the innerRadius and outerRadius are
+  # based on the inner and outer radii of the chromosome. Here we convert the arc coordinates to percentage of the space
+  # inside the chromosome, based on the assumption that the inner and outer radii of the chromosome are respectively at 70
+  # and 80 percents of the widget minimal dimension. The conversion to absolute values is performed on the JavaScript side. 
+  tabHeat = suppressWarnings(rbind(unname(chromosomes), unname(starts), unname(ends), unname(labels), unname(values)))
+  rownames(tabHeat) = c("chr", "start", "end", "name", "value")
+  track3 = unname(alply(tabHeat, 2, as.list))
+
+  track = BioCircosTracklist() + list(list(track1, track2, track3))
+  return(track)
+}
+
+
 #' Create a track with arcs to be added to a BioCircos tracklist
 #'
 #' Arcs are defined by beginning and ending genomic coordinates

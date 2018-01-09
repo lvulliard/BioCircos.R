@@ -232,8 +232,8 @@ for (i in 1:length(genomeChr)){
   barValues = sapply(1:nbBars, function(x) 10 + nbBars%%x)
   barColor = colorRampPalette(brewer.pal(8, "YlOrBr"))(length(genomeChr))[i]
   # Add a track with bars on the i-th chromosome
-  tracks = tracks + BioCircosBarTrack(paste0("bars", i), chromosome = genomeChr[i], starts = 1:nbBars, 
-    ends = 1 + (1:nbBars), values = barValues, color = barColor, range = c(5,75))
+  tracks = tracks + BioCircosBarTrack(paste0("bars", i), chromosome = genomeChr[i], starts = (1:nbBars) - 1, 
+    ends = 1:nbBars, values = barValues, color = barColor, range = c(5,75))
 }
 
 # Add background
@@ -242,6 +242,34 @@ tracks = tracks + BioCircosBackgroundTrack("bars_background", colors = "#2222EE"
 BioCircos(tracks, genomeFillColor = "YlOrBr", genome = as.list(lengthChr), genomeTicksDisplay = F, genomeLabelDy = 0)
 ```
 
+## Heatmap tracks {#heatSection}
+
+For a given genome stretch, heatmaps associate linearly numerical values with a color range.  
+For two-dimensional heatmaps, you can stack up *heatmap tracks*, as done in the following example.  
+
+```{r}
+library(BioCircos)
+
+# Define a custom genome
+genomeChr = LETTERS[1:10]
+lengthChr = 5*1:length(genomeChr)
+names(lengthChr) <- genomeChr
+
+# Define boxes positions
+boxPositions = unlist(sapply(lengthChr, seq))
+boxChromosomes = rep(genomeChr, lengthChr)
+
+# Define values for two heatmap tracks
+boxVal1 = boxPositions %% 13 / 13
+boxVal2 = (7 + boxPositions) %% 17 / 17
+
+tracks = BioCircosHeatmapTrack("heatmap1", boxChromosomes, boxPositions - 1, boxPositions,
+  boxVal1, minRadius = 0.6, maxRadius = 0.75)
+tracks = tracks + BioCircosHeatmapTrack("heatmap1", boxChromosomes, boxPositions - 1, boxPositions, 
+  boxVal2, minRadius = 0.75, maxRadius = 0.9, color = c("#FFAAAA", "#000000"))
+
+BioCircos(tracks, genome = as.list(lengthChr), genomeTicksDisplay = F, genomeLabelDy = 0)
+```
 
 
 ## Removing track
