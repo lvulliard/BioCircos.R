@@ -640,7 +640,7 @@ BioCircosHeatmapTrack <- function(trackname, chromosomes, starts, ends, values,
   
   track1 = paste("HEATMAP", trackname, sep="_")
   track2 = list(outerRadius = maxRadius - 8/7, innerRadius = minRadius - 1,
-       minColor = color[1], maxColor = color[2])  # In JS lib the innerRadius and outerRadius are
+       minColor = color[1], maxColor = color[2], range = range)  # In JS lib the innerRadius and outerRadius are
   # based on the inner and outer radii of the chromosome. Here we convert the arc coordinates to percentage of the space
   # inside the chromosome, based on the assumption that the inner and outer radii of the chromosome are respectively at 70
   # and 80 percents of the widget minimal dimension. The conversion to absolute values is performed on the JavaScript side. 

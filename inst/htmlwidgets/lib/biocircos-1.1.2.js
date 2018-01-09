@@ -1511,8 +1511,7 @@ var BioCircos;
             else{
               var histogram_value_maxmin_instance = self.histogram_value_maxmin(self.HISTOGRAM[histogrami]);
             }
-            console.log(histogram_value_maxmin_instance);
-
+            
             svg.append("g")
                 .attr("class", "BioCircosHISTOGRAM")
                 .selectAll("path.BioCircosHISTOGRAM")
@@ -2026,6 +2025,14 @@ var BioCircos;
             var HeatmapMinColor = d3.rgb(self.HEATMAPsettings.minColor);
             var HeatmapValue2Color = d3.interpolate(HeatmapMinColor,HeatmapMaxColor);
 
+            if(self.HEATMAPsettings.range){
+              var heatmap_value_maxmin_instance = self.HEATMAPsettings.range;
+              heatmap_value_maxmin_instance.reverse();
+            }
+            else{
+              var heatmap_value_maxmin_instance = self.heatmap_value_maxmin(self.HEATMAP[heatmapi]);
+            }
+
             var heatmap = d3.svg.arc().innerRadius(innerRadius+self.HEATMAPsettings.innerRadius).outerRadius(outerRadius+self.HEATMAPsettings.outerRadius);
             svg.append("g")
                 .attr("class", "BioCircosHEATMAP")
@@ -2034,7 +2041,7 @@ var BioCircos;
                   .enter()
                 .append("path")
                 .attr("class", "BioCircosHEATMAP")
-                .attr("fill", function(d,i) { return HeatmapValue2Color((d.heatmap_value - self.heatmap_value_maxmin(self.HEATMAP[heatmapi])[1])/(self.heatmap_value_maxmin(self.HEATMAP[heatmapi])[0]-self.heatmap_value_maxmin(self.HEATMAP[heatmapi])[1])); })
+                .attr("fill", function(d,i) { return HeatmapValue2Color((d.heatmap_value - heatmap_value_maxmin_instance[1])/(heatmap_value_maxmin_instance[0]-heatmap_value_maxmin_instance[1])); })
                 .attr("d", function(d,i) { return heatmap(d,i); });
             self.init_HEATMAPsettings();
 
