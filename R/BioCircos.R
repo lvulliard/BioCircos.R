@@ -466,7 +466,61 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
     LINKMouseOverTooltipsHtml02 =  LINKMouseOverTooltipsHtml02,
     LINKMouseOverStrokeWidth = LINKMouseOverStrokeWidth,
     LINKMouseOutStrokeWidth = LINKMouseOutStrokeWidth,
-    LINKMouseOverTooltipsBorderWidth = LINKMouseOverTooltipsBorderWidth
+    LINKMouseOverTooltipsBorderWidth = LINKMouseOverTooltipsBorderWidth,
+    LINEMouseEvent = T,
+    LINEMouseClickDisplay = F,
+    LINEMouseClickLineOpacity = 1,
+    LINEMouseClickLineStrokeColor = "red",
+    LINEMouseClickLineStrokeWidth = "none",
+    LINEMouseDownDisplay = F,
+    LINEMouseDownLineOpacity = 1,
+    LINEMouseDownLineStrokeColor = "red",
+    LINEMouseDownLineStrokeWidth = "none",
+    LINEMouseEnterDisplay = F,
+    LINEMouseEnterLineOpacity = 1,
+    LINEMouseEnterLineStrokeColor = "red",
+    LINEMouseEnterLineStrokeWidth = "none",
+    LINEMouseLeaveDisplay = F,
+    LINEMouseLeaveLineOpacity = 1,
+    LINEMouseLeaveLineStrokeColor = "red",
+    LINEMouseLeaveLineStrokeWidth = "none",
+    LINEMouseMoveDisplay = F,
+    LINEMouseMoveLineOpacity = 1,
+    LINEMouseMoveLineStrokeColor = "red",
+    LINEMouseMoveLineStrokeWidth = "none",
+    LINEMouseOutDisplay = F,
+    LINEMouseOutAnimationTime = 500,
+    LINEMouseOutLineOpacity = 1.0,
+    LINEMouseOutLineStrokeColor = "red",
+    LINEMouseOutLineStrokeWidth = "none",
+    LINEMouseUpDisplay = F,
+    LINEMouseUpLineOpacity = 1,
+    LINEMouseUpLineStrokeColor = "red",
+    LINEMouseUpLineStrokeWidth = "none",
+    LINEMouseOverDisplay = F,
+    LINEMouseOverLineOpacity = 1,
+    LINEMouseOverLineStrokeColor = "red",
+    LINEMouseOverLineStrokeWidth = "none",
+    LINEMouseOverTooltipsHtml01 = "Line",
+    LINEMouseOverTooltipsPosition = "absolute",
+    LINEMouseOverTooltipsBackgroundColor = "white",
+    LINEMouseOverTooltipsBorderStyle = "solid",
+    LINEMouseOverTooltipsBorderWidth = 0,
+    LINEMouseOverTooltipsPadding = "3px",
+    LINEMouseOverTooltipsBorderRadius = "3px",
+    LINEMouseOverTooltipsOpacity = 0.8
+    # SNPMouseOutDisplay = SNPMouseOutDisplay,
+    # SNPMouseOutColor = SNPMouseOutColor,
+    # SNPMouseOverDisplay = SNPMouseOverDisplay,
+    # SNPMouseOverColor = SNPMouseOverColor,
+    # SNPMouseOverCircleSize = SNPMouseOverCircleSize,
+    # SNPMouseOverCircleOpacity = SNPMouseOverCircleOpacity,
+    # SNPMouseOverTooltipsHtml01 = SNPMouseOverTooltipsHtml01,
+    # SNPMouseOverTooltipsHtml02 = SNPMouseOverTooltipsHtml02,
+    # SNPMouseOverTooltipsHtml03 = SNPMouseOverTooltipsHtml03,
+    # SNPMouseOverTooltipsHtml04 = SNPMouseOverTooltipsHtml04,
+    # SNPMouseOverTooltipsHtml05 = SNPMouseOverTooltipsHtml05,
+    # SNPMouseOverTooltipsBorderWidth = SNPMouseOverTooltipsBorderWidth,
   )
 
   # create widget
@@ -623,6 +677,49 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
   tabSNP = suppressWarnings(rbind(unname(chromosomes), unname(positions), unname(values), unname(colors), 
     unname(labels), unname(opacities)))
   rownames(tabSNP) = c("chr", "pos", "value", "color", "des", "opacity")
+  track3 = unname(alply(tabSNP, 2, as.list))
+
+  track = BioCircosTracklist() + list(list(track1, track2, track3))
+  return(track)
+}
+
+
+#' Create a track with lines to be added to a BioCircos tracklist
+#'
+#' Lines are defined by genomic coordinates and values of an ordered set of points,
+#'  that will define the edges of the segments.
+#' 
+#' @param trackname The name of the new track.
+#' 
+#' @param chromosomes A vector containing the chromosomes on which each vertex is found.
+#'  Values should match the chromosome names given in the genome parameter of the BioCircos function.
+#' @param positions A vector containing the coordinates on which each vertex are found.
+#'  Values should be inferior to the chromosome lengths given in the genome parameter of the BioCircos function.
+#' @param values A vector of numerical values associated with each vertex, used to determine the 
+#'  radial coordinate of each vertex on the visualization.
+#' 
+#' @param color The color of the line in hexadecimal RGB format.
+#' @param width The line width.
+#' 
+#' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
+#' @param range a vector of the values to be mapped to the minimum and maximum radii of the track.
+#'  Default to 0, mapping the minimal and maximal values input in the values parameter.
+#' 
+#' @param ... Ignored
+#' 
+#' @examples
+#' BioCircos(BioCircosLineTrack('LnId', rep(1,30), 2e+6*(1:100), log(1:100)) + BioCircosBackgroundTrack('BGId'))
+#' 
+#' @export
+BioCircosLineTrack <- function(trackname, chromosomes, positions, values, color = "#40B9D4", 
+    width = 2, maxRadius = 0.9, minRadius = 0.5, range = 0, ...){
+  track1 = paste("LINE", trackname, sep="_")
+  track2 = list(maxRadius = maxRadius, minRadius = minRadius, 
+    LineColor = color,
+    LineWidth = width,
+    range = range)
+  tabSNP = suppressWarnings(rbind(unname(chromosomes), unname(positions), unname(values)))
+  rownames(tabSNP) = c("chr", "pos", "value")
   track3 = unname(alply(tabSNP, 2, as.list))
 
   track = BioCircosTracklist() + list(list(track1, track2, track3))
