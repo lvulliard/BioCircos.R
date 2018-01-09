@@ -88,9 +88,9 @@
 #' @param BARMouseOverTooltipsHtml01 Label displayed in tooltip in first position, before chromosome number.
 #' @param BARMouseOverTooltipsHtml02 Label displayed in tooltip in second position, before start position.
 #' @param BARMouseOverTooltipsHtml03 Label displayed in tooltip in second position, before end position.
-#' @param BARMouseOverTooltipsHtml04 Label displayed in tooltip in third position, before value.
-#' @param BARMouseOverTooltipsHtml05 Label displayed in tooltip in fourth position, before labels if any.
-#' @param BARMouseOverTooltipsHtml06 Label displayed in tooltip in fifth position, after labels if any.
+#' @param BARMouseOverTooltipsHtml04 Label displayed in tooltip in third position, before labels if any.
+#' @param BARMouseOverTooltipsHtml05 Label displayed in tooltip in fourth position, before values.
+#' @param BARMouseOverTooltipsHtml06 Label displayed in tooltip in fifth position, after values.
 #' @param BARMouseOverTooltipsHtmlBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
 #' 
 #' @param BARMouseOutDisplay Hide tooltip when mouse is not hovering a bar anymore.
@@ -139,7 +139,7 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
   BARMouseOutDisplay = TRUE, BARMouseOutColor = "none", BARMouseOverDisplay = TRUE, BARMouseOverColor = "#FF0000",
   BARMouseOverOpacity = 0.9,
   BARMouseOverTooltipsHtml01 = "Chromosome: ", BARMouseOverTooltipsHtml02 = "<br/>Start: ",
-  BARMouseOverTooltipsHtml03 = " End: ", BARMouseOverTooltipsHtml04 = "<br/>Value:",  BARMouseOverTooltipsHtml05 = "",
+  BARMouseOverTooltipsHtml03 = " End: ", BARMouseOverTooltipsHtml04 = "<br/>",  BARMouseOverTooltipsHtml05 = "<br/>Value: ",
   BARMouseOverTooltipsHtml06 = "", BARMouseOverTooltipsBorderWidth = "1px",
   width = NULL, height = NULL, elementId = NULL, ...) {
 
@@ -592,6 +592,10 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
 #' 
 #' @param ... Ignored
 #' 
+#' @examples
+#' BioCircos(BioCircosBarTrack('BarTrack', chromosomes = 1:3, starts = 1e+7*2:4, ends = 2.5e+7*2:4, 
+#'   values = 1:3, labels = c('A ', 'B ', 'C '), range = c(0,4)) + BioCircosBackgroundTrack('BGTrack'))
+#' 
 #' @export
 BioCircosBarTrack <- function(trackname, chromosomes, starts, ends, values,
   labels = "", maxRadius = 0.9, minRadius = 0.5, color = "#40B9D4", range = 0, ...){
@@ -633,6 +637,10 @@ BioCircosBarTrack <- function(trackname, chromosomes, starts, ends, values,
 #' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
 #' 
 #' @param ... Ignored
+#' 
+#' @examples
+#' BioCircos(BioCircosHeatmapTrack('HmTrack', chromosomes = 1:3, starts = 1e+7*2:4, ends = 2.5e+7*2:4, 
+#'   values = 1:3, labels = c('A ', 'B ', 'C ')))
 #' 
 #' @export
 BioCircosHeatmapTrack <- function(trackname, chromosomes, starts, ends, values,
