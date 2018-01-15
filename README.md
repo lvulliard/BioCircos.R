@@ -44,6 +44,11 @@ Since the visualizations are powered by JavaScript, they are affected by the env
 If nothing shows up in a shiny application or an Rmarkdown document, try to update your web browser. 
 See the vignettes for examples of BioCircos plots that should be correctly displayed.
 
+### Obseved behavior
+
+* Firefox 55, Chrome 54 and later versions work as expected.
+* Firefox 46, Chrome 53 and past versions do not display the plots at all.
+* Firefox 47 to 54 do not include all features, such as zooming.
 
 ## Tutorial
 
