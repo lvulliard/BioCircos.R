@@ -68,6 +68,19 @@
 #' @param ARCMouseOverTooltipsHtml05 Label displayed in tooltip in fifth position, after ARC labels if any.
 #' @param ARCMouseOverTooltipsBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
 #' 
+#' @param LINEMouseOverDisplay Display the tooltip when mouse hover on a line.
+#' @param LINEMouseOverLineOpacity Opacity of the line when hovered by the mouse, in hexadecimal RGB format.
+#' @param LINEMouseOverLineStrokeColor Color of the line when hovered by the mouse, in hexadecimal RGB format.
+#' @param LINEMouseOverLineStrokeWidth Width of the line when hovered by the mouse, in hexadecimal RGB format.
+#' @param LINEMouseOverTooltipsHtml01 Label displayed in tooltip.
+#' @param LINEMouseOverTooltipsBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
+#' 
+#' @param LINEMouseOutDisplay Hide tooltip when mouse is not hovering a line anymore.
+#' @param LINEMouseOutLineOpacity Opacity of the line when mouse is not hovering a link anymore.
+#' @param LINEMouseOutLineStrokeColor Color of the line when mouse is not hovering anymore, in hexadecimal
+#'  RGB format. To revert back to original color, use the value "none".
+#' @param LINEMouseOutLineStrokeWidth Thickness of the line when mouse is not hovering a link anymore.
+#' 
 #' @param LINKMouseOverDisplay Display the tooltip when mouse hover on a link.
 #' @param LINKMouseOverStrokeColor Color of the link when hovered.
 #' @param LINKMouseOverOpacity Opacity of the link when hovered.
@@ -146,7 +159,10 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
   HEATMAPMouseOverTooltipsHtml01 = "Chromosome: ", HEATMAPMouseOverTooltipsHtml02 = "<br/>Start: ",
   HEATMAPMouseOverTooltipsHtml03 = " End: ", HEATMAPMouseOverTooltipsHtml04 = "<br/>",  HEATMAPMouseOverTooltipsHtml05 = "<br/>Value: ",
   HEATMAPMouseOverTooltipsHtml06 = "", HEATMAPMouseOverTooltipsBorderWidth = "1px",
-  width = NULL, height = NULL, elementId = NULL, ...) {
+  LINEMouseOutDisplay = TRUE, LINEMouseOutLineOpacity = "none", LINEMouseOutLineStrokeColor = "none",
+  LINEMouseOutLineStrokeWidth = "none", LINEMouseOverDisplay = T, LINEMouseOverLineOpacity = 1,
+  LINEMouseOverLineStrokeColor = "red", LINEMouseOverLineStrokeWidth = "none", LINEMouseOverTooltipsHtml01 = "Line",
+  LINEMouseOverTooltipsBorderWidth = 0, width = NULL, height = NULL, elementId = NULL, ...) {
 
   # If genome is a string, convert to corresponding chromosome lengths
   if(class(genome) == "character"){
@@ -488,39 +504,27 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
     LINEMouseMoveLineOpacity = 1,
     LINEMouseMoveLineStrokeColor = "red",
     LINEMouseMoveLineStrokeWidth = "none",
-    LINEMouseOutDisplay = F,
+    LINEMouseOutDisplay = LINEMouseOutDisplay,
     LINEMouseOutAnimationTime = 500,
-    LINEMouseOutLineOpacity = 1.0,
-    LINEMouseOutLineStrokeColor = "red",
-    LINEMouseOutLineStrokeWidth = "none",
+    LINEMouseOutLineOpacity = LINEMouseOutLineOpacity,
+    LINEMouseOutLineStrokeColor = LINEMouseOutLineStrokeColor,
+    LINEMouseOutLineStrokeWidth = LINEMouseOutLineStrokeWidth,
     LINEMouseUpDisplay = F,
     LINEMouseUpLineOpacity = 1,
     LINEMouseUpLineStrokeColor = "red",
     LINEMouseUpLineStrokeWidth = "none",
-    LINEMouseOverDisplay = F,
-    LINEMouseOverLineOpacity = 1,
-    LINEMouseOverLineStrokeColor = "red",
-    LINEMouseOverLineStrokeWidth = "none",
-    LINEMouseOverTooltipsHtml01 = "Line",
+    LINEMouseOverDisplay = LINEMouseOverDisplay,
+    LINEMouseOverLineOpacity = LINEMouseOverLineOpacity,
+    LINEMouseOverLineStrokeColor = LINEMouseOverLineStrokeColor,
+    LINEMouseOverLineStrokeWidth = LINEMouseOverLineStrokeWidth,
+    LINEMouseOverTooltipsHtml01 = LINEMouseOverTooltipsHtml01,
     LINEMouseOverTooltipsPosition = "absolute",
     LINEMouseOverTooltipsBackgroundColor = "white",
     LINEMouseOverTooltipsBorderStyle = "solid",
-    LINEMouseOverTooltipsBorderWidth = 0,
+    LINEMouseOverTooltipsBorderWidth = LINEMouseOverTooltipsBorderWidth,
     LINEMouseOverTooltipsPadding = "3px",
     LINEMouseOverTooltipsBorderRadius = "3px",
     LINEMouseOverTooltipsOpacity = 0.8
-    # SNPMouseOutDisplay = SNPMouseOutDisplay,
-    # SNPMouseOutColor = SNPMouseOutColor,
-    # SNPMouseOverDisplay = SNPMouseOverDisplay,
-    # SNPMouseOverColor = SNPMouseOverColor,
-    # SNPMouseOverCircleSize = SNPMouseOverCircleSize,
-    # SNPMouseOverCircleOpacity = SNPMouseOverCircleOpacity,
-    # SNPMouseOverTooltipsHtml01 = SNPMouseOverTooltipsHtml01,
-    # SNPMouseOverTooltipsHtml02 = SNPMouseOverTooltipsHtml02,
-    # SNPMouseOverTooltipsHtml03 = SNPMouseOverTooltipsHtml03,
-    # SNPMouseOverTooltipsHtml04 = SNPMouseOverTooltipsHtml04,
-    # SNPMouseOverTooltipsHtml05 = SNPMouseOverTooltipsHtml05,
-    # SNPMouseOverTooltipsBorderWidth = SNPMouseOverTooltipsBorderWidth,
   )
 
   # create widget
