@@ -1790,6 +1790,13 @@ var BioCircos;
             function BioCircosCnv(d) {
               return self.CNV[cnvi].map(function(v, i) {
                 var cnv_k = (d[self.initGenome[v.chr]].endAngle - d[self.initGenome[v.chr]].startAngle) / d[self.initGenome[v.chr]].value;
+                // Check if a range is given
+                if(self.CNVsettings.range){
+                  var cnv_value_maxmin_instance = self.CNVsettings.range;
+                }
+                else{
+                  var cnv_value_maxmin_instance = self.cnv_value_maxmin(self.CNV[cnvi]);
+                }
                 return {
                   startAngle: v.start * cnv_k + d[self.initGenome[v.chr]].startAngle,
                   endAngle: v.end * cnv_k + d[self.initGenome[v.chr]].startAngle,
@@ -1799,7 +1806,7 @@ var BioCircos;
                   cnv_val: v.value,
                   cnv_link: v.link,
                   cnv_click_label: "cnv"+cnvi+"_"+i,
-                  cnv_deviation: (v.value-self.cnv_value_maxmin(self.CNV[cnvi])[1])/(self.cnv_value_maxmin(self.CNV[cnvi])[0]-self.cnv_value_maxmin(self.CNV[cnvi])[1])*(self.CNVsettings.maxRadius-self.CNVsettings.minRadius)
+                  cnv_deviation: (v.value-cnv_value_maxmin_instance[1])/(cnv_value_maxmin_instance[0]-cnv_value_maxmin_instance[1])*(self.CNVsettings.maxRadius-self.CNVsettings.minRadius)
 
                 };
               });

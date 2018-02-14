@@ -714,7 +714,7 @@ BioCircosTextTrack <- function(trackname, text,
 #' @param shape Shape of the points. Can be "circle" or "rect".
 #' 
 #' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
-#' @param range a vector of the values to be mapped to the minimum and maximum radii of the track.
+#' @param range Vector of values to be mapped to the minimum and maximum radii of the track.
 #'  Default to 0, mapping the minimal and maximal values input in the values parameter.
 #' 
 #' @param ... Ignored
@@ -767,7 +767,7 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
 #' @param width The line width.
 #' 
 #' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
-#' @param range a vector of the values to be mapped to the minimum and maximum radii of the track.
+#' @param range Vector of values to be mapped to the minimum and maximum radii of the track.
 #'  Default to 0, mapping the minimal and maximal values input in the values parameter.
 #' 
 #' @param ... Ignored
@@ -806,7 +806,7 @@ BioCircosLineTrack <- function(trackname, chromosomes, positions, values, color 
 #' 
 #' @param labels One or multiple character objects to label each bar.
 #' 
-#' @param range a vector of the values to be mapped to the minimum and maximum radii of the track.
+#' @param range Vector of values to be mapped to the minimum and maximum radii of the track.
 #'  Default to 0, mapping the minimal and maximal values input in the values parameter.
 #' @param color The color for the bars, in hexadecimal RGB format.
 #' 
@@ -848,6 +848,8 @@ BioCircosBarTrack <- function(trackname, chromosomes, starts, ends, values,
 #' 
 #' @param width The thickness of the arc
 #' @param color The color for the arcs, in hexadecimal RGB format.
+#' @param range Vector of values to be mapped to the minimum and maximum radii of the track.
+#'  Default to 0, mapping the minimal and maximal values input in the values parameter.
 #' 
 #' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
 #' 
@@ -855,14 +857,14 @@ BioCircosBarTrack <- function(trackname, chromosomes, starts, ends, values,
 #' 
 #' @examples
 #' BioCircos(BioCircosCNVTrack('BarTrack', chromosomes = 1:3, starts = 1e+7*2:4, ends = 2.5e+7*2:4, 
-#'   values = 1:3, color = "#BB0000") + BioCircosBackgroundTrack('BGTrack'))
+#'   values = 1:3, color = "#BB0000", maxRadius = 0.85, minRadius = 0.55,) + BioCircosBackgroundTrack('BGTrack'))
 #' @export
 BioCircosCNVTrack <- function(trackname, chromosomes, starts, ends, values,
-  maxRadius = 0.9, minRadius = 0.5, width = 1, color = "#40B9D4", ...){
+  maxRadius = 0.9, minRadius = 0.5, width = 1, color = "#40B9D4", range = 0, ...){
   
   track1 = paste("CNV", trackname, sep="_")
   track2 = list(maxRadius = maxRadius, minRadius = minRadius, 
-    CNVColor = color, CNVwidth = width)
+    CNVColor = color, CNVwidth = width, range = range)
   tabHist = suppressWarnings(rbind(unname(chromosomes), unname(starts), unname(ends), unname(values)))
   rownames(tabHist) = c("chr", "start", "end", "value")
   track3 = unname(alply(tabHist, 2, as.list))

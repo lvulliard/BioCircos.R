@@ -149,9 +149,10 @@ snvEnd = c(rep(39999999,6), rep(99999999,6),
   191154276, 180915260, 171115067, 159138663, 146364022, 141213431)
 # Values associated with each point, used as radial coordinate 
 #   on a scale going to minRadius for the lowest value to maxRadius for the highest value
-snvValues = 1:18%%5
+snvValues = (1:18%%5)+1
 # Create CNV track
-tracks = BioCircosCNVTrack('cnv_track', as.character(snvChr), snvStart, snvEnd, snvValues, color = "#CC0000")
+tracks = BioCircosCNVTrack('cnv_track', as.character(snvChr), snvStart, snvEnd, snvValues, 
+  color = "#CC0000", range = c(0,6))
 
 # Add background
 tracks = tracks + BioCircosBackgroundTrack("arcs_background", colors = "#2222EE")
