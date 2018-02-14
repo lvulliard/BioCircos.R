@@ -524,7 +524,68 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
     LINEMouseOverTooltipsBorderWidth = LINEMouseOverTooltipsBorderWidth,
     LINEMouseOverTooltipsPadding = "3px",
     LINEMouseOverTooltipsBorderRadius = "3px",
-    LINEMouseOverTooltipsOpacity = 0.8
+    LINEMouseOverTooltipsOpacity = 0.8,
+    CNVMouseEvent = T,
+    CNVMouseClickDisplay = F,
+    CNVMouseClickColor = "red",
+    CNVMouseClickArcOpacity = 1.0,
+    CNVMouseClickArcStrokeColor = "#F26223",
+    CNVMouseClickArcStrokeWidth = 0,
+    CNVMouseClickTextFromData = "fourth",
+    CNVMouseClickTextOpacity = 1,
+    CNVMouseClickTextColor = "red",
+    CNVMouseClickTextSize = 8,
+    CNVMouseClickTextPostionX = 0,
+    CNVMouseClickTextPostionY = 0,
+    CNVMouseClickTextDrag = T,
+    CNVMouseDownDisplay = F,
+    CNVMouseDownColor = "green",
+    CNVMouseDownArcOpacity = 1.0,
+    CNVMouseDownArcStrokeColor = "#F26223",
+    CNVMouseDownArcStrokeWidth = 0,
+    CNVMouseEnterDisplay = F,
+    CNVMouseEnterColor = "yellow",
+    CNVMouseEnterArcOpacity = 1.0,
+    CNVMouseEnterArcStrokeColor = "#F26223",
+    CNVMouseEnterArcStrokeWidth = 0,
+    CNVMouseLeaveDisplay = F,
+    CNVMouseLeaveColor = "pink",
+    CNVMouseLeaveArcOpacity = 1.0,
+    CNVMouseLeaveArcStrokeColor = "#F26223",
+    CNVMouseLeaveArcStrokeWidth = 0,
+    CNVMouseMoveDisplay = F,
+    CNVMouseMoveColor = "red",
+    CNVMouseMoveArcOpacity = 1.0,
+    CNVMouseMoveArcStrokeColor = "#F26223",
+    CNVMouseMoveArcStrokeWidth = 0,
+    CNVMouseOutDisplay = F,
+    CNVMouseOutAnimationTime = 500,
+    CNVMouseOutColor = "red",
+    CNVMouseOutArcOpacity = 1.0,
+    CNVMouseOutArcStrokeColor = "red",
+    CNVMouseOutArcStrokeWidth = 0,
+    CNVMouseUpDisplay = F,
+    CNVMouseUpColor = "grey",
+    CNVMouseUpArcOpacity = 1.0,
+    CNVMouseUpArcStrokeColor = "#F26223",
+    CNVMouseUpArcStrokeWidth = 0,
+    CNVMouseOverDisplay = F,
+    CNVMouseOverColor = "red",
+    CNVMouseOverArcOpacity = 1.0,
+    CNVMouseOverArcStrokeColor = "#F26223",
+    CNVMouseOverArcStrokeWidth = 3,
+    CNVMouseOverTooltipsHtml01 = "chr:",
+    CNVMouseOverTooltipsHtml02 = "<br>start:",
+    CNVMouseOverTooltipsHtml03 = "<br>end:",
+    CNVMouseOverTooltipsHtml04 = "<br>value:",
+    CNVMouseOverTooltipsHtml05 = "",
+    CNVMouseOverTooltipsPosition = "absolute",
+    CNVMouseOverTooltipsBackgroundColor = "white",
+    CNVMouseOverTooltipsBorderStyle = "solid",
+    CNVMouseOverTooltipsBorderWidth = 0,
+    CNVMouseOverTooltipsPadding = "3px",
+    CNVMouseOverTooltipsBorderRadius = "3px",
+    CNVMouseOverTooltipsOpacity = 0.8
   )
 
   # create widget
@@ -773,6 +834,42 @@ BioCircosBarTrack <- function(trackname, chromosomes, starts, ends, values,
   return(track)
 }
 
+#' Create a track with concentric arcs to be added to a BioCircos tracklist
+#'
+#' Arcs are defined by a genomic range and radially associated with a numerical value
+#' 
+#' @param trackname The name of the new track.
+#' 
+#' @param chromosomes A vector containing the chromosomes on which each arc is found.
+#'  Values should match the chromosome names given in the genome parameter of the BioCircos function.
+#' @param starts,ends Vectors containing the coordinates on which each arc begins or ends.
+#' @param values A vector of numerical values associated with each bin, used to determine the 
+#'  height of each bar on the track.
+#' 
+#' @param width The thickness of the arc
+#' @param color The color for the arcs, in hexadecimal RGB format.
+#' 
+#' @param minRadius,maxRadius Where the track should begin and end, in proportion of the inner radius of the plot.
+#' 
+#' @param ... Ignored
+#' 
+#' @examples
+#' BioCircos(BioCircosCNVTrack('BarTrack', chromosomes = 1:3, starts = 1e+7*2:4, ends = 2.5e+7*2:4, 
+#'   values = 1:3, color = "#BB0000") + BioCircosBackgroundTrack('BGTrack'))
+#' @export
+BioCircosCNVTrack <- function(trackname, chromosomes, starts, ends, values,
+  maxRadius = 0.9, minRadius = 0.5, width = 1, color = "#40B9D4", ...){
+  
+  track1 = paste("CNV", trackname, sep="_")
+  track2 = list(maxRadius = maxRadius, minRadius = minRadius, 
+    CNVColor = color, CNVwidth = width)
+  tabHist = suppressWarnings(rbind(unname(chromosomes), unname(starts), unname(ends), unname(values)))
+  rownames(tabHist) = c("chr", "start", "end", "value")
+  track3 = unname(alply(tabHist, 2, as.list))
+
+  track = BioCircosTracklist() + list(list(track1, track2, track3))
+  return(track)
+}
 
 #' Create a heatmap track to be added to a BioCircos tracklist
 #'

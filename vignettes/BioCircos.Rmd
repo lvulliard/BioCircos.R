@@ -146,9 +146,13 @@ By default, points display a tooltip when hovered by the mouse.
 ```{r}
 library(BioCircos)
 
-points_chromosomes = c('X', '2', '7', '13', '9') # Chromosomes on which the points should be displayed
-points_coordinates = c(102621, 140253678, 98567307, 28937403, 20484611) # Chromosomes on which the points should be displayed
-points_values = 0:4 # Values associated with each point, used as radial coordinate on a scale going to minRadius for the lowest value to maxRadius for the highest value
+# Chromosomes on which the points should be displayed
+points_chromosomes = c('X', '2', '7', '13', '9')
+# Coordinates on which the points should be displayed
+points_coordinates = c(102621, 140253678, 98567307, 28937403, 20484611) 
+# Values associated with each point, used as radial coordinate 
+#   on a scale going to minRadius for the lowest value to maxRadius for the highest value
+points_values = 0:4
 
 tracklist = BioCircosSNPTrack('mySNPTrack', points_chromosomes, points_coordinates, 
   points_values, colors = c("tomato2", "darkblue"), minRadius = 0.5, maxRadius = 0.9)
@@ -246,6 +250,31 @@ BioCircos(tracks, genomeFillColor = "YlOrBr", genome = as.list(lengthChr),
   genomeTicksDisplay = F, genomeLabelDy = 0)
 ```
 
+## CNV tracks {#cnvSection}
+
+Conceptually close to bar tracks, and commonly used for purposes such as representation of copy number variants, the CNV tracks consist of arcs at a given radial distance showing a value associated with a genome stretch.  
+The start and end coordinates of each arc, as well as the associated value need to be specified.  
+
+```{r figCNVTrack}
+library(BioCircos)
+
+# Arcs coordinates
+snvChr = rep(4:9, 3)
+snvStart = c(rep(1,6), rep(40000000,6), rep(100000000,6))
+snvEnd = c(rep(39999999,6), rep(99999999,6), 
+  191154276, 180915260, 171115067, 159138663, 146364022, 141213431)
+# Values associated with each point, used as radial coordinate 
+#   on a scale going to minRadius for the lowest value to maxRadius for the highest value
+snvValues = 1:18%%5
+# Create CNV track
+tracks = BioCircosCNVTrack('cnv_track', as.character(snvChr), snvStart, snvEnd, snvValues, color = "#CC0000")
+
+# Add background
+tracks = tracks + BioCircosBackgroundTrack("arcs_background", colors = "#2222EE")
+
+BioCircos(tracks, genomeFillColor = "YlOrBr", genomeTicksDisplay = F, genomeLabelDy = 0)
+```
+
 
 ## Heatmap tracks {#heatSection}
 
@@ -293,7 +322,7 @@ tracks = tracks + BioCircosLineTrack('LineTrack2', as.character(chrVert+1), 0.95
 tracks = tracks + BioCircosBackgroundTrack('Bg', fillColors = '#FFEEBB', borderSize = 0)
 
 BioCircos(tracks, chrPad = 0.05, displayGenomeBorder = FALSE, LINEMouseOutDisplay = FALSE, 
-  LINEMouseOverTooltipsHtml01 = "Pretty lines")
+  LINEMouseOverTooltipsHtml01 = "Pretty lines<br/>This tooltip won't go away!")
 ```
 
 
@@ -364,8 +393,8 @@ tracks = tracks + BioCircosLinkTrack("testLink", gene1Chromosomes = chr1,
   color = "#EEEE55", width = "0.3em", labels = paste(chr1, chr2, sep = "*"), displayLabel = F,
   gene2Starts = linkPos2, gene2Ends = linkPos2+1, maxRadius = 0.42)
 tracks = tracks + BioCircosLinkTrack("testLink2", gene1Chromosomes = chr3, 
-  gene1Starts = linkPos3, gene1Ends = linkPos3+5000000, gene2Chromosomes = chr4, color = "#FF6666", 
-  axisPadding = 6, labels = paste(chr3, chr4, sep = "-"), displayLabel = F,
+  gene1Starts = linkPos3, gene1Ends = linkPos3+5000000, axisPadding = 6, displayLabel = F,
+  color = "#FF6666", labels = paste(chr3, chr4, sep = "-"), gene2Chromosomes = chr4,
   gene2Starts = linkPos4, gene2Ends = linkPos4+2500000, maxRadius = 0.42)
 
 # Display the BioCircos visualization
