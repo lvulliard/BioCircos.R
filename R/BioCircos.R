@@ -123,11 +123,26 @@
 #' @param BARMouseOverTooltipsHtml04 Label displayed in tooltip in third position, before labels if any.
 #' @param BARMouseOverTooltipsHtml05 Label displayed in tooltip in fourth position, before values.
 #' @param BARMouseOverTooltipsHtml06 Label displayed in tooltip in fifth position, after values.
-#' @param BARMouseOverTooltipsHtmlBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
+#' @param BARMouseOverTooltipsBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
 #' 
 #' @param BARMouseOutDisplay Hide tooltip when mouse is not hovering a bar anymore.
 #' @param BARMouseOutColor Color of the bar when mouse is not hovering anymore, in hexadecimal
 #'  RGB format. To revert back to original color, use the value "none".
+#' 
+#' @param HEATMAPMouseOutDisplay Hide tooltip when mouse is not hovering a box anymore.
+#' @param HEATMAPMouseOutColor Color of the box when mouse is not hovering anymore, in hexadecimal
+#'  RGB format. To revert back to original color, use the value "none".
+#' 
+#' @param HEATMAPMouseOverDisplay Display the tooltip when mouse hover on a box.
+#' @param HEATMAPMouseOverColor Color of the box when hovered.
+#' @param HEATMAPMouseOverOpacity Opacity of the box when hovered.
+#' @param HEATMAPMouseOverTooltipsHtml01 Label displayed in tooltip in first position, before chromosome number.
+#' @param HEATMAPMouseOverTooltipsHtml02 Label displayed in tooltip in second position, before start position.
+#' @param HEATMAPMouseOverTooltipsHtml03 Label displayed in tooltip in second position, before end position.
+#' @param HEATMAPMouseOverTooltipsHtml04 Label displayed in tooltip in third position, before labels if any.
+#' @param HEATMAPMouseOverTooltipsHtml05 Label displayed in tooltip in fourth position, before values.
+#' @param HEATMAPMouseOverTooltipsHtml06 Label displayed in tooltip in fifth position, after values.
+#' @param HEATMAPMouseOverTooltipsBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
 #' 
 #' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
@@ -797,8 +812,9 @@ BioCircosSNPTrack <- function(trackname, chromosomes, positions, values,
 #' @param ... Ignored
 #' 
 #' @examples
-#' BioCircos(BioCircosLineTrack('LnId', rep(1,30), 2e+6*(1:100), log(1:100)) + BioCircosBackgroundTrack('BGId'))
-#' 
+#' BioCircos(BioCircosLineTrack('LnId', rep(1,30), 2e+6*(1:100), log(1:100)) 
+#'   + BioCircosBackgroundTrack('BGId'))
+#
 #' @export
 BioCircosLineTrack <- function(trackname, chromosomes, positions, values, color = "#40B9D4", 
     width = 2, maxRadius = 0.9, minRadius = 0.5, range = 0, ...){
@@ -881,7 +897,8 @@ BioCircosBarTrack <- function(trackname, chromosomes, starts, ends, values,
 #' 
 #' @examples
 #' BioCircos(BioCircosCNVTrack('BarTrack', chromosomes = 1:3, starts = 1e+7*2:4, ends = 2.5e+7*2:4, 
-#'   values = 1:3, color = "#BB0000", maxRadius = 0.85, minRadius = 0.55,) + BioCircosBackgroundTrack('BGTrack'))
+#'   values = 1:3, color = "#BB0000", maxRadius = 0.85, minRadius = 0.55) 
+#'   + BioCircosBackgroundTrack('BGTrack'))
 #' @export
 BioCircosCNVTrack <- function(trackname, chromosomes, starts, ends, values,
   maxRadius = 0.9, minRadius = 0.5, width = 1, color = "#40B9D4", range = 0, ...){
