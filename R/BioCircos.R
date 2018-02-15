@@ -68,6 +68,25 @@
 #' @param ARCMouseOverTooltipsHtml05 Label displayed in tooltip in fifth position, after ARC labels if any.
 #' @param ARCMouseOverTooltipsBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
 #' 
+#' @param CNVMouseOutDisplay Hide tooltip when mouse is not hovering an arc anymore.
+#' @param CNVMouseOutColor Color of the line when mouse is not hovering anymore, in hexadecimal
+#'  RGB format. To revert back to original color, use the value "none".
+#' @param CNVMouseOutArcOpacity Opacity of the arc when not hovered by the mouse anymore.
+#' @param CNVMouseOutArcStrokeColor Color of the arc's stroke when not hovered by the mouse anymore.
+#' @param CNVMouseOutArcStrokeWidth Width of the arc's stroke when not hovered by the mouse anymore.
+#' 
+#' @param CNVMouseOverDisplay Display the tooltip when mouse hover on an arc.
+#' @param CNVMouseOverColor Color of the arc when hovered by the mouse, in hexadecimal RGB format.
+#' @param CNVMouseOverArcOpacity Opacity of the arc when hovered by the mouse.
+#' @param CNVMouseOverArcStrokeColor Color of the arc's stroke when hovered by the mouse, in hexadecimal RGB format.
+#' @param CNVMouseOverArcStrokeWidth Width of the arc's stroke when hovered by the mouse.
+#' @param CNVMouseOverTooltipsHtml01 Label displayed in tooltip in first position, before chromosome number.
+#' @param CNVMouseOverTooltipsHtml02 Label displayed in tooltip in second position, before starting position.
+#' @param CNVMouseOverTooltipsHtml03 Label displayed in tooltip in second position, before ending position.
+#' @param CNVMouseOverTooltipsHtml04 Label displayed in tooltip in third position, before value.
+#' @param CNVMouseOverTooltipsHtml05 Label displayed in tooltip in third position, after value.
+#' @param CNVMouseOverTooltipsBorderWidth The thickness of the tooltip borders, with units specified (such as em or px). 
+#' 
 #' @param LINEMouseOverDisplay Display the tooltip when mouse hover on a line.
 #' @param LINEMouseOverLineOpacity Opacity of the line when hovered by the mouse, in hexadecimal RGB format.
 #' @param LINEMouseOverLineStrokeColor Color of the line when hovered by the mouse, in hexadecimal RGB format.
@@ -161,8 +180,13 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
   HEATMAPMouseOverTooltipsHtml06 = "", HEATMAPMouseOverTooltipsBorderWidth = "1px",
   LINEMouseOutDisplay = TRUE, LINEMouseOutLineOpacity = "none", LINEMouseOutLineStrokeColor = "none",
   LINEMouseOutLineStrokeWidth = "none", LINEMouseOverDisplay = T, LINEMouseOverLineOpacity = 1,
-  LINEMouseOverLineStrokeColor = "red", LINEMouseOverLineStrokeWidth = "none", LINEMouseOverTooltipsHtml01 = "Line",
-  LINEMouseOverTooltipsBorderWidth = 0, width = NULL, height = NULL, elementId = NULL, ...) {
+  LINEMouseOverLineStrokeColor = "#FF0000", LINEMouseOverLineStrokeWidth = "none", LINEMouseOverTooltipsHtml01 = "Line",
+  LINEMouseOverTooltipsBorderWidth = 0, CNVMouseOutDisplay = TRUE, CNVMouseOutColor = "none",
+  CNVMouseOutArcOpacity = 1.0, CNVMouseOutArcStrokeColor = "none", CNVMouseOutArcStrokeWidth = 0,
+  CNVMouseOverDisplay = TRUE, CNVMouseOverColor = "#FF0000", CNVMouseOverArcOpacity = 0.9, CNVMouseOverArcStrokeColor = "#F26223",
+  CNVMouseOverArcStrokeWidth = 3, CNVMouseOverTooltipsHtml01 = "Chromosome: ", CNVMouseOverTooltipsHtml02 = "<br>Start: ",
+  CNVMouseOverTooltipsHtml03 = "<br>End: ", CNVMouseOverTooltipsHtml04 = "<br>Value: ", CNVMouseOverTooltipsHtml05 = "",
+  CNVMouseOverTooltipsBorderWidth = "1px", width = NULL, height = NULL, elementId = NULL, ...) {
 
   # If genome is a string, convert to corresponding chromosome lengths
   if(class(genome) == "character"){
@@ -558,31 +582,31 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
     CNVMouseMoveArcOpacity = 1.0,
     CNVMouseMoveArcStrokeColor = "#F26223",
     CNVMouseMoveArcStrokeWidth = 0,
-    CNVMouseOutDisplay = F,
+    CNVMouseOutDisplay = CNVMouseOutDisplay,
     CNVMouseOutAnimationTime = 500,
-    CNVMouseOutColor = "red",
-    CNVMouseOutArcOpacity = 1.0,
-    CNVMouseOutArcStrokeColor = "red",
-    CNVMouseOutArcStrokeWidth = 0,
+    CNVMouseOutColor = CNVMouseOutColor,
+    CNVMouseOutArcOpacity = CNVMouseOutArcOpacity,
+    CNVMouseOutArcStrokeColor = CNVMouseOutArcStrokeColor,
+    CNVMouseOutArcStrokeWidth = CNVMouseOutArcStrokeWidth,
     CNVMouseUpDisplay = F,
     CNVMouseUpColor = "grey",
     CNVMouseUpArcOpacity = 1.0,
     CNVMouseUpArcStrokeColor = "#F26223",
     CNVMouseUpArcStrokeWidth = 0,
-    CNVMouseOverDisplay = F,
-    CNVMouseOverColor = "red",
-    CNVMouseOverArcOpacity = 1.0,
-    CNVMouseOverArcStrokeColor = "#F26223",
-    CNVMouseOverArcStrokeWidth = 3,
-    CNVMouseOverTooltipsHtml01 = "chr:",
-    CNVMouseOverTooltipsHtml02 = "<br>start:",
-    CNVMouseOverTooltipsHtml03 = "<br>end:",
-    CNVMouseOverTooltipsHtml04 = "<br>value:",
-    CNVMouseOverTooltipsHtml05 = "",
+    CNVMouseOverDisplay = CNVMouseOverDisplay,
+    CNVMouseOverColor = CNVMouseOverColor,
+    CNVMouseOverArcOpacity = CNVMouseOverArcOpacity,
+    CNVMouseOverArcStrokeColor = CNVMouseOverArcStrokeColor,
+    CNVMouseOverArcStrokeWidth = CNVMouseOverArcStrokeWidth,
+    CNVMouseOverTooltipsHtml01 = CNVMouseOverTooltipsHtml01,
+    CNVMouseOverTooltipsHtml02 = CNVMouseOverTooltipsHtml02,
+    CNVMouseOverTooltipsHtml03 = CNVMouseOverTooltipsHtml03,
+    CNVMouseOverTooltipsHtml04 = CNVMouseOverTooltipsHtml04,
+    CNVMouseOverTooltipsHtml05 = CNVMouseOverTooltipsHtml05,
     CNVMouseOverTooltipsPosition = "absolute",
     CNVMouseOverTooltipsBackgroundColor = "white",
     CNVMouseOverTooltipsBorderStyle = "solid",
-    CNVMouseOverTooltipsBorderWidth = 0,
+    CNVMouseOverTooltipsBorderWidth = CNVMouseOverTooltipsBorderWidth,
     CNVMouseOverTooltipsPadding = "3px",
     CNVMouseOverTooltipsBorderRadius = "3px",
     CNVMouseOverTooltipsOpacity = 0.8

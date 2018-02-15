@@ -74,7 +74,7 @@ Documentation: http://bioinfo.ibp.ac.cn/biocircos/document/index.html
 The following features have been added to the original BioCircos.js library, based on version 1.1.2:
 
 * Parameter *snp_value_maxmin_instance* set by *SNPsettings.range* when provided, to allow the use of a pre-defined range of values for the SNP track.
-* Similar parameter *histogram_value_maxmin_instance* added for Histogram/Bar tracks.
+* Similar parameter *histogram_value_maxmin_instance* added for Histogram/Bar tracks, Line tracks, Heatmap tracks and CNV tracks.
 * Parameter *opacity* added to each elements of SNP and Arc tracks.
 
 
