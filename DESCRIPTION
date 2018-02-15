@@ -6,9 +6,9 @@ Authors@R: c(person("Loan", "Vulliard", email = "lvulliard@cemm.at", role = c("t
 	person("Ya", "Cui", email = "cui_ya@163.com", role = c("aut")))
 Description: Implement in 'R' interactive Circos-like visualizations of genomic data, to map information
 	such as genetic variants, genomic fusions and aberrations to a circular genome, as proposed by the
-	'JavaScript' library 'BioCircos.js', based on the 'JQuery' and 'D3' technologies. The output can be
-	integrated in 'R Markdown' documents, 'Shiny' applications, or by will be displayed by default in
-	stand-alone HTML documents or in the 'RStudio' viewer pane.
+	'JavaScript' library 'BioCircos.js', based on the 'JQuery' and 'D3' technologies. The output is by 
+	default displayed in stand-alone HTML documents or in the 'RStudio' viewer pane. Moreover it can be
+	integrated in 'R Markdown' documents and 'Shiny' applications.
 Depends: R (>= 3.1.0)
 License: GPL-2 | file LICENSE
 Encoding: UTF-8
