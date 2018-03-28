@@ -41,7 +41,9 @@ To install this package, you can use CRAN (the central R package repository) to 
 ## Compatibility and troubleshooting
 
 Since the visualizations are powered by JavaScript, they are affected by the environment in which they are displayed.  
-If nothing shows up in a shiny application or an Rmarkdown document, try to update your web browser. 
+
+* If nothing shows up in the Rstudio viewer pane, try displaying the plot you generated in your browser instead. You can export the figure using the *Save as Web Page...* option in the *Export* tab of the viewer pane.
+* If nothing shows up in a shiny application or an Rmarkdown document, try to update your web browser. 
 See the vignettes for examples of BioCircos plots that should be correctly displayed.
 
 ### Obseved behavior
