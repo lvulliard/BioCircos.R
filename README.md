@@ -11,7 +11,7 @@ For a complete list of all the parameters available, please refer to the package
 
 ## Motivation
 
-The amount of data produced nowadays in a lot of different fields assesses the relevance of reactive analyses and interactive display of the results. This especially true in biology, where the cost of sequencing data has dropped must faster than the Moore's law prediction. New ways of integrating different level of information and accelerating the interpretation are therefore needed.
+The amount of data produced nowadays in a lot of different fields assesses the relevance of reactive analyses and interactive display of the results. This is especially true in biology, where the cost of sequencing data has dropped must faster than the Moore's law prediction. New ways of integrating different levels of information and accelerating the interpretation are therefore needed.
 
 The integration challenge appears to be of major importance, as it allows a deeper understanding of the biological phenomena happening, that cannot be observed in the single analyses independently.  
 
@@ -94,4 +94,6 @@ This package relies on several open source projects other R packages, and is mad
 
 The package **heatmaply** was used as a model for this vignette, as well as for the **htmlwidgets** configuration.
 
-[![](https://cranlogs.r-pkg.org/badges/BioCircos)](https://cran.r-project.org/package=BioCircos)
+[![](https://cranlogs.r-pkg.org/badges/BioCircos)](https://cran.r-project.org/package=BioCircos) [![DOI](https://zenodo.org/badge/112120164.svg)](https://zenodo.org/badge/latestdoi/112120164)
+
+
