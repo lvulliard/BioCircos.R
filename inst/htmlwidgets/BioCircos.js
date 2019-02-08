@@ -451,7 +451,8 @@ HTMLWidgets.widget({
             textSize : opts.genomeLabelTextSize,
             textColor : opts.genomeLabelTextColor,
             dx : opts.genomeLabelDx,
-            dy : opts.genomeLabelDy
+            dy : opts.genomeLabelDy,
+            rotation : opts.genomeLabelOrientation
           },
           TEXTModuleDragEvent : opts.TEXTModuleDragEvent
         });

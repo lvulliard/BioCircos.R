@@ -45,6 +45,7 @@ Since the visualizations are powered by JavaScript, they are affected by the env
 * If nothing shows up in the Rstudio viewer pane, try displaying the plot you generated in your browser instead. You can export the figure using the *Save as Web Page...* option in the *Export* tab of the viewer pane.
 * If nothing shows up in a shiny application or an Rmarkdown document, try to update your web browser. 
 See the vignettes for examples of BioCircos plots that should be correctly displayed.
+* Rotation of labels using the *genomeLabelOrientation* parameter leads to a slight offset of the text when displayed in Firefox because some recent CSS options are not yet implemented.
 
 ### Obseved behavior
 
@@ -78,6 +79,7 @@ The following features have been added to the original BioCircos.js library, bas
 * Parameter *snp_value_maxmin_instance* set by *SNPsettings.range* when provided, to allow the use of a pre-defined range of values for the SNP track.
 * Similar parameters added for the range of Histogram/Bar tracks, Line tracks, CNV tracks and Heatmap tracks (for the range to be used for color mapping).
 * Parameter *opacity* added to each elements of SNP and Arc tracks.
+* Changes were made in order to allow rotation of genome labels with the new parameter *genomeLabelOrientation* and the radial offset *dy* is now directly integrated in the label translation.
 
 
 ## Contact

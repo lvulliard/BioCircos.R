@@ -7,7 +7,7 @@ output:
 vignette: >
   %\VignetteIndexEntry{BioCircos: Generating circular multi-track plots}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\usepackage[utf8]{inputenc}
 date: "`r Sys.Date()`"
 author: "Loan Vulliard"
 ---

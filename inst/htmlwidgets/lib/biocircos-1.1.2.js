@@ -628,7 +628,8 @@ var BioCircos;
              "textSize" : 15,
              "textColor" : "#000",
              "dx" : 0.028,
-             "dy" : "-0.55em"
+             "dy" : 15,
+             "rotation" : 0
           }
       };
 
@@ -761,6 +762,7 @@ var BioCircos;
       self.genomeTextColor=self.settings.genomeLabel.textColor;
       self.genomeTextDx=self.settings.genomeLabel.dx;
       self.genomeTextDy=self.settings.genomeLabel.dy;
+      self.genomeTextRotation=self.settings.genomeLabel.rotation;
 
       var labeli= self.genomeLabel.length;
       var initGenome = new Object();
@@ -1164,12 +1166,17 @@ var BioCircos;
 	    .each( function(d,i) { 
                d.angle = (d.startAngle + d.endAngle) / 2 - self.genomeTextDx;
                d.name = self.genomeLabel[i];
+               d.rotation = self.genomeTextRotation;
+               d.dy = self.genomeTextDy;
             })
-	    .attr("dy",self.genomeTextDy)
+      .attr("text-anchor", "middle") // Rotate around horizontal center of text box
+      .attr("alignment-baseline", "middle") // Rotate around vertical center of text box
+      .attr("vertical-align", "middle")
 	    .attr("transform", function(d){
-	       return "rotate(" + ( d.angle * 180 / Math.PI ) + ")" +
-	       "translate(0,"+ -1.0*(outerRadius+10) +")" +
-	       ( ( d.angle > Math.PI*2 && d.angle < Math.PI*0 ) ? "rotate(180)" : "");
+	       return "rotate(" + (d.angle * 180 / Math.PI ) + ")" +
+	       "translate(0,"+ -1.0*(outerRadius+10+d.dy) +")" +
+	       ( ( d.angle > Math.PI*2 && d.angle < Math.PI*0 ) ? "rotate(180)" : "") +
+         "rotate(" + d.rotation +")";
 	    })
 	    .text(function(d){
 	       return d.name;
@@ -1206,7 +1213,7 @@ var BioCircos;
 
         ticks.append("text")
             .attr("x", 8)
-            .attr("dy", ".35em")
+            .attr("dy", "0.35em")
             .style("font-size", self.ticksTextSize)
             .style("fill", self.ticksTextColor)
             .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })

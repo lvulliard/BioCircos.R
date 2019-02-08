@@ -29,9 +29,9 @@
 #' @param genomeTicksDisplay,genomeTicksLen,genomeTicksColor,genomeTicksTextSize,genomeTicksTextColor,genomeTicksScale
 #'  Should the refence genome have ticks, of which length, color (in hexadecimal RGB format), with labels in which font
 #' size and color, and spaced by how many bases?
-#' @param genomeLabelDisplay,genomeLabelTextSize,genomeLabelTextColor,genomeLabelDx,genomeLabelDy
+#' @param genomeLabelDisplay,genomeLabelTextSize,genomeLabelTextColor,genomeLabelDx,genomeLabelDy,genomeLabelOrientation
 #'  Should the reference genome have labels on each chromosome, in which font size and color? Moreover rotation
-#'  and radius shifts for the label texts can be adde
+#'  and radius shifts for the label texts can be added, and the angle between the radius and the label changed.
 #' 
 #' @param zoom Is zooming and moving in the visualization allowed?
 #' 
@@ -164,7 +164,7 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
   genomeTicksDisplay = TRUE, genomeTicksLen = 5, genomeTicksColor = "#000", 
   genomeTicksTextSize = "0.6em", genomeTicksTextColor = "#000", genomeTicksScale = 30000000,
   genomeLabelDisplay = TRUE, genomeLabelTextSize = "10pt", genomeLabelTextColor = "#000",
-  genomeLabelDx = 0.028, genomeLabelDy = "-0.55em",
+  genomeLabelDx = 0.0, genomeLabelDy = 10, genomeLabelOrientation = 0,
   zoom = TRUE, TEXTModuleDragEvent = FALSE,
   SNPMouseOverDisplay = TRUE, SNPMouseOverColor = "#FF0000", SNPMouseOverCircleSize = 3,
   SNPMouseOverCircleOpacity = 0.9,
@@ -261,6 +261,7 @@ BioCircos <- function(tracklist = BioCircosTracklist(),
     genomeLabelTextColor = genomeLabelTextColor,
     genomeLabelDx = genomeLabelDx, 
     genomeLabelDy = genomeLabelDy,
+    genomeLabelOrientation = genomeLabelOrientation,
     SNPMouseEvent = T,
     SNPMouseClickDisplay = F,
     SNPMouseClickColor = "red",
