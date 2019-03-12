@@ -1113,7 +1113,7 @@ BioCircosTracklist <- function(){
   colorError = paste0("\'", varName, 
     "\' parameter should be either a vector of chromosome colors or the name of a RColorBrewer brewer.")
   if(class(colVar) == "character"){
-    if((colVar %in% rownames(RColorBrewer::brewer.pal.info))&&(length(colVar) == 1)) { # RColorBrewer's brewer
+    if(all(colVar %in% rownames(RColorBrewer::brewer.pal.info))&(length(colVar) == 1)) { # RColorBrewer's brewer
       colVar = grDevices::colorRampPalette(RColorBrewer::brewer.pal(8, colVar))(colLength)
     }
     else if(!all(grepl("^#", colVar))){ # Not RGB values

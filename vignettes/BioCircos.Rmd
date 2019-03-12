@@ -39,13 +39,13 @@ To install this package, you can use CRAN (the central R package repository) to 
 
 ### From CRAN
 
-```{r eval=FALSE}
+```{r eval=FALSE, screenshot.force = FALSE}
 install.packages('BioCircos')
 ```
 
 ### From Github
 
-```{r eval=FALSE}
+```{r eval=FALSE, screenshot.force = FALSE}
 # You need devtools for that
 if (!require('devtools')){install.packages('devtools')}
 
@@ -72,7 +72,7 @@ A genome needs to be set in order to map all the coordinates of the tracks on it
 For now, the only pre-configured genome available is *hg19* (GRCh37), for which the length of the main 22 genomic autosomal chromosome pairs and of the sexual chromosomes are available. The Y chromosome can be removed using the *ychr* parameter. Visual parameters are also available, such as by giving a vector of colors or a *RColorBrewer* palette to change the colors of each chromosome (parameter *genomeFillColor*), the space between each chromosome (*chrPad*) or their borders (*displayGenomeBorder*).  
 The ticks, displaying the scale on each chromosome, can be removed with *genomeTicksDisplay*, and the genome labels (chromosome names) can be brought closer or further away from the chromosomes with *genomeLabelDy*.
 
-```{r}
+```{r, screenshot.force = FALSE}
 library(BioCircos)
 
 BioCircos(genome = "hg19", yChr = FALSE, genomeFillColor = "Reds", chrPad = 0, 
@@ -82,7 +82,7 @@ BioCircos(genome = "hg19", yChr = FALSE, genomeFillColor = "Reds", chrPad = 0,
 To use your own reference genome, you need to define a named list of chromosomal lengths and use it as the *genome* parameter. The names and lengths should match the coordinates you plan on using later for your tracks.  
 You may want to change the scale of the ticks on the chromosomes, to fit to your reference genome, with the *genomeTickScale* parameters.
 
-```{r}
+```{r, screenshot.force = FALSE}
 library(BioCircos)
 
 myGenome = list("A" = 10560,
@@ -109,7 +109,7 @@ All tracks need to be named.
 A first track simply corresponds to text annotations. The obligatory parameters are the track name and the text to be displayed. 
 Some parameters such as the size, the opacity and the coordinates can be customized.
 
-```{r}
+```{r, screenshot.force = FALSE}
 library(BioCircos)
 
 tracklist = BioCircosTextTrack('myTextTrack', 'Some text', size = "2em", opacity = 0.5, 
@@ -126,7 +126,7 @@ BioCircos(tracklist, genomeFillColor = "PuOr",
 
 Another simple track type correspond to backgrounds, displayed under other tracks, in a given radius interval.
 
-```{r}
+```{r, screenshot.force = FALSE}
 library(BioCircos)
 
 tracklist = BioCircosBackgroundTrack("myBackgroundTrack", minRadius = 0.5, maxRadius = 0.8,
@@ -143,7 +143,7 @@ To map punctual information associated with a single-dimensional value on the re
 It is therefore needed to specify the chromosome and coordinates where each points are mapped, as well as the corresponding value, which will be used to compute the radial coordinate of the points.  
 By default, points display a tooltip when hovered by the mouse.
 
-```{r}
+```{r, screenshot.force = FALSE}
 library(BioCircos)
 
 # Chromosomes on which the points should be displayed
@@ -172,7 +172,7 @@ BioCircos(tracklist, genomeFillColor = "PuOr",
 Arc tracks are displaying arcs along the genomic circle, between the radii given as the *minRadius* and *maxRadius* parameters. As for an SNP track, the chromosome and coordinates (here corresponding to the beginning and end of each arc) should be specified.
 By default, arcs display a tooltip when hovered by the mouse.
 
-```{r}
+```{r, screenshot.force = FALSE}
 library(BioCircos)
 
 arcs_chromosomes = c('X', 'X', '2', '9') # Chromosomes on which the arcs should be displayed
@@ -192,7 +192,7 @@ BioCircos(tracklist, genomeFillColor = "PuOr",
 Links track represent links between different genomic position. They are displayed at the center of the visualization, and out to a radius specified by the *maxRadius* parameter. The chromosomes and beginning and end positions of the regions to be linked are necessary, and labels can be added.  
 By default, links display a tooltip when hovered by the mouse.
 
-```{r}
+```{r, screenshot.force = FALSE}
 library(BioCircos)
 
 links_chromosomes_1 = c('X', '2', '9') # Chromosomes on which the links should start
@@ -220,7 +220,7 @@ Bar plots may be added on another type of tracks. The start and end coordinates 
 By default, the radial range of the track will stretch from the minimal to the maximum value of the track, but other boundaries may be specified with the *range* parameter.  
 Here, to add a track to the tracklist at each iteration of the loop, we initialize the *tracks* tracklist with an empty *BioCircosTracklist* object.
 
-```{r figBarTrack, fig.width=4, fig.height=4, fig.align = 'center'}
+```{r figBarTrack, fig.width=4, fig.height=4, fig.align = 'center', screenshot.force = FALSE}
 library(BioCircos)
 library(RColorBrewer)
 library(grDevices)
@@ -255,7 +255,7 @@ BioCircos(tracks, genomeFillColor = "YlOrBr", genome = as.list(lengthChr),
 Conceptually close to bar tracks, and commonly used for purposes such as representation of copy number variants, the CNV tracks consist of arcs at a given radial distance showing a value associated with a genome stretch.  
 The start and end coordinates of each arc, as well as the associated value need to be specified.  
 
-```{r figCNVTrack}
+```{r figCNVTrack, screenshot.force = FALSE}
 library(BioCircos)
 
 # Arcs coordinates
@@ -282,7 +282,7 @@ BioCircos(tracks, genomeFillColor = "YlOrBr", genomeTicksDisplay = F, genomeLabe
 For a given genome stretch, heatmaps associate linearly numerical values with a color range.  
 For two-dimensional heatmaps, you can stack up *heatmap tracks*, as done in the following example.  
 
-```{r}
+```{r, screenshot.force = FALSE}
 library(BioCircos)
 
 # Define a custom genome
@@ -313,7 +313,7 @@ BioCircos(tracks, genome = as.list(lengthChr), genomeTicksDisplay = F, genomeLab
 The *Line tracks* display segments on a track. They are defined by the set of vertices that will be joined to produce the segments.  
 If the vertices provided span multiple chromosomes, the segments between the last point on a chromosome and the first point on the next chromosome will be discarded.
 
-```{r}
+```{r, screenshot.force = FALSE}
 chrVert =  rep(c(1, 3, 5), c(20,10,5))
 posVert = c(249250621*log(c(20:1, 10:1, 5:1), base = 20))
 
@@ -331,7 +331,7 @@ BioCircos(tracks, chrPad = 0.05, displayGenomeBorder = FALSE, LINEMouseOutDispla
 
 Tracks can be removed from a track list by substracting the name of the corresponding track.
 
-```{r}
+```{r, screenshot.force = FALSE}
 library(BioCircos)
 
 # Create a tracklist with a text annotation and backgrounds
@@ -347,7 +347,7 @@ BioCircos(tracklist - 't1')
 
 You can combine and overlap as many tracks as you want. 
 
-```{r figMultiTrack, fig.width=5, fig.height=5, fig.align = 'center'}
+```{r figMultiTrack, fig.width=5, fig.height=5, fig.align = 'center', screenshot.force = FALSE}
 library(BioCircos)
 
 # Fix random generation for reproducibility
@@ -422,6 +422,6 @@ The package **heatmaply** was used as a model for this vignette, as well as for 
 
 ## Session info
 
-```{r sessionINFO}
+```{r sessionINFO, screenshot.force = FALSE}
 sessionInfo()
 ``` 
