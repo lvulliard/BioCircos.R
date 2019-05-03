@@ -405,6 +405,38 @@ BioCircos(tracks, genomeFillColor = "Spectral", yChr = T, chrPad = 0, displayGen
 ```
 
 
+## Saving plot as a standalone document
+
+You can save your visualization as a standalone *html* document, thanks to the *htmlwidgets* library:
+
+```{r eval=FALSE, screenshot.force = FALSE}
+library(BioCircos)
+library(htmlwidgets)
+
+# Prepare your plot and store it in an object
+tracklist = BioCircosBackgroundTrack("myBackgroundTrack", minRadius = 0.5, maxRadius = 0.8,
+  borderColors = "#AAAAAA", borderSize = 0.6, fillColors = "#FFBBBB")  
+
+plot <- BioCircos(tracklist, genomeFillColor = "PuOr", displayGenomeBorder = FALSE, 
+  genomeTicksDisplay = FALSE,  genomeLabelDy = 0)
+
+# Save it as an html file
+saveWidget(plot, "plot.html")
+```
+
+You can then convert it to a *PDF* or *PNG* file programatically thanks to Chrome's headless mode (version 59 or later). 
+The following needs to be adapted to the path to your local installation of Chrome:
+
+```{r eval=FALSE, screenshot.force = FALSE}
+# Output in screenshot.png
+system("/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --headless --disable-gpu --screenshot plot.html") 
+
+# Output in output.pdf
+system("/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --headless --disable-gpu --print-to-pdf plot.html") 
+```
+
+
+
 ## Contact
 
 To report bugs, request features or for any question or remark regarding this package, please use the <a href="https://github.com/lvulliard/BioCircos.R">GitHub page</a> or contact <a href="mailto:lvulliard@cemm.at">Loan Vulliard</a>.
